@@ -14,8 +14,8 @@
   "dependencies": {
     "flyd-forwardto": "^0.0.1",
     "ramda": "^0.14.0",
-    "snabbdom": "^0.0.1",
+    "snabbdom": "^0.1.0",
     "flyd": "^0.1.4",
-    "union-type-js": "^0.0.1"
+    "union-type-js": "^0.1.0"
   }
 }

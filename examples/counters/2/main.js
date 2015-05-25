@@ -3,9 +3,14 @@ const R = require('ramda');
 const flyd = require('flyd');
 const stream = flyd.stream;
 const forwardTo = require('flyd-forwardto');
-const snabbdom = require('snabbdom');
-const h = snabbdom.h;
 const Type = require('union-type-js');
+const patch = require('snabbdom').init([
+  require('snabbdom/modules/class'),
+  require('snabbdom/modules/props'),
+  require('snabbdom/modules/eventlisteners'),
+]);
+const h = require('snabbdom/h');
+
 
 const counter = require('./counter.js');
 
@@ -24,7 +29,7 @@ const Action = Type({
 });
 
 const update = (model, action) =>
-  Type.case({
+  Action.case({
     Reset: () => init(0, 0),
     Top: (act) => R.evolve({topCounter: counter.update(R.__, act)}, model),
     Bottom: (act) => R.evolve({bottomCounter: counter.update(R.__, act)}, model),
@@ -35,7 +40,7 @@ const view = R.curry((actions$, model) =>
   h('div', [
     counter.view(forwardTo(actions$, Action.Top), model.topCounter),
     counter.view(forwardTo(actions$, Action.Bottom), model.bottomCounter),
-    h('button', {onclick: [actions$, Action.Reset()]}, 'RESET'),
+    h('button', {on: {click: [actions$, Action.Reset()]}}, 'RESET'),
   ]));
 
 // Streams
@@ -47,5 +52,5 @@ const vnode$ = flyd.map(view(actions$), model$);
 
 window.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('container');
-  flyd.scan(snabbdom.patch, snabbdom.emptyNodeAt(container), vnode$);
+  flyd.scan(patch, container, vnode$);
 });

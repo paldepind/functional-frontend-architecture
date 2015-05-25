@@ -3,9 +3,13 @@ const R = require('ramda');
 const flyd = require('flyd');
 const stream = flyd.stream;
 const forwardTo = require('flyd-forwardto');
-const snabbdom = require('snabbdom');
-const h = snabbdom.h;
 const Type = require('union-type-js');
+const patch = require('snabbdom').init([
+  require('snabbdom/modules/class'),
+  require('snabbdom/modules/props'),
+  require('snabbdom/modules/eventlisteners'),
+]);
+const h = require('snabbdom/h');
 
 const counter = require('./counter.js');
 
@@ -26,7 +30,7 @@ const Action = Type({
 // View
 
 const update = (model, action) =>
-  Type.case({
+  Action.case({
     Insert: () => R.evolve({nextId: R.add(1),
                            counters: R.append([model.nextId, counter.init(0)])}, model),
     Remove: () => R.evolve({counters: R.tail}, model),
@@ -40,18 +44,15 @@ const update = (model, action) =>
 // View
 
 const viewCounter = R.curry((actions$, c) => {
-  console.log(c);
   const [id, model] = c;
   return counter.view(forwardTo(actions$, Action.Modify(id)), model);
 });
 
 const view = R.curry(function (actions$, model) {
-  console.log('view');
-  console.log(model.counters);
   const counters = R.map(viewCounter(actions$), model.counters);
-  return h('div', 
-    R.concat([h('button.rm', {onclick: [actions$, Action.Remove()]}, 'Remove'),
-              h('button.add', {onclick: [actions$, Action.Insert()]}, 'Add')], counters)
+  return h('div',
+    R.concat([h('button.rm', {on: {click: [actions$, Action.Remove()]}}, 'Remove'),
+              h('button.add', {on: {click: [actions$, Action.Insert()]}}, 'Add')], counters)
   );
 });
 
@@ -61,8 +62,8 @@ const model$ = flyd.scan(update, init(0, 0), actions$);
 const vnode$ = flyd.map(view(actions$), model$);
 
 // flyd.map((model) => console.log(model), model$); // Uncomment to log state on every update
- 
+
 window.addEventListener('DOMContentLoaded', function() {
   const container = document.getElementById('container');
-  flyd.scan(snabbdom.patch, snabbdom.emptyNodeAt(container), vnode$);
+  flyd.scan(patch, container, vnode$);
 });

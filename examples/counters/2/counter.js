@@ -1,7 +1,7 @@
 /* jshint esnext: true */
 const R = require('ramda');
 const Type = require('union-type-js');
-const h = require('snabbdom').h;
+const h = require('snabbdom/h');
 
 
 // Model
@@ -11,7 +11,7 @@ const init = (n) => n;
 const Action = Type({Increment: [], Decrement: []});
 
 const update = R.curry((model, action) =>
-  Type.case({
+  Action.case({
     Increment: () => model + 1,
     Decrement: () => model - 1,
   }, action));
@@ -19,9 +19,9 @@ const update = R.curry((model, action) =>
 // View
 const view = R.curry((actions$, model) =>
   h('div', {style: countStyle}, [
-    h('button', {onclick: [actions$, Action.Decrement()]}, '–'),
+    h('button', {on: {click: [actions$, Action.Decrement()]}}, '–'),
     h('div', {style: countStyle}, model),
-    h('button', {onclick: [actions$, Action.Increment()]}, '+'),
+    h('button', {on: {click: [actions$, Action.Increment()]}}, '+'),
   ]));
 
 const countStyle = {fontSize:   '20px',
