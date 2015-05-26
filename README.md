@@ -7,4 +7,6 @@ Work in progress.
 [union-type-js](https://github.com/paldepind/union-type-js) +
 [Flyd](https://github.com/paldepind/flyd) +
 [Snabbdom](https://github.com/paldepind/snabbdom) + a lot of inspiration from
-[Elm](http://elm-lang.org/) = a very functional JavaScript frontend framework.
+[Elm](http://elm-lang.org/) = a functional JavaScript frontend framework for
+writing web applications with no state mutations.
+
