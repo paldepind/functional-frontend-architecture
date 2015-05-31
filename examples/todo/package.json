@@ -1,0 +1,25 @@
+{
+  "name": "counter-example",
+  "version": "0.0.1",
+  "description": "Counters app with Flyd and Snabbdom",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Simon Friis Vindum",
+  "license": "MIT",
+  "devDependencies": {
+    "babelify": "^6.1.1"
+  },
+  "dependencies": {
+    "flyd-forwardto": "^0.0.1",
+    "ramda": "^0.14.0",
+    "snabbdom": "^0.1.0",
+    "flyd": "^0.1.4",
+    "union-type-js": "^0.1.0"
+  },
+  "jshintConfig": {
+    "esnext": true,
+    "asi": true
+  }
+}
