@@ -122,10 +122,22 @@ const MyRouter = Router.init({
   },
 });
 
+// Persistence
+function restoreState() {
+  var restored = JSON.parse(localStorage.getItem('state'));
+  return restored === null ? init() : restored;
+}
+
+function saveState(model) {
+  localStorage.setItem('state', JSON.stringify(model));
+}
+
 // Streams
 const action$ = flyd.merge(MyRouter.stream, flyd.stream());
-const model$ = flyd.scan(update, init(0), action$)
+const model$ = flyd.scan(update, restoreState(), action$)
 const vnode$ = flyd.map(view(action$), model$)
+
+flyd.map(saveState, model$);
 
 // flyd.map((model) => console.log(model), model$); // Uncomment to log state on every update
 
