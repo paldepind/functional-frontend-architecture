@@ -18,6 +18,8 @@ const init = (title) => ({
 
 const Action = Type({
   ToggleDone: [],
+  SetDone: [],
+  UnsetDone: [],
   ToggleEditing: [],
   Remove: [],
   ChangeTitle: [String],
@@ -25,9 +27,11 @@ const Action = Type({
 
 // Update
 
-const update = (model, action) => !console.log(action) &&
+const update = (model, action) => //!console.log(action) &&
   Action.case({
     ToggleDone: () => R.evolve({done: R.not}, model),
+    SetDone: () => R.evolve({done: R.T}, model),
+    UnsetDone: () => R.evolve({done: R.F}, model),
     ToggleEditing: () => R.evolve({editing: R.not}, model),
     ChangeTitle: (title) => R.evolve({title: R.always(title)}, model),
   }, action)
@@ -38,10 +42,18 @@ function targetValue(ev) {
   return ev.target.value
 }
 
+function focus(oldVnode, vnode) {
+  if (oldVnode.data.class.editing === false &&
+      vnode.data.class.editing === true) {
+    vnode.elm.querySelector('input.edit').focus();
+  }
+}
+
 const view = R.curry((context, model) =>
   h('li', {
     class: {completed: model.done && !model.editing,
-            editing: model.editing}
+            editing: model.editing},
+    hook: {update: focus},
   }, [
     h('div.view', [
       h('input.toggle', {
