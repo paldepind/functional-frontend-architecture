@@ -4,14 +4,18 @@ const flyd = require('flyd');
 const stream = flyd.stream;
 const forwardTo = require('flyd-forwardto');
 const Type = require('union-type-js');
-const Router = require('../../../router.js');
+const Router = require('../../../router');
 const patch = require('snabbdom').init([
   require('snabbdom/modules/class'),
   require('snabbdom/modules/style'),
   require('snabbdom/modules/props'),
   require('snabbdom/modules/eventlisteners'),
 ]);
+const treis = require('treis');
 const h = require('snabbdom/h')
+
+const targetValue = require('../../../helpers/targetvalue');
+const ifEnter = require('../../../helpers/ifenter');
 
 const Todo = require('./task')
 
@@ -21,6 +25,7 @@ const init = () => ({
   todos: [],
   newTitle: '',
   view: 'all',
+  nextId: 0,
 });
 
 // Actions
@@ -28,8 +33,8 @@ const init = () => ({
 const Action = Type({
   ChangeNewTitle: [String],
   Create: [],
-  Remove: [Number],
-  Modify: [Number, Todo.Action],
+  Remove: [Object],
+  Modify: [Object, Todo.Action],
   ToggleAll: [],
   ClearDone: [],
   ChangePage: [R.T],
@@ -37,42 +42,37 @@ const Action = Type({
 
 // Update
 
-const update = (model, action) =>
-  Action.case({
-    ChangeNewTitle: (title) => R.evolve({newTitle: R.always(title)}, model),
-    Create: () => R.evolve({todos: R.append(Todo.init(model.newTitle)),
-                            newTitle: R.always('')}, model),
-    Remove: (idx) => R.evolve({todos: R.remove(idx, 1)}, model),
-    Modify: (idx, action) =>
-      R.evolve({todos: R.adjust(Todo.update(R.__, action), idx)}, model),
-    ToggleAll: () => {
-      const left = R.length(R.reject(R.prop('done'), model.todos)),
-            todoAction = left === 0 ? Todo.Action.UnsetDone() : Todo.Action.SetDone();
-      return R.evolve({todos: R.map(Todo.update(R.__, todoAction))}, model);
-    },
-    ClearDone: () => R.evolve({todos: R.reject(R.prop('done'))}, model),
-    ChangePage: (action) => MyRouter.Action.case({
-      ViewAll: () => R.evolve({view: R.always('all')}, model),
-      ViewActive: () => R.evolve({view: R.always('active')}, model),
-      ViewCompleted: () => R.evolve({view: R.always('complete')}, model),
-    }, action)
+// action -> model -> newModel
+const update = Action.caseOn({
+  ChangeNewTitle: R.assoc('newTitle'),
+  Create: (model) => R.evolve({todos: R.append(Todo.init(model.nextId, model.newTitle)),
+                               nextId: R.inc,
+                               newTitle: R.always('')}, model),
+  Remove: (todo, model) => R.evolve({todos: R.reject(R.eq(todo))}, model),
+  Modify: (todo, action, model) => {
+    const idx = R.indexOf(todo, model.todos)
+    return R.evolve({todos: R.adjust(Todo.update(action), idx)}, model)
+  },
+  ToggleAll: (model) => {
+    const left = R.length(R.reject(R.prop('done'), model.todos)),
+          todoAction = left === 0 ? Todo.Action.UnsetDone() : Todo.Action.SetDone();
+    return R.evolve({todos: R.map(Todo.update(todoAction))}, model);
+  },
+  ClearDone: R.evolve({todos: R.reject(R.prop('done'))}),
+  ChangePage: (action, model) => MyRouter.Action.case({
+    ViewAll: () => R.evolve({view: R.always('all')}, model),
+    ViewActive: () => R.evolve({view: R.always('active')}, model),
+    ViewCompleted: () => R.evolve({view: R.always('complete')}, model),
   }, action)
+})
 
 // View
 
-const viewTodo = R.curry((action$, todo, idx) => {
+const viewTodo = R.curry((action$, todo) => {
   return Todo.view({
-    action$: forwardTo(action$, Action.Modify(idx)),
-    remove$: forwardTo(action$, R.always(Action.Remove(idx))),
+    action$: forwardTo(action$, Action.Modify(todo)),
+    remove$: forwardTo(action$, R.always(Action.Remove(todo))),
   }, todo)
-})
-
-function targetValue(ev) {
-  return ev.target.value
-}
-
-const whenEnter = R.curry((fn, val, ev) => {
-  if (ev.keyCode === 13) fn(val)
 })
 
 const view = R.curry((action$, model) => {
@@ -88,14 +88,14 @@ const view = R.curry((action$, model) => {
         props: {placeholder: 'What needs to be done?',
                 value: model.newTitle},
         on: {input: R.compose(action$, Action.ChangeNewTitle, targetValue),
-             keydown: whenEnter(action$, Action.Create())},
+             keydown: ifEnter(action$, Action.Create())},
       }),
     ]),
     h('section.main', {
       style: {display: hasTodos ? 'block' : 'none'}
     }, [
       h('input.toggle-all', {props: {type: 'checkbox'}, on: {click: [action$, Action.ToggleAll()]}}),
-      h('ul.todo-list', R.mapIndexed(viewTodo(action$), filteredTodos)),
+      h('ul.todo-list', R.map(viewTodo(action$), filteredTodos)),
     ]),
     h('footer.footer', {
       style: {display: hasTodos ? 'block' : 'none'}
@@ -123,18 +123,18 @@ const MyRouter = Router.init({
 });
 
 // Persistence
-function restoreState() {
-  var restored = JSON.parse(localStorage.getItem('state'));
+const restoreState = () => {
+  const restored = JSON.parse(localStorage.getItem('state'));
   return restored === null ? init() : restored;
-}
+};
 
-function saveState(model) {
+const saveState = (model) => {
   localStorage.setItem('state', JSON.stringify(model));
-}
+};
 
 // Streams
 const action$ = flyd.merge(MyRouter.stream, flyd.stream());
-const model$ = flyd.scan(update, restoreState(), action$)
+const model$ = flyd.scan(R.flip(update), restoreState(), action$)
 const vnode$ = flyd.map(view(action$), model$)
 
 flyd.map(saveState, model$);

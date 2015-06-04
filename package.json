@@ -1,0 +1,28 @@
+{
+  "name": "noname-functional-frontend-framework",
+  "version": "0.0.1",
+  "description": "A functional frontend framework.",
+  "main": "router/router.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paldepind/noname-functional-frontend-framework.git"
+  },
+  "author": "Simon Friis Vindum",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paldepind/noname-functional-frontend-framework/issues"
+  },
+  "homepage": "https://github.com/paldepind/noname-functional-frontend-framework#readme",
+  "dependencies": {
+    "flyd": "^0.1.6",
+    "ramda": "^0.14.0",
+    "ryter": "0.0.1",
+    "union-type-js": "^0.1.4"
+  }
+}

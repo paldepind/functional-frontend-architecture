@@ -1,5 +1,4 @@
 var flyd = require('flyd');
-var forwardTo = require('flyd-forwardto');
 var ryter = require('ryter');
 var Type = require('union-type-js');
 
