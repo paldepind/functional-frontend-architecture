@@ -21,7 +21,7 @@ Work in progress.
 # Documentation
 
 Nothing to see here yet. Check out the examples. [Here is at TodoMVC
-implementation](https://github.com/paldepind/union-type-js) that is _almost_
+implementation](http://paldepind.github.io/noname-functional-frontend-framework/examples/todo/) that is _almost_
 only pure functions.
 
 # What it is
