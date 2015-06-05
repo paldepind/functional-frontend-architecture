@@ -5,16 +5,24 @@ Work in progress.
 
 # Goals/ideas
 
-* No mutations in application code.
-* Testing should be easy and nothing is easier to test than pure side-effect free functions.
-* State should be easily inspectable to for debugging and serialization. Also, time travel.
-* Minimalism, simplicity.
-* Actions should be expressed as union types.
-* Time changing values and interactions with the world is introduced through FRP
+* As few mutations in application code as possible. The vast majority of your
+  application can be completely pure.
+* Time changing values and interactions with the world is introduced in a
+  controlled manner through FRP
+* Testing should be easy! And nothing is easier to test than pure side-effect
+  free functions.
+* State should be easily inspectable for debugging and serialization. Also,
+  time travel.
+* Minimalism and simplicity are center pieces in every used library.
+* Actions should be expressed as [union types](https://github.com/paldepind/union-type-js).
+* Everything should be modular. Ideally this GitHub repository should contain
+  as little code as possible.
 
 # Documentation
 
-Nothing to see here yet. Check out the examples.
+Nothing to see here yet. Check out the examples. [Here is at TodoMVC
+implementation](https://github.com/paldepind/union-type-js) that is _almost_
+only pure functions.
 
 # What it is
 
