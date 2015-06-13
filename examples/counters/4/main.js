@@ -3,7 +3,7 @@ const R = require('ramda');
 const flyd = require('flyd');
 const stream = flyd.stream;
 const forwardTo = require('flyd-forwardto');
-const Type = require('union-type-js');
+const Type = require('union-type');
 const patch = require('snabbdom').init([
   require('snabbdom/modules/class'),
   require('snabbdom/modules/props'),
@@ -29,18 +29,16 @@ const Action = Type({
   Modify: [Number, counter.Action],
 });
 
-const update = (model, action) =>
-  Action.case({
-    Insert: () => R.evolve({nextId: R.add(1),
-                           counters: R.append([model.nextId, counter.init(0)])}, model),
-    //Remove: () => R.evolve({counters: R.tail}, model),
-    Remove: (id) => R.evolve({counters: R.reject((c) => c[0] === id)}, model),
-    Modify: (id, counterAction) =>
+const update = Action.caseOn({
+    Insert: (model) =>
+      R.evolve({nextId: R.inc, counters: R.append([model.nextId, counter.init(0)])}, model),
+    Remove: (id, model) => R.evolve({counters: R.reject((c) => c[0] === id)}, model),
+    Modify: (id, counterAction, model) =>
       R.evolve({counters: R.map((c) => {
                   const [counterId, counterModel] = c;
-                  return counterId === id ? [counterId, counter.update(counterModel, counterAction)] : c;
+                  return counterId === id ? [counterId, counter.update(counterAction, counterModel)] : c;
                })}, model)
-  }, action);
+  });
 
 // View
 
@@ -64,7 +62,7 @@ const view = R.curry((actions$, model) => {
 // Streams
 
 const actions$ = flyd.stream();
-const model$ = flyd.scan(update, init(0, 0), actions$);
+const model$ = flyd.scan(R.flip(update), init(0, 0), actions$);
 const vnode$ = flyd.map(view(actions$), model$);
 
 // flyd.map((model) => console.log(model), model$); // Uncomment to log state on every update

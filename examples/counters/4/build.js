@@ -3,7 +3,7 @@
 'use strict';
 
 var R = require('ramda');
-var Type = require('union-type-js');
+var Type = require('union-type');
 var h = require('snabbdom/h');
 
 // Model
@@ -14,15 +14,9 @@ var init = function init(n) {
 // Update
 var Action = Type({ Increment: [], Decrement: [] });
 
-var update = R.curry(function (model, action) {
-  return Action['case']({
-    Increment: function Increment() {
-      return model + 1;
-    },
-    Decrement: function Decrement() {
-      return model - 1;
-    } }, action);
-});
+var update = Action.caseOn({
+  Increment: R.inc,
+  Decrement: R.dec });
 
 // View
 var view = R.curry(function (actions$, model) {
@@ -40,7 +34,7 @@ var countStyle = { fontSize: '20px',
 
 module.exports = { init: init, Action: Action, update: update, view: view, viewWithRemoveButton: viewWithRemoveButton };
 
-},{"ramda":6,"snabbdom/h":13,"union-type-js":20}],2:[function(require,module,exports){
+},{"ramda":6,"snabbdom/h":13,"union-type":20}],2:[function(require,module,exports){
 /* jshint esnext: true */
 'use strict';
 
@@ -50,7 +44,7 @@ var R = require('ramda');
 var flyd = require('flyd');
 var stream = flyd.stream;
 var forwardTo = require('flyd-forwardto');
-var Type = require('union-type-js');
+var Type = require('union-type');
 var patch = require('snabbdom').init([require('snabbdom/modules/class'), require('snabbdom/modules/props'), require('snabbdom/modules/eventlisteners')]);
 var h = require('snabbdom/h');
 
@@ -71,30 +65,26 @@ var Action = Type({
   Remove: [Number],
   Modify: [Number, counter.Action] });
 
-var update = function update(model, action) {
-  return Action['case']({
-    Insert: function Insert() {
-      return R.evolve({ nextId: R.add(1),
-        counters: R.append([model.nextId, counter.init(0)]) }, model);
-    },
-    //Remove: () => R.evolve({counters: R.tail}, model),
-    Remove: function Remove(id) {
-      return R.evolve({ counters: R.reject(function (c) {
-          return c[0] === id;
-        }) }, model);
-    },
-    Modify: function Modify(id, counterAction) {
-      return R.evolve({ counters: R.map(function (c) {
-          var _c = _slicedToArray(c, 2);
+var update = Action.caseOn({
+  Insert: function Insert(model) {
+    return R.evolve({ nextId: R.inc, counters: R.append([model.nextId, counter.init(0)]) }, model);
+  },
+  Remove: function Remove(id, model) {
+    return R.evolve({ counters: R.reject(function (c) {
+        return c[0] === id;
+      }) }, model);
+  },
+  Modify: function Modify(id, counterAction, model) {
+    return R.evolve({ counters: R.map(function (c) {
+        var _c = _slicedToArray(c, 2);
 
-          var counterId = _c[0];
-          var counterModel = _c[1];
+        var counterId = _c[0];
+        var counterModel = _c[1];
 
-          return counterId === id ? [counterId, counter.update(counterModel, counterAction)] : c;
-        }) }, model);
-    }
-  }, action);
-};
+        return counterId === id ? [counterId, counter.update(counterAction, counterModel)] : c;
+      }) }, model);
+  }
+});
 
 // View
 
@@ -118,7 +108,7 @@ var view = R.curry(function (actions$, model) {
 // Streams
 
 var actions$ = flyd.stream();
-var model$ = flyd.scan(update, init(0, 0), actions$);
+var model$ = flyd.scan(R.flip(update), init(0, 0), actions$);
 var vnode$ = flyd.map(view(actions$), model$);
 
 // flyd.map((model) => console.log(model), model$); // Uncomment to log state on every update
@@ -128,7 +118,7 @@ window.addEventListener('DOMContentLoaded', function () {
   flyd.scan(patch, container, vnode$);
 });
 
-},{"./counter.js":1,"flyd":5,"flyd-forwardto":3,"ramda":6,"snabbdom":18,"snabbdom/h":13,"snabbdom/modules/class":15,"snabbdom/modules/eventlisteners":16,"snabbdom/modules/props":17,"union-type-js":20}],3:[function(require,module,exports){
+},{"./counter.js":1,"flyd":5,"flyd-forwardto":3,"ramda":6,"snabbdom":18,"snabbdom/h":13,"snabbdom/modules/class":15,"snabbdom/modules/eventlisteners":16,"snabbdom/modules/props":17,"union-type":20}],3:[function(require,module,exports){
 var flyd = require('flyd');
 
 module.exports = flyd.curryN(2, function(targ, fn) {
@@ -8979,10 +8969,20 @@ function Constructor(group, name, validators) {
   return constructor;
 }
 
-var typeCase = curryN(3, function(type, cases, action) {
+function rawCase(type, cases, action, arg) {
   if (type !== action.of) throw new TypeError('wrong type passed to case');
-  return cases[action.name].apply(undefined, action);
-});
+  var name = action.name in cases ? action.name
+           : '_' in cases         ? '_'
+                                  : undefined;
+  if (name === undefined) {
+    throw new Error('unhandled value passed to case');
+  } else {
+    return cases[name].apply(undefined, arg !== undefined ? action.concat([arg]) : action);
+  }
+}
+
+var typeCase = curryN(3, rawCase);
+var caseOn = curryN(4, rawCase);
 
 function Type(desc) {
   var obj = {};
@@ -8990,6 +8990,7 @@ function Type(desc) {
     obj[key] = Constructor(obj, key, desc[key]);
   }
   obj.case = typeCase(obj);
+  obj.caseOn = caseOn(obj);
   return obj;
 }
 

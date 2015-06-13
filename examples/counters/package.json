@@ -16,6 +16,6 @@
     "ramda": "^0.14.0",
     "snabbdom": "^0.1.0",
     "flyd": "^0.1.4",
-    "union-type-js": "^0.1.0"
+    "union-type": "^0.1.0"
   }
 }
