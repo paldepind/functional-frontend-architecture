@@ -59,11 +59,11 @@ const update = Action.caseOn({
     return R.evolve({todos: R.map(Todo.update(todoAction))}, model);
   },
   ClearDone: R.evolve({todos: R.reject(R.prop('done'))}),
-  ChangePage: (action, model) => MyRouter.Action.case({
-    ViewAll: () => R.evolve({view: R.always('all')}, model),
-    ViewActive: () => R.evolve({view: R.always('active')}, model),
-    ViewCompleted: () => R.evolve({view: R.always('complete')}, model),
-  }, action)
+  ChangePage: MyRouter.Action.caseOn({
+    ViewAll: (_, model) => R.assoc('view', 'all', model),
+    ViewActive: (_, model) => treis(R.assoc)('view', 'active', model),
+    ViewCompleted: (_, model) => treis(R.assoc)('view', 'complete', model),
+  })
 })
 
 // View

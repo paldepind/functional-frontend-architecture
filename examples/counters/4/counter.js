@@ -1,6 +1,6 @@
 /* jshint esnext: true */
 const R = require('ramda');
-const Type = require('union-type-js');
+const Type = require('union-type');
 const h = require('snabbdom/h');
 
 
@@ -10,11 +10,10 @@ const init = (n) => n;
 // Update
 const Action = Type({Increment: [], Decrement: []});
 
-const update = R.curry((model, action) =>
-  Action.case({
-    Increment: () => model + 1,
-    Decrement: () => model - 1,
-  }, action));
+const update = Action.caseOn({
+    Increment: R.inc,
+    Decrement: R.dec,
+  });
 
 // View
 const view = R.curry((actions$, model) =>
