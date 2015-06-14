@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Dialog</title>
+    <script type="text/javascript" src="js/build.js"></script>
+    <style>
+    a {
+      cursor: pointer;
+      color: blue;
+    }
+    .tabs {
+      border-bottom: 1px solid #000000;
+      margin: 0em;
+      padding: 0;
+      list-style: none;
+    }
+    .tabs li {
+      display: inline-block;
+      padding: .5em;
+      cursor: pointer;
+    }
+    .tabs li.active {
+      background: #fbfbfb;
+      border-bottom: 2px solid #000000;
+    }
+    .list {
+      background: rgba(0, 0, 0, .03);
+      margin: 0em;
+      padding: .5em;
+    }
+    .list ul {
+      list-style: none;
+      margin: 0em;
+      padding: 0em;
+    }
+    .list li {
+      background: rgba(0, 0, 0, .03);
+      padding: .5em;
+      margin: .5em 0;
+    }
+    .list li:last-child {
+      margin-bottom: 0;
+    }
+    .switch {
+      display: inline-block;
+      cursor: pointer;
+      border: 2px solid black;
+      background: #fff;
+    }
+    .switch span {
+      display: inline-block;
+      padding: .4em;
+    }
+    .switch .active {
+      background: #000;
+      color: #fff;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+  </body>
+</html>
