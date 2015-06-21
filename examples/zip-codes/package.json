@@ -1,0 +1,26 @@
+{
+  "name": "zip-codes-example",
+  "version": "0.0.1",
+  "description": "Zip codes example (http requests)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify js/main.js -t babelify --outfile js/build.js"
+  },
+  "author": "Eric Gjertsen",
+  "license": "MIT",
+  "devDependencies": {
+    "babelify": "^6.1.1"
+  },
+  "dependencies": {
+    "flyd-forwardto": "^0.0.1",
+    "ramda": "^0.14.0",
+    "snabbdom": "^0.2.0",
+    "flyd": "^0.1.4",
+    "union-type": "^0.1.0"
+  },
+  "jshintConfig": {
+    "esnext": true,
+    "asi": true
+  }
+}
