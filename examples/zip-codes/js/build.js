@@ -3,6 +3,13 @@
 /* globals require, window, Request */
 'use strict';
 
+/* This is a translation of Elm's zip-codes example, designed to show how
+   to use asyncronous tasks, specifically http requests. ES6 Promises are used
+   here as stand-ins for Elm's Tasks. 
+
+   Original: http://elm-lang.org/examples/zip-codes
+*/
+
 var R = require('ramda');
 var flyd = require('flyd');
 var stream = flyd.stream;
@@ -58,16 +65,16 @@ module.exports = function start(container) {
 };
 
 function lookupZipCode(query) {
-  var toRequest = function toRequest(success, fail) {
+  var makeRequest = function makeRequest() {
     if (query.match(/^\d{5}$/)) {
-      success(new Request('http://api.zippopotam.us/us/' + query, { method: 'GET' }));
+      return window.fetch(new Request('http://api.zippopotam.us/us/' + query, { method: 'GET' }));
     } else {
-      fail('Give me a valid US zip code!');
+      return Promise.reject('Give me a valid US zip code!');
     }
   };
 
-  return new Promise(toRequest).then(window.fetch).then(throwHttpErrorAnd) // 404 errors not caught by fetch
-  .then(R.invoker(0, 'text')).then(places).then(Result.Ok)['catch'](debugAnd(R.compose(Result.Err, R.always('Not found :('))));
+  return makeRequest().then(responseStatus) // 404 errors are not caught by fetch
+  .then(R.invoker(0, 'text')).then(places).then(Result.Ok, Result.Err);
 }
 
 function places(text) {
@@ -83,10 +90,14 @@ function targetValue(e) {
   return e.target.value;
 }
 
-function throwHttpErrorAnd(response) {
-  if (!response.ok) throw Error('' + response.status + ' ' + response.statusText);
-  return response;
+function responseStatus(response) {
+  if (!response.ok) return Promise.reject('Not found :(');
+  return Promise.resolve(response);
 }
+
+var isType = R.curryN(2, function (T, x) {
+  return !!(x.of && x.name && T === x.of[x.name]);
+});
 
 function debugAnd(fn) {
   return function (err) {

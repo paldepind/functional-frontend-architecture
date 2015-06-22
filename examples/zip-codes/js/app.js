@@ -72,22 +72,21 @@ module.exports = function start(container){
 }
 
 
+
 function lookupZipCode(query){
-  const toRequest = (success,fail) => {
+  const makeRequest = function(){
     if (query.match(/^\d{5}$/)) { 
-      success( new Request("http://api.zippopotam.us/us/" + query, {method: 'GET'}) ); 
+      return window.fetch( new Request("http://api.zippopotam.us/us/" + query, {method: 'GET'}) );
     } else { 
-      fail( "Give me a valid US zip code!" ); 
+      return Promise.reject( "Give me a valid US zip code!" ); 
     }
   }
-  
-  return new Promise(toRequest)
-               .then( window.fetch )
-               .then( throwHttpErrorAnd )    // 404 errors are not caught by fetch, strange
-               .then( R.invoker(0,'text') )
-               .then( places )
-               .then( Result.Ok )
-               .catch( debugAnd( R.compose( Result.Err, R.always('Not found :(')) ) )
+
+  return makeRequest()
+           .then( responseStatus )    
+           .then( R.invoker(0,'text') )
+           .then( places )
+           .then( Result.Ok, Result.Err )
 }
 
 function places(text){
@@ -100,16 +99,11 @@ function places(text){
 
 function targetValue(e){  return e.target.value; }
 
-function throwHttpErrorAnd(response){
-  if (!response.ok) throw Error("" + response.status + " " + response.statusText);
-  return response;
-}
 
-function debugAnd(fn){
-  return function(err){
-    console.debug('error: %o', err);
-    return fn(err);
-  }
+// cf. http://updates.html5rocks.com/2015/03/introduction-to-fetch
+function responseStatus(response){
+  if (!response.ok) return Promise.reject("Not found :(");
+  return Promise.resolve(response);
 }
 
 function map2(fn, s1, s2){
