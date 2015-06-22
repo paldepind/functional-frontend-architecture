@@ -36,7 +36,7 @@ var view = function view(model, result) {
     }
   }, result);
 
-  return h('div', {}, R.concat([field], messages));
+  return h('div', {}, R.prepend(field, messages));
 };
 
 var myStyle = { 'width': '100%',
@@ -73,8 +73,7 @@ function lookupZipCode(query) {
     }
   };
 
-  return makeRequest().then(responseStatus) // 404 errors are not caught by fetch
-  .then(R.invoker(0, 'text')).then(places).then(Result.Ok, Result.Err);
+  return makeRequest().then(responseStatus).then(R.invoker(0, 'text')).then(places).then(Result.Ok, Result.Err);
 }
 
 function places(text) {
@@ -90,20 +89,10 @@ function targetValue(e) {
   return e.target.value;
 }
 
+// cf. http://updates.html5rocks.com/2015/03/introduction-to-fetch
 function responseStatus(response) {
   if (!response.ok) return Promise.reject('Not found :(');
   return Promise.resolve(response);
-}
-
-var isType = R.curryN(2, function (T, x) {
-  return !!(x.of && x.name && T === x.of[x.name]);
-});
-
-function debugAnd(fn) {
-  return function (err) {
-    console.debug('error: %o', err);
-    return fn(err);
-  };
 }
 
 function map2(fn, s1, s2) {

@@ -39,7 +39,7 @@ const view = (model, result) => {
     Err: (msg) => [ h('div', { style: myStyle }, msg) ]
   }, result);
   
-  return h('div', {}, R.concat([field], messages));
+  return h('div', {}, R.prepend(field, messages));
 }
 
 const myStyle =
