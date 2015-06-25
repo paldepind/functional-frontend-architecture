@@ -8,6 +8,7 @@ const patch = require('snabbdom').init([
   require('snabbdom/modules/class'),
   require('snabbdom/modules/props'),
   require('snabbdom/modules/eventlisteners'),
+  require('snabbdom/modules/style'),
 ]);
 const h = require('snabbdom/h');
 
