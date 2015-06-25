@@ -21,33 +21,34 @@ const patch = require('snabbdom').init([
 ]);
 const h = require('snabbdom/h');
 
+const formatPlace = R.pipe( R.props(['place name', 'state']), R.join(', ') );
+const places = R.pipe( JSON.parse, R.prop('places'), R.map(formatPlace) );
 
 // view
 
 const view = (model, result) => {
-  
   const field = h('input', {
-      props: {  placeholder: 'Zip Code', value: model },
+      props: { placeholder: 'Zip Code', value: model },
       style: myStyle,
-      on: { input:  R.pipe( targetValue, query$) } 
+      on: { input: R.pipe(targetValue, query$) }
     },
     []
-  )
+  );
  
   const messages = Result.case({
-    Ok:  R.map((city) => h('div', {style: myStyle}, city)),
+    Ok:  R.map((city) => h('div', { style: myStyle }, city)),
     Err: (msg) => [ h('div', { style: myStyle }, msg) ]
   }, result);
   
   return h('div', {}, R.prepend(field, messages));
 }
 
-const myStyle =
-    { "width": "100%"
-      , "height": "40px"
-      , "padding": "10px 0"
-      , "font-size": "2em"
-      , "text-align": "center"
+const myStyle = {
+        'width': '100%'
+      , 'height': '40px'
+      , 'padding': '10px 0'
+      , 'font-size': '2em'
+      , 'text-align': 'center'
     };
  
 // wiring
@@ -55,59 +56,53 @@ const myStyle =
 const Result = Type({
   Ok: [Array],
   Err: [String]
-})
+});
 
-const query$ = stream("");
-const result$ = stream(Result.Err("A valid US zip code is 5 numbers."));
+const query$ = stream('');
+const result$ = stream(Result.Err('A valid US zip code is 5 numbers.'));
 
 const vnode$ = map2( view, query$, result$ );
 
 const request$ = flyd.map( 
   R.pipe( lookupZipCode, result$ ), 
   query$
-)
+);
 
 module.exports = function start(container){
-  flyd.scan( patch, container, vnode$ )
-}
+  flyd.scan( patch, container, vnode$ );
+};
 
 
 
 function lookupZipCode(query){
   const makeRequest = function(){
     if (query.match(/^\d{5}$/)) { 
-      return window.fetch( new Request("http://api.zippopotam.us/us/" + query, {method: 'GET'}) );
+      return window.fetch( new Request('http://api.zippopotam.us/us/' + query, {method: 'GET'}) );
     } else { 
-      return Promise.reject( "Give me a valid US zip code!" ); 
+      return Promise.reject( 'Give me a valid US zip code!' );
     }
-  }
+  };
 
   return makeRequest()
            .then( responseStatus )    
-           .then( R.invoker(0,'text') )
+           .then( R.invoker(0, 'text') )
            .then( places )
-           .then( Result.Ok, Result.Err )
+           .then( Result.Ok, Result.Err );
 }
-
-function places(text){
-  const place = (obj) => obj['place name'] + ', ' + obj['state']
-  return JSON.parse(text)['places'].map(place)
-}
-
 
 // utils
 
-function targetValue(e){  return e.target.value; }
+function targetValue(e){ return e.target.value; }
 
 
 // cf. http://updates.html5rocks.com/2015/03/introduction-to-fetch
 function responseStatus(response){
-  if (!response.ok) return Promise.reject("Not found :(");
+  if (!response.ok) return Promise.reject('Not found :(');
   return Promise.resolve(response);
 }
 
 function map2(fn, s1, s2){
   return flyd.stream([s1,s2], function(){
     return fn(s1(), s2());
-  })
+  });
 }
