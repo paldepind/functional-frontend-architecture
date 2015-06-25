@@ -17016,7 +17016,7 @@ window.addEventListener('DOMContentLoaded', function () {
 'use strict';
 
 var R = require('ramda');
-var Type = require('union-type-js');
+var Type = require('union-type');
 var h = require('snabbdom/h');
 var forwardTo = require('flyd-forwardto');
 
@@ -17059,7 +17059,7 @@ module.exports = function (Component) {
   return { init: init, Action: Action, update: update, view: view };
 };
 
-},{"flyd-forwardto":41,"ramda":43,"snabbdom/h":50,"treis":1,"union-type-js":59}],39:[function(require,module,exports){
+},{"flyd-forwardto":41,"ramda":43,"snabbdom/h":50,"treis":1,"union-type":59}],39:[function(require,module,exports){
 /* jshint esnext: true */
 'use strict';
 

@@ -14,7 +14,7 @@ Work in progress.
 * State should be easily inspectable for debugging and serialization. Also,
   time travel.
 * Minimalism and simplicity are center pieces in every used library.
-* Actions should be expressed as [union types](https://github.com/paldepind/union-type-js).
+* Actions should be expressed as [union types](https://github.com/paldepind/union-type).
 * Everything should be modular. Ideally this GitHub repository should contain
   as little code as possible.
 
@@ -27,7 +27,7 @@ only pure functions.
 # What it is
 
 [Ramda](http://ramdajs.com/) +
-[union-type-js](https://github.com/paldepind/union-type-js) +
+[union-type](https://github.com/paldepind/union-type) +
 [Flyd](https://github.com/paldepind/flyd) +
 [Snabbdom](https://github.com/paldepind/snabbdom) + a lot of inspiration from
 [Elm](http://elm-lang.org/) = a functional JavaScript frontend framework for

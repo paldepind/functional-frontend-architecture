@@ -1,6 +1,6 @@
 var flyd = require('flyd');
 var ryter = require('ryter');
-var Type = require('union-type-js');
+var Type = require('union-type');
 
 function any() { return true; }
 

@@ -3,7 +3,7 @@
 'use strict';
 
 var R = require('ramda');
-var Type = require('union-type-js');
+var Type = require('union-type');
 var h = require('snabbdom/h');
 
 // Model
@@ -36,7 +36,7 @@ var countStyle = { fontSize: '20px',
 
 module.exports = { init: init, Action: Action, update: update, view: view };
 
-},{"ramda":6,"snabbdom/h":13,"union-type-js":20}],2:[function(require,module,exports){
+},{"ramda":6,"snabbdom/h":13,"union-type":20}],2:[function(require,module,exports){
 /* jshint esnext: true */
 'use strict';
 
@@ -46,7 +46,7 @@ var R = require('ramda');
 var flyd = require('flyd');
 var stream = flyd.stream;
 var forwardTo = require('flyd-forwardto');
-var Type = require('union-type-js');
+var Type = require('union-type');
 var patch = require('snabbdom').init([require('snabbdom/modules/class'), require('snabbdom/modules/props'), require('snabbdom/modules/eventlisteners')]);
 var h = require('snabbdom/h');
 
@@ -117,7 +117,7 @@ window.addEventListener('DOMContentLoaded', function () {
   flyd.scan(patch, container, vnode$);
 });
 
-},{"./counter.js":1,"flyd":5,"flyd-forwardto":3,"ramda":6,"snabbdom":18,"snabbdom/h":13,"snabbdom/modules/class":15,"snabbdom/modules/eventlisteners":16,"snabbdom/modules/props":17,"union-type-js":20}],3:[function(require,module,exports){
+},{"./counter.js":1,"flyd":5,"flyd-forwardto":3,"ramda":6,"snabbdom":18,"snabbdom/h":13,"snabbdom/modules/class":15,"snabbdom/modules/eventlisteners":16,"snabbdom/modules/props":17,"union-type":20}],3:[function(require,module,exports){
 var flyd = require('flyd');
 
 module.exports = flyd.curryN(2, function(targ, fn) {

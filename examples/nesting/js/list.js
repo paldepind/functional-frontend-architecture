@@ -1,6 +1,6 @@
 /* jshint esnext: true */
 const R = require('ramda')
-const Type = require('union-type-js')
+const Type = require('union-type')
 const h = require('snabbdom/h')
 const forwardTo = require('flyd-forwardto')
 
