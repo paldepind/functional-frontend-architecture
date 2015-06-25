@@ -9050,7 +9050,7 @@ var R = require('ramda');
 var flyd = require('flyd');
 var stream = flyd.stream;
 var forwardTo = require('flyd-forwardto');
-var Type = require('union-type-js');
+var Type = require('union-type');
 var Router = require('../../../router');
 var patch = require('snabbdom').init([require('snabbdom/modules/class'), require('snabbdom/modules/style'), require('snabbdom/modules/props'), require('snabbdom/modules/eventlisteners')]);
 var treis = require('treis');
@@ -9175,12 +9175,12 @@ window.addEventListener('DOMContentLoaded', function () {
   flyd.scan(patch, container, vnode$);
 });
 
-},{"../../../helpers/ifenter":45,"../../../helpers/targetvalue":46,"../../../router":57,"./task":26,"flyd":28,"flyd-forwardto":27,"ramda":29,"snabbdom":42,"snabbdom/h":36,"snabbdom/modules/class":38,"snabbdom/modules/eventlisteners":39,"snabbdom/modules/props":40,"snabbdom/modules/style":41,"treis":1,"union-type-js":44}],26:[function(require,module,exports){
+},{"../../../helpers/ifenter":45,"../../../helpers/targetvalue":46,"../../../router":57,"./task":26,"flyd":28,"flyd-forwardto":27,"ramda":29,"snabbdom":42,"snabbdom/h":36,"snabbdom/modules/class":38,"snabbdom/modules/eventlisteners":39,"snabbdom/modules/props":40,"snabbdom/modules/style":41,"treis":1,"union-type":44}],26:[function(require,module,exports){
 /* jshint esnext: true */
 'use strict';
 
 var R = require('ramda');
-var Type = require('union-type-js');
+var Type = require('union-type');
 var h = require('snabbdom/h');
 
 var targetValue = require('../../../helpers/targetvalue');
@@ -9246,7 +9246,7 @@ var view = R.curry(function (context, model) {
 
 module.exports = { init: init, Action: Action, update: update, view: view };
 
-},{"../../../helpers/ifenter":45,"../../../helpers/targetvalue":46,"ramda":29,"snabbdom/h":36,"union-type-js":44}],27:[function(require,module,exports){
+},{"../../../helpers/ifenter":45,"../../../helpers/targetvalue":46,"ramda":29,"snabbdom/h":36,"union-type":44}],27:[function(require,module,exports){
 var flyd = require('flyd');
 
 module.exports = flyd.curryN(2, function(targ, fn) {
@@ -17963,12 +17963,12 @@ module.exports = {init: init, navigate: navigate, destroy: destroy};
 
 },{}],56:[function(require,module,exports){
 module.exports=require(44)
-},{"/home/simon/projects/noname-functional-frontend-framework/examples/todo/node_modules/union-type-js/union-type.js":44,"ramda/src/curryN":51}],57:[function(require,module,exports){
+},{"/home/simon/projects/noname-functional-frontend-framework/examples/todo/node_modules/union-type/union-type.js":44,"ramda/src/curryN":51}],57:[function(require,module,exports){
 'use strict';
 
 var flyd = require('flyd');
 var ryter = require('ryter');
-var Type = require('union-type-js');
+var Type = require('union-type');
 
 function any() {
   return true;
@@ -18017,7 +18017,7 @@ module.exports = {
   destroy: ryter.destroy,
   Change: Change };
 
-},{"flyd":47,"ryter":55,"union-type-js":56}],58:[function(require,module,exports){
+},{"flyd":47,"ryter":55,"union-type":56}],58:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};

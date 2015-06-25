@@ -3,7 +3,7 @@ const R = require('ramda');
 const flyd = require('flyd');
 const stream = flyd.stream;
 const forwardTo = require('flyd-forwardto');
-const Type = require('union-type-js');
+const Type = require('union-type');
 const Router = require('../../../router');
 const patch = require('snabbdom').init([
   require('snabbdom/modules/class'),

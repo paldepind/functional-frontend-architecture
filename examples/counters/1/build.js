@@ -3,7 +3,7 @@
 'use strict';
 
 var R = require('ramda');
-var Type = require('union-type-js');
+var Type = require('union-type');
 var flyd = require('flyd');
 var stream = flyd.stream;
 var patch = require('snabbdom').init([require('snabbdom/modules/class'), require('snabbdom/modules/props'), require('snabbdom/modules/eventlisteners')]);
@@ -46,7 +46,7 @@ window.addEventListener('DOMContentLoaded', function () {
   flyd.scan(patch, container, vnode$);
 });
 
-},{"flyd":2,"ramda":3,"snabbdom":15,"snabbdom/h":10,"snabbdom/modules/class":12,"snabbdom/modules/eventlisteners":13,"snabbdom/modules/props":14,"union-type-js":17}],2:[function(require,module,exports){
+},{"flyd":2,"ramda":3,"snabbdom":15,"snabbdom/h":10,"snabbdom/modules/class":12,"snabbdom/modules/eventlisteners":13,"snabbdom/modules/props":14,"union-type":17}],2:[function(require,module,exports){
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     define([], factory); // AMD. Register as an anonymous module.
