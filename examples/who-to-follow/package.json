@@ -1,0 +1,20 @@
+{
+  "name": "who-to-follow",
+  "version": "1.0.0",
+  "private": "true",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "watch": "watchify main.js -v -t babelify --outfile build.js & browser-sync start --server --files='index.html, build.js'",
+    "build": "browserify main.js --outfile build.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "babelify": "^6.1.2",
+    "flyd": "^0.1.13",
+    "snabbdom": "^0.2.0",
+    "union-type": "^0.1.6",
+    "whatwg-fetch": "^0.9.0"
+  }
+}
