@@ -16,7 +16,7 @@ const counter = require('./counter.js');
 
 
 // Model
-const init = (top, bottom) => ({
+const init = () => ({
   counters: [],
   nextId: 0,
 });
@@ -59,7 +59,7 @@ const view = R.curry(function (actions$, model) {
 
 // Streams
 const actions$ = flyd.stream();
-const model$ = flyd.scan(update, init(0, 0), actions$);
+const model$ = flyd.scan(update, init(), actions$);
 const vnode$ = flyd.map(view(actions$), model$);
 
 // flyd.map((model) => console.log(model), model$); // Uncomment to log state on every update
