@@ -1,9 +1,12 @@
 # noname-functional-frontend-framework
+
 A functional frontend framework.
 
-Work in progress.
+This repository is meant to document and explore the implementation of what is
+know as "the Elm architecture". A simple functional architecture for building
+frontend applications.
 
-# Goals/ideas
+# Features/goals/ideas
 
 * As few mutations in application code as possible. The vast majority of your
   application can be completely pure.
@@ -20,16 +23,18 @@ Work in progress.
 
 # Documentation
 
-Nothing to see here yet. Check out the examples. [Here is at TodoMVC
+Check out the examples. [Here is at TodoMVC
 implementation](http://paldepind.github.io/noname-functional-frontend-framework/examples/todo/) that is _almost_
 only pure functions.
 
-# What it is
+# Libraries
 
-[Ramda](http://ramdajs.com/) +
-[union-type](https://github.com/paldepind/union-type) +
-[Flyd](https://github.com/paldepind/flyd) +
-[Snabbdom](https://github.com/paldepind/snabbdom) + a lot of inspiration from
-[Elm](http://elm-lang.org/) = a functional JavaScript frontend framework for
-writing web applications with no state mutations.
+The architecture is implementation independent. It can be implemented with
+varied combinations of libraries. It only requires a virtual DOM library and a
+way to update JavaScript data structures without mutations. Having a nice
+representation of actions is also useful.
 
+* [Ramda](http://ramdajs.com/)
+* [union-type](https://github.com/paldepind/union-type)
+* [Flyd](https://github.com/paldepind/flyd)
+* [Snabbdom](https://github.com/paldepind/snabbdom)
