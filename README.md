@@ -1,10 +1,20 @@
 # noname-functional-frontend-framework
 
-A functional frontend framework.
-
 This repository is meant to document and explore the implementation of what is
 know as "the Elm architecture". A simple functional architecture for building
 frontend applications.
+
+# High level overview
+
+The entire state is contained in a single data structure. Things can happend
+and the state should change accordingly. The number of things that can happend
+is described as a set of _actions_. Actions flow unidirectionally down the
+application. Actions are handled by pure _update_ functions. Such a function
+takes an action and a state and returns a new state. The state is handled to a
+_view_ function that returns a virtual DOM representation. A module is an
+encapsulated set of actions, an update function and a view function. Modules
+can be nested inside other modules and modules can contain other modules. This
+makes the architecture nestable and modular.
 
 # Features/goals/ideas
 
@@ -22,6 +32,13 @@ frontend applications.
   as little code as possible.
 
 # Documentation
+
+* [React-less Virtual DOM with Snabbdom: functions
+  everywhere!](https://medium.com/@yelouafi/react-less-virtual-dom-with-snabbdom-functions-everywhere-53b672cb2fe3)
+  – An article that introduces the virtual DOM library Snabbdom and step by
+  step implements the Elm architecture with it.
+
+# Examples
 
 Check out the examples. [Here is at TodoMVC
 implementation](http://paldepind.github.io/noname-functional-frontend-framework/examples/todo/) that is _almost_
