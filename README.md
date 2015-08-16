@@ -40,6 +40,25 @@ makes the architecture nestable and modular.
 
 # Examples
 
+* [Counters example without FRP](examples/counters-no-frp) – This is several
+  versions of a counters application. It starts out very simple and then
+  gradualy increases in complexity. This is implemented with Snabbdom, union-type and Ramda.
+* [Counters example with FRP](examples/counters) – This is similair to the above example but
+  the architecture is bootstraped with Flyd as and FRP library.
+* [Who to follow](examples/who-to-follow) – A small who to follow box using
+  GitHubs API. It can be compared with a [plain FRP version using
+  Flyd](https://github.com/paldepind/flyd/tree/master/examples/who-to-follow)
+  and [one using Rx](http://jsfiddle.net/staltz/8jFJH/48/).
+* [Zip codes](examples/zip-codes) – This is a translation of Elm's zip-codes
+  example, designed to show how to use asyncronous tasks, specifically http
+  requests. ES6 Promises are used here as stand-ins for Elm's Tasks.
+* [Todo](examples/todo) – A TodoMVC implementation built with Snabbdom,
+  union-type, Ramda and Flyd.
+* [Modal](examples/modal) – Demonstrates a technique for implementing modals.
+* [Nesting](examples/nesting) – A simple application that demonstrates three
+  level nesting of components. This is intended to show how the action-routing
+  scales.
+
 Check out the examples. [Here is at TodoMVC
 implementation](http://paldepind.github.io/noname-functional-frontend-framework/examples/todo/) that is _almost_
 only pure functions.
@@ -51,7 +70,30 @@ varied combinations of libraries. It only requires a virtual DOM library and a
 way to update JavaScript data structures without mutations. Having a nice
 representation of actions is also useful.
 
-* [Ramda](http://ramdajs.com/)
+## Virtual DOM libraries
+
+The view layer in the architecture consists of pure functions that takes part
+of the applications state and returns a description of it's view. Such a description
+will typically be a virtual DOM representation that will later be rendered with a virtual
+DOM library. A number of options exists.
+
+* [Snabbdom](https://github.com/paldepind/snabbdom) – A small modular and
+  extensible virtual DOM library with splendid performance.
+* [virtual-dom](https://github.com/Matt-Esch/virtual-dom) – A popular virtual
+  DOM library.
+* [React](http://facebook.github.io/react/) – Mature and widely used. It
+  supports JSX which many people like. It is however a bulky library. It
+  supports stateful components which should not be used together with the
+  architecture.
+
+## Updating data structures
+
+When handling actions inside `update` functions it is necessary to update ones
+state without mutating it. Libraries can provide a help with regards to this.
+
+* [Ramda](http://ramdajs.com/) – Ramda provides a huge amount of functions for
+  working with native JavaScript data structures in a purely functional way.
+
+## Representing actions
+
 * [union-type](https://github.com/paldepind/union-type)
-* [Flyd](https://github.com/paldepind/flyd)
-* [Snabbdom](https://github.com/paldepind/snabbdom)
