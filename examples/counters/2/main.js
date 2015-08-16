@@ -51,6 +51,7 @@ const vnode$ = flyd.map(view(actions$), model$);
 
 // flyd.map((model) => console.log(model), model$); // Uncomment to log state on every update
 
+// Begin rendering when the DOM is ready
 window.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('container');
   flyd.scan(patch, container, vnode$);

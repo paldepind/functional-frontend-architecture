@@ -1,6 +1,20 @@
-# Counters example
+# Counters example without FRP
 
-This is a coutners example with Snabbdom, union-type and Ramda as dependencies.
+This is a coutners example implemented with Snabbdom, union-type and Ramda as
+dependencies.  It is similair to the [counters example](../counters) expect it
+doesn't use FRP to bootstrap the architecture. Instead it uses an
+[asynchronously recursive main function](1/main.js#L36-L42) as described in the
+article [React-less Virtual DOM with Snabbdom](https://medium.com/@yelouafi/react-less-virtual-dom-with-snabbdom-functions-everywhere-53b672cb2fe3)
+
+If you want to see the difference between the FRP dependent counters example
+and this one you can run:
+
+```
+git diff --no-index -- ../counters/2/main.js 2/main.js
+```
+
+The only changes are in the main file and replacing `forwardTo` with function
+composition.
 
 # How to build it
 
