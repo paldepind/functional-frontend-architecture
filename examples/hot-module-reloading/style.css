@@ -1,0 +1,18 @@
+body {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.counter {
+  margin: 1em;
+}
+
+button {
+  font-size: 1.2em;
+  padding: .1em .4em;
+}
+
+.nr {
+  font-size: 1.2em;
+  padding: .8em .6em .5em .6em;
+}
