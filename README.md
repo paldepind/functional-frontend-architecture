@@ -1,13 +1,13 @@
 # noname-functional-frontend-framework
 
 This repository is meant to document and explore the implementation of what is
-know as "the Elm architecture". A simple functional architecture for building
+known as "the Elm architecture". A simple functional architecture for building
 frontend applications.
 
 # High level overview
 
-The entire state is contained in a single data structure. Things can happend
-and the state should change accordingly. The number of things that can happend
+The entire state is contained in a single data structure. Things can happen
+and the state should change accordingly. The number of things that can happen
 is described as a set of _actions_. Actions flow unidirectionally down the
 application. Actions are handled by pure _update_ functions. Such a function
 takes an action and a state and returns a new state. The state is handled to a
@@ -21,7 +21,7 @@ makes the architecture nestable and modular.
 * As few mutations in application code as possible. The vast majority of your
   application can be completely pure.
 * Time changing values and interactions with the world is introduced in a
-  controlled manner through FRP
+  controlled manner through FRP.
 * Testing should be easy! And nothing is easier to test than pure side-effect
   free functions.
 * State should be easily inspectable for debugging and serialization. Also,
