@@ -13,6 +13,16 @@ The code responsible for the hot swapping is in [main.js](./main.js). The
 implementation is simple, even trivial since components in the architecture
 consists of pure function only and does not carry private state.
 
+# Demonstration
+
+In the recording I first create a few counters, then I increment them, after
+which I edit the increment and decrement amount, afterwards the counters
+immediately change with the new amount. After that I modify the color of the
+numbers and the initial count of counters. All changes are applied immediately
+without a browser reload.
+
+![Screencast](./screencast.gif)
+
 # How run it
 
 Install the dependencies.
