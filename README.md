@@ -1,4 +1,4 @@
-# noname-functional-frontend-framework
+# functional-frontend-architecture
 
 This repository is meant to document and explore the implementation of what is
 known as "the Elm architecture". A simple functional architecture for building
@@ -52,16 +52,12 @@ makes the architecture nestable and modular.
 * [Zip codes](examples/zip-codes) – This is a translation of Elm's zip-codes
   example, designed to show how to use asyncronous tasks, specifically http
   requests. ES6 Promises are used here as stand-ins for Elm's Tasks.
-* [Todo](examples/todo) – A TodoMVC implementation built with Snabbdom,
+* [TodoMVC](examples/todo) – A TodoMVC implementation built with Snabbdom,
   union-type, Ramda and Flyd.
 * [Modal](examples/modal) – Demonstrates a technique for implementing modals.
 * [Nesting](examples/nesting) – A simple application that demonstrates three
   level nesting of components. This is intended to show how the action-routing
   scales.
-
-Check out the examples. [Here is at TodoMVC
-implementation](http://paldepind.github.io/noname-functional-frontend-framework/examples/todo/) that is _almost_
-only pure functions.
 
 # Libraries
 

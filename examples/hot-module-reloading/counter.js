@@ -14,8 +14,8 @@ const init = (n) => n;
 const Action = Type({Increment: [], Decrement: []});
 
 const update = Action.caseOn({
-  Increment: R.add(1),
-  Decrement: R.add(-1),
+  Increment: R.add(100),
+  Decrement: R.add(-10),
 })
 
 
@@ -23,7 +23,7 @@ const update = Action.caseOn({
 
 const view = R.curry((context, model) =>
   h('div.counter', {style: {}}, [
-    h('button', {on: {click: [context.actions, Action.Decrement()]}}, '–'), ' ',
+    h('button', {on: {click: [context.actions, Action.Decrement()]}}, '-'), ' ',
     h('span.nr', model), ' ',
     h('button', {on: {click: [context.actions, Action.Increment()]}}, '+'), ' ',
     h('button', {on: {click: [context.remove]}}, 'X'),

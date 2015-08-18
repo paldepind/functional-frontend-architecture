@@ -22,7 +22,7 @@ const Action = Type({
 
 const update = Action.caseOn({
     Insert: (model) =>
-      R.evolve({nextId: R.inc, counters: R.append([model.nextId, counter.init(0)])}, model),
+      R.evolve({nextId: R.inc, counters: R.append([model.nextId, counter.init(4)])}, model),
     Remove: (id, model) =>
       R.evolve({counters: R.reject((c) => c[0] === id)}, model),
     Modify: (id, counterAction, model) =>

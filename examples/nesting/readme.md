@@ -1,6 +1,6 @@
 # Nesting example
 
-[View example here](http://paldepind.github.io/noname-functional-frontend-framework/examples/nesting/)
+[View example here](http://paldepind.github.io/functional-frontend-architecture/examples/nesting/)
 
 This example demonstrates two things:
 
