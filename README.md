@@ -28,8 +28,9 @@ makes the architecture nestable and modular.
   time travel.
 * Minimalism and simplicity are center pieces in every used library.
 * Actions should be expressed as [union types](https://github.com/paldepind/union-type).
-* Everything should be modular. Ideally this GitHub repository should contain
-  as little code as possible.
+* Everything should be modular and nestable.
+* [Simple live code editing](examples/hot-module-reloading) thanks to hot
+  module replacement.  
 
 # Documentation
 
@@ -54,6 +55,9 @@ makes the architecture nestable and modular.
   requests. ES6 Promises are used here as stand-ins for Elm's Tasks.
 * [TodoMVC](examples/todo) – A TodoMVC implementation built with Snabbdom,
   union-type, Ramda and Flyd.
+* [Hot module reloading](examples/hot-module-roloading) – Demonstrates how
+  simple it is to use webpack's hot module replacement to achieve live code
+  editing without browser refreshes.
 * [Modal](examples/modal) – Demonstrates a technique for implementing modals.
 * [Nesting](examples/nesting) – A simple application that demonstrates three
   level nesting of components. This is intended to show how the action-routing
