@@ -1,0 +1,21 @@
+{
+  "name": "zip-codes-future",
+  "version": "0.0.1",
+  "description": "Zip code checker using futures",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Simon Friis Vindum",
+  "license": "MIT",
+  "devDependencies": {
+    "babel": "^5.8.21",
+    "babelify": "^6.1.1"
+  },
+  "dependencies": {
+    "ramda": "^0.17.1",
+    "ramda-fantasy": "^0.4.0",
+    "snabbdom": "^0.2.4",
+    "union-type": "^0.1.6"
+  }
+}
