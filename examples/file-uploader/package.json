@@ -1,0 +1,29 @@
+{
+  "name": "file-uploader-example",
+  "version": "0.0.1",
+  "description": "File uploader example",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "browserify js/test.js -t /usr/lib/node_modules/babelify --outfile js/test_build.js",
+    "test": "node js/test_build.js | ./node_modules/tap-spec/bin/cmd.js",
+    "build": "browserify js/main.js -t /usr/lib/node_modules/babelify --outfile js/build.js"
+  },
+  "author": "Eric Gjertsen",
+  "license": "MIT",
+  "devDependencies": {
+    "tape": "^4.2.0",
+    "tap-spec": "^4.1.0"
+  },
+  "dependencies": {
+    "ramda": "^0.17.0",
+    "ramda-fantasy": "^0.4.0",
+    "snabbdom": "^0.2.0",
+    "union-type": "^0.1.0"
+  },
+  "jshintConfig": {
+    "esnext": true,
+    "undef": true,
+    "unused": true,
+    "asi": true
+  }
+}
