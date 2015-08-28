@@ -3,7 +3,7 @@ const Type = require('union-type');
 const map = require('ramda/src/map')
     , reduce = require('ramda/src/reduce')
     , curry  = require('ramda/src/curry')
-    , find  = require('ramda/src/find')
+    , contains  = require('ramda/src/contains')
     , always  = require('ramda/src/always')
     , merge  = require('ramda/src/merge')
     , evolve  = require('ramda/src/evolve')
@@ -61,7 +61,7 @@ const aborted = (model) => {
 }
 
 const abortable = (model) => {
-  return !!model.abort && !!find(model.status, ['uploading']);
+  return !!model.abort && contains(model.status, ['uploading']);
 }
 
 const hasProgressData = (x) => {
@@ -79,14 +79,14 @@ const percentProgress = (p) => {
 // NOTE: no async tasks initiated, so all updates simply return changed state
 
 const Action = Type({
-  Progress: [hasProgressData, Function],
+  Progress: [Function, hasProgressData],
   Uploaded: [],
   Error: [],
   Abort: []
 });
 
 const update = Action.caseOn({
-  Progress: ({loaded,total},abort,model) => {
+  Progress: (abort,{loaded,total},model) => {
     return evolve({ status:   always(loaded < total ? 'uploading' : 'processing'),
                     progress: always({loaded, total}),
                     abort:  always(abort)
@@ -104,11 +104,11 @@ const view = curry( ({progress},model) => {
   progress = merge({width: 200, height: 20}, progress || {});
   
   return (
-    h('div.upload', {}, [
-      h('div.title', {}     [ renderTitle(model)             ]),
-      h('div.progress', {}, [ renderProgress(model,progress) ]),
-      h('div.status', {},   [ renderStatus(model)            ]),
-      h('div.abort', {},    [ renderAbort(model)             ])
+    h('div.upload', [
+      h('div.title',     [ renderTitle(model)             ]),
+      h('div.progress',  [ renderProgress(model,progress) ]),
+      h('div.status',    [ renderStatus(model)            ]),
+      h('div.abort',     [ renderAbort(model)             ])
     ])
   );
 
@@ -119,9 +119,9 @@ function renderTitle(model){
   const sizespan = h('span.size', {}, '' + size(model));  // TODO readable bytesize
   return (
     model.url
-      ?  h('a', { attr: {'href': model.url,
-                         'target': '_blank'
-                        } 
+      ?  h('a', { attrs: {'href': model.url,
+                          'target': '_blank'
+                         } 
                 }, [ titlespan, sizespan ])
 
       :  h('span', {}, [ titlespan, sizespan]) 
@@ -134,19 +134,20 @@ function renderProgress(model,specs){
                       y1: 0,           y2: specs.height };
 
   const rect = (
-    s('rect.bar', { attr: { height: specs.height,
-                            width: barwidth
-                          }
-                      } )
+    s('rect', { attrs: { height: specs.height,
+                         width: barwidth,
+                         class: 'bar'
+                       }
+              })
   );
 
   const line = (
-    s('line.end', { attr: linespecs } )
+    s('line', { attrs: merge(linespecs, {class: 'end'}) } )
   );
 
   return (
-    s('svg', {attr: specs}, [
-      s('g', {}, (barwidth > 0) && uploading(model) ? [rect,line] : [])
+    s('svg', {attrs: specs}, [
+      s('g', {}, (barwidth > 0) ? [rect,line] : [])
      ])       
   );
 

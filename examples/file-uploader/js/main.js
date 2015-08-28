@@ -5,11 +5,12 @@ const patch = require('snabbdom').init([
   require('snabbdom/modules/class'),
   require('snabbdom/modules/style'),
   require('snabbdom/modules/props'),
+  require('snabbdom/modules/attributes'),
   require('snabbdom/modules/eventlisteners')
 ]);
 
 const app = require('./app');
-const uploader = require('./uploader);
+const uploader = require('./uploader');
 
 let state = app.init(), asyncActions, vnode
 

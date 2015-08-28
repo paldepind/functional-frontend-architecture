@@ -1,7 +1,9 @@
+
 const Type = require('union-type');
 const T = require('ramda/src/T')
-    , evolve = require('ramda/src/evolve')
+    , assoc = require('ramda/src/assoc')
     , curry  = require('ramda/src/curry')
+    , compose  = require('ramda/src/compose')
     , map  = require('ramda/src/map')
     , invoker = require('ramda/src/invoker') 
 ;
@@ -9,19 +11,19 @@ const h = require('snabbdom/h');
 
 const uploadList = require('./list');
 const uploader   = require('./uploader');
-
+  
 
 // action
 
 const listUpdate = (listAction,model) => {
-  const [state, tasks] = uploadList.update(listAction);
-  return [ evolve({uploads: state},model), 
+  const [state, tasks] = uploadList.update(listAction, model.uploads);
+  return [ assoc('uploads', state, model), 
            tasks.map( map(Action.Route) ) 
          ];
 }
 
 const Action = Type({
-  Create: [Function,Array],
+  Create: [T, T],
   Route:  [uploadList.Action]
 });
 
@@ -36,7 +38,7 @@ const update = Action.caseOn({
 
 // model
 
-const init = () = { uploads: uploadList.init() }
+const init = () => { return { uploads: uploadList.init() }; }
 
 // view
 
@@ -47,7 +49,7 @@ const view = curry( ({url, headers, action$}, model) => {
   const form = (
     h('form', {on: {submit: preventDefault} }, [
        h('input', 
-         { attr: {'type': 'file'},
+         { props: {type: 'file', multiple: true},
            on:   {
              change: compose(action$, Action.Create(up), getTarget('files')) 
            }

@@ -11,10 +11,12 @@ const uploader = require('./uploader');
 
 const sync = (s) => [s, []];
 
+const isFileList = (x) => !(undefined === x.length)
+
 // action
 
 const Action = Type({
-  Create:      [Function, Array],
+  Create:      [Function, isFileList],
   Result:      [Number, uploader.Result]
 });
 
@@ -38,8 +40,8 @@ const update = Action.caseOn({
         NotFound: finish('Error'),
         Error:    finish('Error'),
         Abort:    finish('Abort'), 
-        Progress: (p,abort) => {
-          return adjust(upload.update(upload.Action.Progress(p,abort)), i, model);
+        Progress: (abort,p) => {
+          return adjust(upload.update(upload.Action.Progress(abort,p)), i, model);
         }
       }, result)
     );
@@ -58,11 +60,11 @@ const nextIndex = (model) => model.length;
 const view = (model) => {
 
   const listItemView = (item, i) => {
-    const view = upload.view(
-                   { progress: { height: 20, weight: 200 } },
-                   item
-                 );
-    return h('li', {}, view);
+    const subview = upload.view(
+                      { progress: { height: 20, weight: 200 } },
+                      item
+                    );
+    return h('li', {}, [subview]);
   }
 
   return (
