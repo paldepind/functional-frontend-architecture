@@ -61,7 +61,7 @@ const view = (model) => {
 
   const listItemView = (item, i) => {
     const subview = upload.view(
-                      { progress: { height: 20, weight: 200 } },
+                      { progress: { height: 20, width: 200 } },
                       item
                     );
     return h('li', {}, [subview]);

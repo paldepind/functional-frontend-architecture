@@ -5,6 +5,65 @@
     <title>File Uploader</title>
     <script type="text/javascript" src="js/build.js"></script>
     <style>
+
+      body {
+        box-sizing: border-box;
+        font-size: 12pt;
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        margin: 1%;
+      }
+
+      .uploading li {
+        list-style: none;
+      }
+
+      .uploading ul {
+        list-style: none;
+        -webkit-margin-before: 0;
+        -webkit-margin-after: 0;
+        -webkit-padding-start: 0;
+      }
+
+      .upload {
+        display: inline-block;
+        padding: 0.5rem;
+        margin: 0.5rem;
+        border: 1px solid lightgrey;
+        border-radius: 3px;
+      }
+
+      .upload.uploaded {
+        background-color: aliceblue;
+      }
+
+      .upload.error {
+        color: pink;
+      }
+
+      .upload.abort {
+        color: lightgrey;
+      }
+
+      .upload > div {
+        display: inline-block;
+        vertical-align: top;
+        margin-right: 0.25rem;
+      }
+
+      .upload > .status {
+        vertical-align: middle;
+        text-transform: uppercase;
+        font-size: 0.7em;
+      }
+
+      .upload > .progress .bar {
+        fill: steelblue;
+      }
+
+      .upload > .title > * > span {
+        margin-right: 0.25rem;
+      }
+
     </style>
   </head>
   <body>

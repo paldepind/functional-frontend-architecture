@@ -104,7 +104,7 @@ const view = curry( ({progress},model) => {
   progress = merge({width: 200, height: 20}, progress || {});
   
   return (
-    h('div.upload', [
+    h('div', { attrs: { 'class': 'upload ' + model.status } },  [
       h('div.title',     [ renderTitle(model)             ]),
       h('div.progress',  [ renderProgress(model,progress) ]),
       h('div.status',    [ renderStatus(model)            ]),
