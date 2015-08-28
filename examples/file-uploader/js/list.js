@@ -59,16 +59,23 @@ const nextIndex = (model) => model.length;
 
 const view = (model) => {
 
+  const style = {'list-style': 'none',
+                 '-webkit-margin-before': 0,
+                 '-webkit-margin-after': 0,
+                 '-webkit-padding-start': 0
+                };
+
   const listItemView = (item, i) => {
+    const substyle = { };
     const subview = upload.view(
                       { progress: { height: 20, width: 200 } },
                       item
                     );
-    return h('li', {}, [subview]);
+    return h('li', {style: substyle}, [subview]);
   }
 
   return (
-    h('ul', {}, model.map( listItemView ) )
+    h('ul', {style}, model.map( listItemView ) )
   );
 
 };

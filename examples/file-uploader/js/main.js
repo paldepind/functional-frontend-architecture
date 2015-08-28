@@ -10,7 +10,6 @@ const patch = require('snabbdom').init([
 ]);
 
 const app = require('./app');
-const uploader = require('./uploader');
 
 let state = app.init(), asyncActions, vnode
 

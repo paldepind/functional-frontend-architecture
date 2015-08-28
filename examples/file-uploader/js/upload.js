@@ -7,6 +7,7 @@ const map = require('ramda/src/map')
     , always  = require('ramda/src/always')
     , merge  = require('ramda/src/merge')
     , evolve  = require('ramda/src/evolve')
+    , dissoc = require('ramda/src/dissoc')
 ;
 
 const h = require('snabbdom/h')
@@ -45,7 +46,7 @@ const statusLabel = (model) => {
 
 const actionLabel = (action) => {
   return {
-    'abort': 'stop'
+    'abort': '×'
   }[action] || null ;
 }
 
@@ -101,32 +102,41 @@ const update = Action.caseOn({
 // view
 
 const view = curry( ({progress},model) => {
+
+  const style = { 'display': 'inline-block' };
+  
+  const substyle = { 'display': 'inline-block',
+                     'vertical-align': 'top',
+                     'margin-right': '1rem'
+                   };
+
   progress = merge({width: 200, height: 20}, progress || {});
   
   return (
-    h('div', { attrs: { 'class': 'upload ' + model.status } },  [
-      h('div.title',     [ renderTitle(model)             ]),
-      h('div.progress',  [ renderProgress(model,progress) ]),
-      h('div.status',    [ renderStatus(model)            ]),
-      h('div.abort',     [ renderAbort(model)             ])
+    h('div', { attrs: { 'class': 'upload ' + model.status }, style },  [
+      h('div.title',    {style: substyle},  [ renderTitle(model)             ]),
+      h('div.size',     {style: substyle},  [ ''+size(model)                 ]),
+      h('div.progress', {style: substyle},  [ renderProgress(model,progress) ]),
+      h('div.status',   {style: substyle},  [ renderStatus(model)            ]),
+      h('div.abort',    {style: dissoc('margin-right',substyle)},  
+                                            [ renderAbort(model)             ])
     ])
   );
 
 });
 
 function renderTitle(model){
-  const titlespan = h('span.title', {}, model.title);
-  const sizespan = h('span.size', {}, '' + size(model));  // TODO readable bytesize
   return (
     model.url
       ?  h('a', { attrs: {'href': model.url,
                           'target': '_blank'
                          } 
-                }, [ titlespan, sizespan ])
+                }, [ model.title ])
 
-      :  h('span', {}, [ titlespan, sizespan]) 
+      :  h('span', {}, [ model.title ]) 
   );
 }
+
 
 function renderProgress(model,specs){
   const barwidth = percentProgress(model.progress) * specs.width;
@@ -161,7 +171,7 @@ function renderStatus(model){
 
 function renderAbort(model){
   const label = actionLabel('abort');
-  return h('a', { style: visible(abortable, model),
+  return h('a', { style: merge(visible(abortable, model), {cursor: 'pointer'}),
                   on: { click: model.abort } }, 
                 label
           );

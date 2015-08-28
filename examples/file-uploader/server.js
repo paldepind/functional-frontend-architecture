@@ -12,6 +12,10 @@ var PORT = process.argv[2] || 8080;
 
 createServer(function(req,res){
 
+  req.on('abort', function(){ 
+    respond(400, 'Error receiving', res); 
+  });
+
   if (req.url == '/upload' && req.method == 'POST'){
     var form = new multipart.Form();
     
