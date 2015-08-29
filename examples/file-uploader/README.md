@@ -15,7 +15,7 @@ the component tree in the familiar way, based on user events) and asynchronous
 (which are constructed via future chains of actions to 'dive down' the component 
 tree, based on server responses). 
 
-The uploader wraps XmlHttpRequest in a [ramda-fantasy][rf] Future, which 
+The uploader wraps XMLHttpRequest in a [ramda-fantasy][rf] Future, which 
 repeatedly resolves on XHR progress events.
 
 
@@ -60,6 +60,9 @@ files to upload.
 
 ## Other notes
 
+- The progress bar is rendered as SVG using @yelouafi 's [builder][svg] (not yet
+  part of snabbdom, but it works great!)
+
 - The example is intended to be a step towards a realistic stand-alone
   file uploader, i.e. a 'widget' or reusable component. So `main` and `app`
   give a picture of how you would integrate it into a real app. Comments
@@ -83,4 +86,5 @@ files to upload.
 [zip]: https://github.com/paldepind/functional-frontend-architecture/tree/master/examples/zip-codes-future
 [elm]: https://github.com/evancz/elm-architecture-tutorial#example-5-random-gif-viewer
 [rf]:  https://github.com/ramda/ramda-fantasy
+[svg]: https://github.com/paldepind/snabbdom/issues/4
 
