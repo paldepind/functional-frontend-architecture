@@ -11,7 +11,9 @@ const uploader = require('./uploader');
 
 const sync = (s) => [s, []];
 
-const isFileList = (x) => !(undefined === x.length)
+// note: prefer to check if iterable, 
+// but FileList.prototype doesn't seem to have Symbol.iterator cross-browser?
+const isFileList = (x) => !(undefined === x.length) 
 
 // action
 
