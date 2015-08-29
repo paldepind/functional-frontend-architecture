@@ -4,6 +4,7 @@ var http = require('http');
 var fs = require('fs');
 var path = require('path');
 var url = require('url');
+var noop = function(){};
 
 var multipart = require('multiparty');
 
@@ -13,6 +14,7 @@ var PORT = process.argv[2] || 8080;
 createServer(function(req,res){
 
   req.on('abort', function(){ 
+    res.on('error', noop);
     respond(400, 'Error receiving', res); 
   });
 
@@ -21,9 +23,15 @@ createServer(function(req,res){
     
     form.on('part', function(part){
       if (!part.filename) return;
+      var fsOut = path.join(__dirname, UPLOADDIR, part.filename);
+
+      part.on('error', function(){
+        console.error('-| ' + fsOut);
+        res.on('error', noop);
+        respond(400, 'Error receiving', res);
+      });
 
       try {
-        var fsOut = path.join(__dirname, UPLOADDIR, part.filename);
         var out = fs.createWriteStream(fsOut);
         part.pipe(out);
         console.log('-> ' + fsOut);
@@ -36,6 +44,7 @@ createServer(function(req,res){
     });
     
     form.on('error', function(){
+      res.on('error', noop);
       respond(400, 'Unable to parse as multipart', res);
     });
 

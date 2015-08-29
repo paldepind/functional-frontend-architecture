@@ -26,10 +26,10 @@ const upload = curry( (headers, url, files) => {
   return new Future( (rej,res) => {
     const xhr = new XMLHttpRequest();
     const getxhr = always(xhr);
-    const abort = xhr.abort.bind(xhr);
+    const abort = xhr.abort.bind(xhr)
     xhr.addEventListener("load",  compose(res, deriveResult, getxhr), false);
-    xhr.addEventListener("abort", compose(res, Result.Abort(xhr) ), false);
-    xhr.addEventListener("error", compose(res, Result.Error(xhr) ), false); 
+    xhr.addEventListener("abort", compose(res, Result.Abort, getxhr), false);
+    xhr.addEventListener("error", compose(res, Result.Error, getxhr), false); 
 
     xhr.upload.addEventListener("progress", 
                                 compose(res, Result.Progress(abort)), false);
