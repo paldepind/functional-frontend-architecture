@@ -59,24 +59,16 @@ const nextIndex = (model) => model.length;
 
 // view
 
-const view = (model) => {
+const view = (model) => h('ul', {style: style.ul}, model.map( listItemView ))
 
-  return (
-    h('ul', {style: style.ul}, model.map( listItemView ) )
-  );
-
-};
-
-const listItemView = (item, i) => {
-  return (
-    h('li', {style: style.li}, [
-      upload.view(
-        { progress: { height: 20, width: 200 } },
-        item
-      )   
-    ])
-  );
-}
+const listItemView = (item, i) => (
+  h('li', {style: style.li}, [
+    upload.view(
+      { progress: { height: 20, width: 200 } },
+      item
+    )   
+  ])
+)
 
 
 const style = {

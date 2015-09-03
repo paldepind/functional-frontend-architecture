@@ -17,8 +17,8 @@ const noop = function(){};
 
 // model
 
-const init = (files) => {
-  return {
+const init = (files) => (
+  {
     status: 'initial',
     progress: {},
     abort: noop,
@@ -27,47 +27,28 @@ const init = (files) => {
               : '(' + files.length + ' files)' ),
     files: map(initFile, files)
   }
-}
+)
 
-const initFile = ({name,lastModifiedDate,size,type}) => {
-  return {name,lastModifiedDate,size,type}
-}
+const initFile = ({name,lastModifiedDate,size,type}) => (
+  {name,lastModifiedDate,size,type}
+)
 
-const statusLabel = (model) => {
-  return {
-    'initial': null,
-    'uploading': 'uploading',
-    'processing': 'processing',
-    'uploaded': 'done',
-    'error': 'error',
-    'abort': 'stopped' 
-  }[model.status] || null ;
-}
-
-const actionLabel = (action) => {
-  return {
-    'abort': '×'
-  }[action] || null ;
-}
-
-const size = (model) => {
-  return reduce( (tot,file) => tot + (file.size || 0), 0, model.files );
-}
+const size = (model) => (
+  reduce( (tot,file) => tot + (file.size || 0), 0, model.files )
+)
 
 const status = curry( (s, model) => model.status == s );
 const uploading = status('uploading');
 
-const aborted = (model) => {
-  return model.status == 'aborted';
-}
+const aborted = (model) => model.status == 'aborted'
 
-const abortable = (model) => {
-  return !!model.abort && contains(model.status, ['uploading']);
-}
+const abortable = (model) => (
+  !!model.abort && contains(model.status, ['uploading'])
+)
 
-const hasProgressData = (x) => {
-  return !(x.loaded === undefined || x.total === undefined);
-}
+const hasProgressData = (x) => (
+  !(x.loaded === undefined || x.total === undefined) 
+)
 
 const percentProgress = (p) => {
   if (!hasProgressData(p)) return null;
@@ -120,17 +101,15 @@ const view = curry( ({progress},model) => {
 
 });
 
-const renderTitle = (model) => {
-  return (
-    model.url
-      ?  h('a', { attrs: {'href': model.url,
-                          'target': '_blank'
-                         } 
-                }, [ model.title ])
+const renderTitle = (model) => (
+  model.url
+    ?  h('a', { attrs: {'href': model.url,
+                        'target': '_blank'
+                       } 
+              }, [ model.title ])
 
-      :  h('span', {}, [ model.title ]) 
-  );
-}
+    :  h('span', {}, [ model.title ]) 
+)
 
 
 const renderProgress = (model,specs) => {
@@ -158,18 +137,33 @@ const renderProgress = (model,specs) => {
 
 }
 
-const renderStatus = (model) => {
-  return h('span', {}, statusLabel(model));
-}
+const renderStatus = (model) => h('span', {}, statusLabel(model))
 
 
-const renderAbort = (model) => {
-  const label = actionLabel('abort');
-  return h('a', { style: merge(visible(abortable, model), {cursor: 'pointer'}),
-                  on: { click: model.abort } }, 
-                label
-          );
-}
+const renderAbort = (model) => (
+  h('a', { style: merge(visible(abortable, model), {cursor: 'pointer'}),
+           on: { click: model.abort } }, 
+    actionLabel('abort')
+  )
+)
+
+
+const statusLabel = (model) => (
+  {
+    'initial': null,
+    'uploading': 'uploading',
+    'processing': 'processing',
+    'uploaded': 'done',
+    'error': 'error',
+    'abort': 'stopped' 
+  }[model.status] || null
+)
+
+const actionLabel = (action) => (
+  {
+    'abort': '×'
+  }[action] || null
+)
 
 
 // view styles 
@@ -185,9 +179,9 @@ const style = {
 
 // view utils
 
-function visible(pred,model){
-  return { display: pred(model) ? null : 'none' }
-}
+const visible = (pred,model) => (
+  { display: pred(model) ? null : 'none' }
+)
 
 
 module.exports = {init, Action, update, view};
