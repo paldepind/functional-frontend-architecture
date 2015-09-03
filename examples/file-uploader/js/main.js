@@ -14,7 +14,7 @@ const app = require('./app');
 let state = app.init(), asyncActions, vnode
 
 const render = () => {
-  vnode = patch(vnode, app.view({action$: update, url: '/upload'}, state));
+  vnode = patch(vnode, app.view({action$: update}, state));
 };
 
 const update = (action) => {

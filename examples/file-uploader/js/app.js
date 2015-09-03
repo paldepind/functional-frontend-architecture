@@ -13,6 +13,12 @@ const uploadList = require('./list');
 const uploader   = require('./uploader');
   
 
+// app constants
+
+const UPLOAD_URL = '/upload'
+const UPLOAD_HEADERS = {}
+
+
 // action
 
 const listUpdate = (listAction,model) => {
@@ -28,9 +34,9 @@ const Action = Type({
 });
 
 const update = Action.caseOn({
-  Create: (up,files,model) => {
-    return listUpdate( uploadList.Action.Create(up,files), model );
-  },
+  Create: (up,files,model) => (
+    listUpdate( uploadList.Action.Create(up,files), model )
+  ),
 
   Route: listUpdate
 });
@@ -42,30 +48,31 @@ const init = () => { return { uploads: uploadList.init() }; }
 
 // view
 
-const view = curry( ({url, headers, action$}, model) => {
+const view = curry( ({action$}, model) => {
+
+  const up = uploader.upload(UPLOAD_HEADERS, UPLOAD_URL);
   
-  const up = uploader.upload(headers, url);
-
-  const form = (
-    h('form', {on: {submit: preventDefault} }, [
-       h('input', 
-         { props: {type: 'file', multiple: true},
-           on:   {
-             change: compose(action$, Action.Create(up), getTarget('files')) 
-           }
-         }
-       )
-     ]
-    )
-  );
-
   return (
     h('div.uploading', {}, [
-      form,
+      form(action$, up),
       uploadList.view(model.uploads)
     ])
   );
 });
+
+const form = (action$, up) => (
+  h('form', {on: {submit: preventDefault} }, [
+     h('input', 
+       { props: {type: 'file', multiple: true},
+         on:   {
+           change: compose(action$, Action.Create(up), getTarget('files')) 
+         }
+       }
+     )
+   ]
+  )
+);
+
 
 const getTarget = curry( (key,e) => e.target[key] );
 const preventDefault = invoker(0, 'preventDefault');

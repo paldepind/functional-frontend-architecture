@@ -9,11 +9,11 @@ const h = require('snabbdom/h');
 const upload = require('./upload');
 const uploader = require('./uploader');
 
-const sync = (s) => [s, []];
+const noFx = (s) => [s, []];
 
 // note: prefer to check if iterable, 
 // but FileList.prototype doesn't seem to have Symbol.iterator cross-browser?
-const isFileList = (x) => !(undefined === x.length) 
+const isFileList = (x) => x.length !== undefined
 
 // action
 
@@ -36,7 +36,7 @@ const update = Action.caseOn({
     const finish = (type) => () => {
       return adjust(upload.update(upload.Action[type]()), i, model);
     };
-    return sync(
+    return noFx(
       uploader.Result.case({
         OK:       finish('Uploaded'),
         NotFound: finish('Error'),
@@ -61,26 +61,28 @@ const nextIndex = (model) => model.length;
 
 const view = (model) => {
 
-  const style = {'list-style': 'none',
-                 '-webkit-margin-before': 0,
-                 '-webkit-margin-after': 0,
-                 '-webkit-padding-start': 0
-                };
-
-  const listItemView = (item, i) => {
-    const substyle = { };
-    const subview = upload.view(
-                      { progress: { height: 20, width: 200 } },
-                      item
-                    );
-    return h('li', {style: substyle}, [subview]);
-  }
-
   return (
-    h('ul', {style}, model.map( listItemView ) )
+    h('ul', {style: style.ul}, model.map( listItemView ) )
   );
 
 };
+
+const listItemView = (item, i) => {
+  return (
+    h('li', {style: style.li}, [
+      upload.view(
+        { progress: { height: 20, width: 200 } },
+        item
+      )   
+    ])
+  );
+}
+
+
+const style = {
+  ul: {'list-style': 'none'},
+  li: { }
+}
 
 
 module.exports = { init, update, Action, view }

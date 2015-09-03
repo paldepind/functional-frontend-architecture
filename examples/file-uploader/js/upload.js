@@ -77,7 +77,7 @@ const percentProgress = (p) => {
 
 // action
 
-// NOTE: no async tasks initiated, so all updates simply return changed state
+// NOTE: no side-effects initiated, so all updates simply return changed state
 
 const Action = Type({
   Progress: [Function, hasProgressData],
@@ -103,29 +103,24 @@ const update = Action.caseOn({
 
 const view = curry( ({progress},model) => {
 
-  const style = { 'display': 'inline-block' };
-  
-  const substyle = { 'display': 'inline-block',
-                     'vertical-align': 'top',
-                     'margin-right': '1rem'
-                   };
-
   progress = merge({width: 200, height: 20}, progress || {});
   
   return (
-    h('div', { attrs: { 'class': 'upload ' + model.status }, style },  [
-      h('div.title',    {style: substyle},  [ renderTitle(model)             ]),
-      h('div.size',     {style: substyle},  [ ''+size(model)                 ]),
-      h('div.progress', {style: substyle},  [ renderProgress(model,progress) ]),
-      h('div.status',   {style: substyle},  [ renderStatus(model)            ]),
-      h('div.abort',    {style: dissoc('margin-right',substyle)},  
-                                            [ renderAbort(model)             ])
+    h('div', { attrs: { 'class': 'upload ' + model.status }, 
+               style: style.upload 
+             },  [
+      h('div.title',    {style: style.div},  [ renderTitle(model)             ]),
+      h('div.size',     {style: style.div},  [ ''+size(model)                 ]),
+      h('div.progress', {style: style.div},  [ renderProgress(model,progress) ]),
+      h('div.status',   {style: style.div},  [ renderStatus(model)            ]),
+      h('div.abort',    {style: dissoc('margin-right', style.div)},   
+                                             [ renderAbort(model)             ])
     ])
   );
 
 });
 
-function renderTitle(model){
+const renderTitle = (model) => {
   return (
     model.url
       ?  h('a', { attrs: {'href': model.url,
@@ -138,7 +133,7 @@ function renderTitle(model){
 }
 
 
-function renderProgress(model,specs){
+const renderProgress = (model,specs) => {
   const barwidth = percentProgress(model.progress) * specs.width;
   const linespecs = { x1: specs.width, x2: specs.width,
                       y1: 0,           y2: specs.height };
@@ -163,19 +158,32 @@ function renderProgress(model,specs){
 
 }
 
-function renderStatus(model){
-  const label = statusLabel(model);
-  return h('span', {}, label);
+const renderStatus = (model) => {
+  return h('span', {}, statusLabel(model));
 }
 
 
-function renderAbort(model){
+const renderAbort = (model) => {
   const label = actionLabel('abort');
   return h('a', { style: merge(visible(abortable, model), {cursor: 'pointer'}),
                   on: { click: model.abort } }, 
                 label
           );
 }
+
+
+// view styles 
+
+const style = { 
+  upload: { 'display': 'inline-block' }, 
+  div:    { 'display': 'inline-block',
+            'vertical-align': 'top',
+            'margin-right': '1rem'
+          }
+}
+
+
+// view utils
 
 function visible(pred,model){
   return { display: pred(model) ? null : 'none' }

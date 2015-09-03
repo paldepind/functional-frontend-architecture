@@ -17,7 +17,7 @@ const noop = function(){}
 
 /******************************************************************************/
 const progressUpload = (total, loaded, data) => {
-  return upload.update( upload.Action.Progress({total,loaded},noop), data );
+  return upload.update( upload.Action.Progress(noop, {total,loaded}), data );
 }
 
 const finishUpload = upload.update(upload.Action.Uploaded());
@@ -75,7 +75,7 @@ const dummyUploader = curry( (total, steps, abort, final, files) => {
     const progress = (loaded, delay) => {
       delay = delay + ( Math.random() * 2000 );
       setTimeout( 
-        () => res(uploader.Result.Progress({total,loaded},abort)),
+        () => res(uploader.Result.Progress(abort, {total,loaded})),
         delay
       );
       return delay;
