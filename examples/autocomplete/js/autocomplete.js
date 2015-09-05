@@ -15,6 +15,14 @@ import forwardTo from 'flyd-forwardto'
 
 const noop = function(){};
 
+const throwOr = (fn) => {
+  return (x) => {
+    if (x instanceof Error) throw x; 
+    return fn(x);
+  }
+}
+
+
 export default function autocomplete(menu){
 
   // model
@@ -34,24 +42,22 @@ export default function autocomplete(menu){
 
   // update
 
-  const nofx = (s) => [s, []];
+  const noFx = (s) => [s, []];
 
   const Action = Type({
-    Input: [Function, Function, String],
+    Input: [Function, String],
     UpdateMenu: [menu.Action],
     ShowMenu: [],
     HideMenu: []
   })
 
   const refreshMenu = compose(Action.UpdateMenu, menu.Action.Refresh);
-  const clearMenu = Action.UpdateMenu(menu.Action.Refresh([]));
+  const clearMenu   = compose(Action.UpdateMenu, menu.Action.Clear);
   
   const update = Action.caseOn({
     
-    Input: (query, guard, str, model) => {
-      const tasks = (str.length === 0) ? [ Future.of(clearMenu) ] 
-                         : !guard(str,model) ? []
-                         : [ map(refreshMenu, query(str,model)) ]
+    Input: (query, str, model) => {
+      const tasks = [ query(str,model).bimap( throwOr(clearMenu), refreshMenu ) ]; 
       return [
         assoc('menuVisible', true, assoc('value', str, model)) ,
         tasks
@@ -59,12 +65,12 @@ export default function autocomplete(menu){
     },
 
     UpdateMenu: (action, model) => {
-      return nofx( assoc('menu', menu.update(action, model.menu), model) )
+      return noFx( assoc('menu', menu.update(action, model.menu), model) )
     },
 
-    ShowMenu: compose(nofx, assoc('menuVisible', true)),
+    ShowMenu: compose(noFx, assoc('menuVisible', true)),
 
-    HideMenu: compose(nofx, assoc('menuVisible', false))
+    HideMenu: compose(noFx, assoc('menuVisible', false))
 
   });
 

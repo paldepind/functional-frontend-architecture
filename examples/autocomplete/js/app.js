@@ -1,14 +1,39 @@
-/* globals Request */
+/* globals window */
+
+import compose from 'ramda/src/compose'
+import map from 'ramda/src/map'
+import chain from 'ramda/src/chain'
+import identity from 'ramda/src/identity'
+import invoker from 'ramda/src/invoker'
+import ifElse from 'ramda/src/ifElse'
+import path from 'ramda/src/path'
+import props from 'ramda/src/props'
+import prop from 'ramda/src/prop'
+import assoc from 'ramda/src/assoc'
+import equals from 'ramda/src/equals'
+import prepend from 'ramda/src/prepend'
+import head from 'ramda/src/head'
+import allPass from 'ramda/src/allPass'
+
+import Type from 'union-type'
+
+import Future from 'ramda-fantasy/src/Future'
+import Maybe from 'ramda-fantasy/src/Maybe'
+
+import forwardTo from 'flyd-forwardto'
+
+import autocomplete from './autocomplete'
+import menu from './menu'
 
 // utils 
 
 const rejectFut = (val) => Future((rej,res) => rej(val))
 const promToFut = (prom) => Future((rej, res) => prom.then(res, rej))
 const getJSON = compose( promToFut, invoker(0, 'json'))
-const getUrl = (url) => promToFut(fetch(new Request(url, {method: 'GET'})))
-const respIsOk = (r) => r.ok === true
+const getUrl = (url) => promToFut(window.fetch(new window.Request(url, {method: 'GET'})))
+const respIsOK = (r) => !!r.ok
 const targetValue = path(['target', 'value'])
-const nofx = (s) => [s,[]]
+const noFx = (s) => [s,[]]
 
 // app constants
 
@@ -25,19 +50,50 @@ const search = autocomplete(searchMenu);
 
 // autocomplete query
 
-
-const fetchZips = ([country, state, place]) => {
-  return getUrl(`http://api.zippopotam.us/${country}/${state}/${place}`);
-}
+// Object -> String -> Future (String, Array (Array String))
+const query = (model) => (
+  compose(
+    chain( ifElse(respIsOK, parseResult, fetchFail) ),
+    chain(fetchZips), 
+    toParams(model)  
+  )
+);
 
 const getZipsAndPlaces = compose( map(props(['post code','place name'])), 
                                   prop('places') );
 
-const parseZips = map(getZipsAndPlaces, getJSON); 
+// Response -> Future ((), Array (Array String))
+const parseResult = compose( map(getZipsAndPlaces), getJSON); 
 
-const failFetch = (_) => rejectFut(Action.Error("Not found"))
+// Response -> Future (String, ())
+const fetchFail = (resp) => rejectFut("Not found");
 
-const lookupZipCodes = chain( ifElse(respIsOk, parseZips, failFetch), fetchZips);
+// Array String -> Future ((), Response)
+const fetchZips = ([country, state, place]) => {
+  return getUrl(`http://api.zippopotam.us/${country}/${state}/${place}`);
+}
+
+// Object -> String -> Future (String, Array String)
+const toParams = (model) => (str,_) => {
+  return new Future( (rej, res) => {
+    const stateAndPlace = parseInput(str);
+    const country = model.country;
+    if (stateAndPlace.length !== 2) { 
+      rej("Enter place name and state or province, separated by a comma"); return; 
+    }
+    if (Maybe.isNothing(country))   { 
+      rej("Select a country"); return; 
+    }
+    map((c) => res(prepend(c,stateAndPlace)), country);
+  });
+}
+
+const parseInput = (str) => {
+  const raw = map((part) => part.trim(), str.split(','));
+  if (raw.some((part) => part.length === 0)) return [];
+  return raw.reverse();
+};
+
 
 
 
@@ -47,8 +103,8 @@ const lookupZipCodes = chain( ifElse(respIsOk, parseZips, failFetch), fetchZips)
 
 const init = () => {
   return {
-    message: null,
-    country: null,
+    message: Maybe.Nothing(),
+    country: Maybe.Nothing(),
     search: search.init() 
   }
 }
@@ -58,89 +114,48 @@ const init = () => {
 
 const Action = Type({
   SetCountry: [String],
-  Error: [String],
-  Search: [Array],
-  SearchRespond: [search.Action]
+  Search: [search.Action]
 });
 
 const update = Action.caseOn({
   
-  SetCountry: compose(sync, assoc('country')) ,
+  SetCountry: (str,model) => (
+    noFx( assoc('country', Maybe(str), model) )
+  ),
 
-  // hide menu as side effect, not sure what I think of this
-  Error: (message,model) => {
+  Search: (action,model) => {
+    const [s,tasks] = search.update(action, model.search);
     return [ 
-      assoc('message', message, model),
-      Future.of( () => Action.SearchRespond(search.Action.HideMenu()) )
-    ]
-  },
-
-  Search: ([action,tasks],model) => {
-    return [ 
-      assoc('search', search.update(action, model.search), model),
-      map( map(Action.SearchRespond), tasks)  
+      assoc('search', s, model),
+      map( (t) => t.bimap(Action.Search, Action.Search), tasks)  
     ];
-  },
-
-  SearchRespond: (action,model) => {
-    return nofx( 
-      assoc('search', search.update(action, model.search), model) 
-    );
   }
-
 });
 
 // view
 
-const view = curry( ({action$}, model) => {
+const view = ({action$}, model) => (
+  h('div#app', [
+    h('label', {props: {'for': 'country'}}, 'Country'),
+    countryMenu(action$, ['DE','ES','FR','US']),
+    search.view(
+      { action$: forwardTo(action$, Action.Search), 
+        query:   query(model),
+      },
+      model.search
+    )
+  ])
+);
 
-  const parseStateAndPlace = (str) =>  {
-    return map((part) => part.trim(), str.split(',')).reverse();
-  }
+const countryMenu = (action$, codes) => (
+  h('select', {
+      on: {
+        change: compose(action$, Action.SetCountry, targetValue) 
+      }
+    },
+    map( (code) => h('option',code) , codes) 
+  )
+);
 
-  const validStateAndPlace = compose(equals(2), length, parseStateAndPlace);
 
-  // get [state, place] from input and prepend current selected country, and
-  // feed that into query
-  const query = compose(lookupZipCodes, 
-                        prepend(model.country), 
-                        parseStateAndPlace );
-  
-  // prevent querying if country is missing or unparseable input
-  const guard = allPass( always(model.country), validStateAndPlace );
-
-  const countryMenu = (codes) => {
-    return (
-      h('select', {
-          on: {
-            change: compose(action$, Action.SetCountry, targetValue) 
-          }
-        },
-        map( (code) => h('option',code) , codes) 
-      )
-    );
-  }
-
-  const header = (model) => {
-    return (model.country === null) ? "Please choose a country to search."
-                                 : "Type a location to search for postal codes." ;
-  }
-
-  return  (
-    h('div#app', [
-      h('h2', header(model)),
-      h('label', {props: {'for': 'country'}}, 'Country'),
-      countryMenu(['DE','ES','FR','US']),
-      search.view(
-        { action$: forwardTo(action$, Action.Search), 
-          query:   query,
-          guard:   guard
-        },
-        model.search
-      )
-    ])
-  );
-
-});
-
-export {init, update, Action, view}
+export default {init, update, Action, view, search, searchMenu, query}

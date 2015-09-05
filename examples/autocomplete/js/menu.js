@@ -41,7 +41,8 @@ export default function menu(itemComponent,valueAccessor){
     Select: [Number],
     SelectNext: [],
     SelectPrev: [],
-    Refresh: [Array]
+    Refresh: [Array],
+    Clear: [String]
   });
 
   const update = Action.caseOn({
@@ -64,7 +65,10 @@ export default function menu(itemComponent,valueAccessor){
       return update( Action.Select(i,model), model );
     },
 
-    Refresh: init
+    Refresh: init,
+
+    Clear: (_,model) => init([])
+
   });
 
 
