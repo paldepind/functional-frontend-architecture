@@ -55,6 +55,10 @@ makes the architecture nestable and modular.
   requests. ES6 Promises are used here as stand-ins for Elm's Tasks.
 * [TodoMVC](examples/todo) – A TodoMVC implementation built with Snabbdom,
   union-type, Ramda and Flyd.
+* [File Uploader](examples/file-uploader) – Implements a file-upload component,
+  i.e. it renders a list of chosen files, shows their upload progress, and
+  allows users to cancel uploads. It demonstrates asynchronous side effects
+  and a realistic stand-alone reuseable component or 'widget'.
 * [Hot module reloading](examples/hot-module-roloading) – Demonstrates how
   simple it is to use webpack's hot module replacement to achieve live code
   editing without browser refreshes.
