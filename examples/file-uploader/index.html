@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>File Uploader</title>
+    <script type="text/javascript" src="js/build.js"></script>
+    <style>
+
+      body {
+        box-sizing: border-box;
+        font-size: 12pt;
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        margin: 1%;
+      }
+
+      .upload {
+        padding: 0.5rem;
+        margin: 0.5rem;
+        border: 1px solid lightgrey;
+        border-radius: 3px;
+      }
+
+      .upload.uploaded {
+        background-color: aliceblue;
+      }
+
+      .upload.error {
+        color: red;
+      }
+
+      .upload.abort {
+        color: lightgrey;
+      }
+
+      .upload > .status {
+        text-transform: uppercase;
+        font-size: 0.7em;
+        transform: translateY(30%);
+      }
+
+      .upload > .progress rect.bar {
+        fill: steelblue;
+      }
+
+      .upload.error > .progress rect.bar {
+        fill: red;
+      }
+
+      .upload.abort > .progress rect.bar {
+        fill: lightgrey;
+      }
+
+      .upload > .progress line.end {
+        stroke: lightgrey;
+        stroke-width: 1;
+      }
+
+    </style>
+  </head>
+  <body>
+    <h1>File Uploader example</h1>
+    <div id="container"></div>
+  </body>
+</html>
