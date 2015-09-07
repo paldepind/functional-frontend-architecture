@@ -1,5 +1,6 @@
 /* globals window */
 
+import curry from 'ramda/src/curry'
 import compose from 'ramda/src/compose'
 import map from 'ramda/src/map'
 import chain from 'ramda/src/chain'
@@ -12,7 +13,8 @@ import prop from 'ramda/src/prop'
 import assoc from 'ramda/src/assoc'
 import equals from 'ramda/src/equals'
 import prepend from 'ramda/src/prepend'
-import head from 'ramda/src/head'
+import insert from 'ramda/src/insert'
+import join from 'ramda/src/join'
 import allPass from 'ramda/src/allPass'
 
 import Type from 'union-type'
@@ -21,6 +23,8 @@ import Future from 'ramda-fantasy/src/Future'
 import Maybe from 'ramda-fantasy/src/Maybe'
 
 import forwardTo from 'flyd-forwardto'
+
+import h from 'snabbdom/h'
 
 import autocomplete from './autocomplete'
 import menu from './menu'
@@ -32,19 +36,23 @@ const promToFut = (prom) => Future((rej, res) => prom.then(res, rej))
 const getJSON = compose( promToFut, invoker(0, 'json'))
 const getUrl = (url) => promToFut(window.fetch(new window.Request(url, {method: 'GET'})))
 const respIsOK = (r) => !!r.ok
-const targetValue = path(['target', 'value'])
+const targetValue = path(['target', 'value']);
+const nullEmpty = (x) => x.length === 0 ? null : x
 const noFx = (s) => [s,[]]
 
 // app constants
 
 const searchItem = {  // mini-component
   init: identity,
-  view: ([post,place]) => {
-    return h('div', [ h('span.post', post), h('span.place', place) ] );
+  view: ([place, state, post]) => {
+    return h('div', [ h('span.place', `${place}, ${state}` ) , 
+                      h('span.post', post) ] );
   }
 }
 
-const searchMenu = menu(searchItem, head);
+const searchItemValue = ([place, state, post]) => `${place}, ${state} ${post}` 
+
+const searchMenu = menu(searchItem, searchItemValue);
 const search = autocomplete(searchMenu);
 
 
@@ -59,8 +67,10 @@ const query = (model) => (
   )
 );
 
-const getZipsAndPlaces = compose( map(props(['post code','place name'])), 
-                                  prop('places') );
+const getZipsAndPlaces = (data) => {
+  const placeAndZips = map( props(['place name', 'post code']), data.places);
+  return map( insert(1,data['state abbreviation']), placeAndZips);
+}
 
 // Response -> Future ((), Array (Array String))
 const parseResult = compose( map(getZipsAndPlaces), getJSON); 
@@ -101,13 +111,13 @@ const parseInput = (str) => {
 
 // model
 
-const init = () => {
-  return {
+const init = () => (
+  {
     message: Maybe.Nothing(),
     country: Maybe.Nothing(),
     search: search.init() 
   }
-}
+);
 
 
 // update
@@ -120,7 +130,7 @@ const Action = Type({
 const update = Action.caseOn({
   
   SetCountry: (str,model) => (
-    noFx( assoc('country', Maybe(str), model) )
+    noFx( assoc('country', Maybe(nullEmpty(str)), model) )
   ),
 
   Search: (action,model) => {
@@ -134,10 +144,14 @@ const update = Action.caseOn({
 
 // view
 
-const view = ({action$}, model) => (
+const view = curry( ({action$}, model) => (
   h('div#app', [
-    h('label', {props: {'for': 'country'}}, 'Country'),
-    countryMenu(action$, ['DE','ES','FR','US']),
+    h('h1', 'Zip codes autocomplete example'),
+    h('h2', header(model)),
+    h('div.country', [
+      h('label', {attrs: {'for': 'country'}}, 'Country'),
+      countryMenu(action$, ['', 'DE','ES','FR','US'])
+    ]),
     search.view(
       { action$: forwardTo(action$, Action.Search), 
         query:   query(model),
@@ -145,7 +159,13 @@ const view = ({action$}, model) => (
       model.search
     )
   ])
-);
+));
+
+const header = (model) => (
+  model.country.isNothing() ? "Select a country"
+                            : model.search.menuVisible ? ""
+                            : "Enter a place and state or province, separated by a comma"
+)
 
 const countryMenu = (action$, codes) => (
   h('select', {

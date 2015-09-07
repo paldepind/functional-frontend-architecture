@@ -2,14 +2,17 @@
 
 import flip from 'ramda/src/flip'
 
-import flyd from 'ramda/src/flyd'
+import flyd from 'flyd'
 
 import snabbdom from 'snabbdom'
 import cl from 'snabbdom/modules/class'
 import pr from 'snabbdom/modules/props'
-import ev from 'snabbdom/modules/eventlistenters'
+import at from 'snabbdom/modules/attributes'
+import ev from 'snabbdom/modules/eventlisteners'
 import st from 'snabbdom/modules/style'
-const patch = snabbdom.init([cl,pr,ev,st]);
+const patch = snabbdom.init([cl,pr,at,ev,st]);
+
+import app from './app'
 
 const throwOr = (fn) => {
   return (x) => {
@@ -19,10 +22,8 @@ const throwOr = (fn) => {
 }
 
 
-const app = require('./app.js')
-
 const update = (action, state) => {
-  const [state1,tasks] = app.update(act,state); 
+  const [state1,tasks] = app.update(action,state); 
   tasks.map((t) => t.fork( throwOr(action$), action$) );
   return state1;
 }
@@ -30,6 +31,8 @@ const update = (action, state) => {
 const action$ = flyd.stream();
 const state$ = flyd.scan( flip(update), app.init(), action$);
 const vnode$ = flyd.map( app.view({action$}), state$);
+
+flyd.on( console.log.bind(console), state$ );
 
 // Begin rendering when the DOM is ready
 window.addEventListener('DOMContentLoaded', () => {

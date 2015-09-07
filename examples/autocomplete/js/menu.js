@@ -7,6 +7,8 @@ import toString from 'ramda/src/toString'
 
 import Type from 'union-type'
 
+import h from 'snabbdom/h'
+
 const identity = (x) => x
 
 export default function menu(itemComponent,valueAccessor){

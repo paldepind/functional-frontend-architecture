@@ -13,6 +13,8 @@ import Type from 'union-type'
 import Future from 'ramda-fantasy/src/Future'
 import forwardTo from 'flyd-forwardto'
 
+import h from 'snabbdom/h'
+
 const noop = function(){};
 
 const throwOr = (fn) => {
@@ -79,7 +81,7 @@ export default function autocomplete(menu){
 
   const valueLens = compose( lensProp('target'), lensProp('value') );
 
-  const view = curry( ({query, guard=T, action$}, model) => {
+  const view = curry( ({query, action$}, model) => {
 
     const menuAction$ = forwardTo(action$, Action.UpdateMenu)
     const menuView = menu.view({ action$: menuAction$ }); 
@@ -92,7 +94,7 @@ export default function autocomplete(menu){
     const input = (
       h('input', {
         on: {
-          input: compose(action$, Action.Input(query,guard), get(valueLens)),
+          input: compose(action$, Action.Input(query), get(valueLens)),
           keydown: !model.menuVisible ? noop 
                      : caseKey([
                          [['Esc','Escape', 0x1B],    handleEsc],
@@ -110,8 +112,8 @@ export default function autocomplete(menu){
 
     return (
       h('div.autocomplete', 
-        model.menuVisible ? [input]
-                          : [input, menuView(model.menu)]
+        model.menuVisible ? [input, menuView(model.menu)]
+                          : [input]
       )
     );
 
@@ -124,11 +126,11 @@ export default function autocomplete(menu){
 // move to helpers?
 const caseKey = curry( (handlers,e) => {
   const k = e.key || e.keyCode;
-  mapHandlers = handlers.reduce((o,handler) => {
-                  for (let i=0;i<handler[0].length;++i) 
-                    o[handler[0][i]] = handler[1];
-                  return o;
-                }, {});
+  const mapHandlers = handlers.reduce((o,handler) => {
+            for (let i=0;i<handler[0].length;++i) 
+              o[handler[0][i]] = handler[1];
+            return o;
+          }, {});
   return hasOwnProperty.call(mapHandlers,k) ? mapHandlers[k](e) : noop() ;
 });
 
