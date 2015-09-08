@@ -25,7 +25,7 @@ const maybeEmpty = (val) => val.length === 0 ? Maybe.Nothing() : Maybe(val)
 
 const throwOr = (fn) => {
   return (x) => {
-    if (x instanceof Error) { throw x; return; }
+    if (x instanceof Error) throw x; 
     return fn(x);
   }
 }

@@ -16,7 +16,7 @@ import app from './app'
 
 const throwOr = (fn) => {
   return (x) => {
-    if (x instanceof Error) { throw x; return; }
+    if (x instanceof Error) throw x; 
     return fn(x);
   }
 }
