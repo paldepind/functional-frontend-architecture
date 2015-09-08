@@ -32,7 +32,9 @@ const action$ = flyd.stream();
 const state$ = flyd.scan( flip(update), app.init(), action$);
 const vnode$ = flyd.map( app.view({action$}), state$);
 
-flyd.on( console.log.bind(console), state$ );
+// enable this for debugging 
+// flyd.on( console.log.bind(console), state$ );
+
 
 // Begin rendering when the DOM is ready
 window.addEventListener('DOMContentLoaded', () => {

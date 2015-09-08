@@ -17,6 +17,7 @@ import forwardTo from 'flyd-forwardto'
 import h from 'snabbdom/h'
 
 const noop = function(){};
+const noFx = (s) => [s, []];
 
 const throwOr = (fn) => {
   return (x) => {
@@ -30,13 +31,13 @@ export default function autocomplete(menu){
 
   // model
 
-  const init = (value=null) => {
-    return {
-      menu: menu.init(),
-      isEditing: false,
-      value: value
-    }
-  }
+  const init = (value=null) => ({
+    menu: menu.init(),
+    isEditing: false,
+    value: value
+  });
+
+  const showMenu = (model) => model.isEditing && model.menu.items.length > 0;
 
   const selectedOrInputValue = (model) => {
     return (model.menu.selectedValue === null) ? model.value 
@@ -44,8 +45,6 @@ export default function autocomplete(menu){
   }
 
   // update
-
-  const noFx = (s) => [s, []];
 
   const Action = Type({
     Input: [Function, String],
@@ -67,9 +66,9 @@ export default function autocomplete(menu){
       ];
     },
 
-    UpdateMenu: (action, model) => {
-      return noFx( assoc('menu', menu.update(action, model.menu), model) )
-    },
+    UpdateMenu: (action, model) => (
+      noFx( assoc('menu', menu.update(action, model.menu), model) )
+    ),
 
     ShowMenu: compose(noFx, assoc('isEditing', true)),
 
@@ -80,21 +79,26 @@ export default function autocomplete(menu){
 
   // view
 
-  const valueLens = compose( lensProp('target'), lensProp('value') );
-
   const view = curry( ({query, action$}, model) => {
 
     const menuAction$ = forwardTo(action$, Action.UpdateMenu)
-    const menuView = menu.view({ action$: menuAction$ }); 
+    const input = inputView(action$, menuAction$, query, model);
+    const menudiv = menuView(menu.view({action$: menuAction$}), 
+                             style.menu, 
+                             model.menu);
 
+    return h('div.autocomplete', showMenu(model) ? [input, menudiv] : [input] );
+
+  });
+
+  const inputView = (action$, menuAction$, query, model) => {
+    
     const handleEsc   = compose( action$, always(Action.HideMenu()) );
     const handleEnter = handleEsc;
     const handleDown  = compose( menuAction$, always(menu.Action.SelectNext()) );
     const handleUp    = compose( menuAction$, always(menu.Action.SelectPrev()) );
 
-    const showMenu = model.isEditing && model.menu.items.length > 0;
-
-    const input = (
+    return (
       h('input', {
         on: {
           input: compose(action$, Action.Input(query), get(valueLens)),
@@ -112,24 +116,37 @@ export default function autocomplete(menu){
                }
       })
     );
+  }
 
-    const menudiv = (
-      h('div.menu', {
-          style: style.menu,
-          hook: { insert: positionUnder('input'), 
-                  postpatch: repositionUnder('input') 
-          } 
-        }, 
-        [ menuView(model.menu) ]
-      )
-    );
+  const menuView = (mview, style, model) => (
+    h('div.menu', {
+        style: style,
+        hook: { insert: positionUnder('input'), 
+                postpatch: repositionUnder('input') 
+        } 
+      }, 
+      [ mview(model) ]
+    )
+  );
 
-    return h('div.autocomplete', showMenu ? [input, menudiv] : [input] );
+  // styles
 
-  });
+  const style = {
+    menu: {
+      position: 'absolute',
+      'z-index': '100',
+      opacity: '1', 
+      transition: 'opacity 0.2s', 
+      remove: { opacity: '0' }
+    }
+  };
 
   return {init, update, Action, view};
 }
+
+
+
+// hooks
 
 const positionUnder = curry( (selector, vnode) => {
   let elm = vnode.elm,
@@ -146,17 +163,11 @@ const repositionUnder = curry( (selector, oldVNode, vnode) => (
 ));
   
 
-const style = {
-  menu: {
-    position: 'absolute',
-    'z-index': '100',
-    opacity: '1', 
-    transition: 'opacity 0.2s', 
-    remove: { opacity: '0' }
-  }
-};
 
-// move to helpers?
+// move to helpers
+
+const valueLens = compose( lensProp('target'), lensProp('value') );
+
 const caseKey = curry( (handlers,e) => {
   const k = e.key || e.keyCode;
   const mapHandlers = handlers.reduce((o,handler) => {

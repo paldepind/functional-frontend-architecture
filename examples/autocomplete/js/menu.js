@@ -17,13 +17,11 @@ export default function menu(itemComponent,valueAccessor){
 
   // TODO: use a Maybe for selected/selectedValue
 
-  const init = (items=[]) => {
-    return {
-      selected: null,
-      selectedValue: null,
-      items: map(itemComponent.init, items)
-    };
-  }
+  const init = (items=[]) => ({
+    selected: null,
+    selectedValue: null,
+    items: map(itemComponent.init, items)
+  });
 
   const nextIndex = (model) => {
     const i = model.selected
@@ -76,6 +74,32 @@ export default function menu(itemComponent,valueAccessor){
 
   // view
 
+  const view = curry( ({style=initStyle(), action$}, model) => {
+    style.ul = merge(style.ul || {}, fixedStyle.ul);
+    style.li = merge(style.li || {}, fixedStyle.li);
+
+    return (
+      h('ul', 
+        {style: style.ul}, 
+        model.items.map( itemView(action$, style.li, model) )
+      )
+    );
+  });
+
+  const itemView = curry( (action$, style, model, item, i) => {
+    const itemview = itemComponent.view(item);
+    return (
+      h('li', { class: {selected: model.selected === i},
+                style: style,
+                on: { click: [action$, Action.Select(i)] }
+              }, 
+              typeof itemview == 'string' ? itemview : [itemview]
+      )
+    );
+  });
+
+  // styles
+
   const initStyle = () => { return {li: {}, ul: {}}; }
   const fixedStyle = {
     ul: { 
@@ -89,26 +113,6 @@ export default function menu(itemComponent,valueAccessor){
     }
   };
 
-  const view = curry( ({style=initStyle(), action$}, model) => {
-    style.ul = merge(style.ul || {}, fixedStyle.ul);
-    style.li = merge(style.li || {}, fixedStyle.li);
-
-    const li = (item,i) => {
-      const itemview = itemComponent.view(item);
-      return (
-        h('li', { class: {selected: model.selected === i},
-                  style: style.li,
-                  on: { click: [action$, Action.Select(i)] }
-                }, 
-                typeof itemview == 'string' ? itemview : [itemview]
-        )
-      );
-    }
-
-    return (
-      h('ul', {style: style.ul}, model.items.map(li))
-    );
-  });
 
   return { init, update, Action, view };
 

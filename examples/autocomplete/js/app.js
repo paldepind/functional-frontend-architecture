@@ -1,4 +1,4 @@
-/* globals window, document */
+/* globals window */
 
 import curry from 'ramda/src/curry'
 import compose from 'ramda/src/compose'
@@ -110,13 +110,11 @@ const parseInput = (str) => {
 ///////////////////////////////////////////////////////////////////////////////
 // model
 
-const init = () => (
-  {
-    message: Maybe.Nothing(),
-    country: Maybe.Nothing(),
-    search: search.init() 
-  }
-);
+const init = () => ({
+  message: Maybe.Nothing(),
+  country: Maybe.Nothing(),
+  search: search.init() 
+});
 
 
 // update
@@ -146,10 +144,10 @@ const update = Action.caseOn({
 const view = curry( ({action$}, model) => (
   h('div#app', [
     h('h1', 'Zip codes autocomplete example'),
-    h('h2', header(model)),
+    h('h2', headerView(model)),
     h('div.country', [
       h('label', {attrs: {'for': 'country'}}, 'Country'),
-      countryMenu(action$, ['', 'DE','ES','FR','US'])
+      countryMenuView(action$, ['', 'DE','ES','FR','US'])
     ]),
     search.view(
       { action$: forwardTo(action$, Action.Search), 
@@ -160,13 +158,13 @@ const view = curry( ({action$}, model) => (
   ])
 ));
 
-const header = (model) => (
+const headerView = (model) => (
   model.country.isNothing() ? "Select a country"
                             : model.search.isEditing ? ""
                             : "Enter a place and state or province, separated by a comma"
 )
 
-const countryMenu = (action$, codes) => (
+const countryMenuView = (action$, codes) => (
   h('select', {
       on: {
         change: compose(action$, Action.SetCountry, targetValue) 
@@ -176,5 +174,6 @@ const countryMenu = (action$, codes) => (
   )
 );
 
+// note: extra exports for testing
 
 export default {init, update, Action, view, search, searchMenu, query}
