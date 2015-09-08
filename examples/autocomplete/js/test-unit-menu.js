@@ -3,17 +3,32 @@ import test from 'tape'
 import menu from './menu'
 
 import prop from 'ramda/src/prop'
+import map from 'ramda/src/map'
+import Maybe from 'ramda-fantasy/src/Maybe'
+
 const identity = (x) => x
 
 const confirmSelected = (assert) => {
   return (inits, exps, subj) => {
     let actual = subj.init(inits);
     for (var i=0;i<exps.length;++i){
-      actual = subj.update( subj.Action.Select(i), actual);
+      actual = subj.update( subj.Action.Select(Maybe(i)), actual);
       console.log(JSON.stringify(actual));
-      assert.equal(actual.selected, i, "selected index updated: " + i);
-      assert.equal(actual.selectedValue, exps[i], "selected value updated");
+      map((act) => { assert.equal(act, i, "selected index updated: " + i); }, 
+          actual.selected);
+      map((act) => { assert.equal(act, exps[i], "selected value updated"); },
+          actual.selectedValue);
     }
+  }
+}
+
+const confirmNothingSelectedAct = (assert) => {
+  return (act, inits, subj) => {
+    let actual = subj.init(inits);
+    actual = subj.update( act(), actual);
+    console.log(JSON.stringify(actual));
+    assert.ok(actual.selected.isNothing(), 'selected index is Nothing');
+    assert.ok(actual.selectedValue.isNothing(), 'selected value is Nothing');
   }
 }
 
@@ -23,7 +38,8 @@ const confirmSelectedAct = (assert) => {
     for (var i=0;i<exps.length;++i){
       actual = subj.update( act(), actual);
       console.log(JSON.stringify(actual));
-      assert.equal(actual.selected, exps[i], "selected index updated: " + exps[i]);
+      map((act) => { assert.equal(act, exps[i], "selected index updated: " + exps[i]); },
+        actual.selected);
     }
   }
 }
@@ -53,7 +69,7 @@ test('menu select action, complex menu item component', (assert) => {
 });
 
 test('menu select-next action', (assert) => {
-  assert.plan(11);
+  assert.plan(10+2);
 
   const subj = menu({view: identity, init: identity}, identity);
 
@@ -64,12 +80,12 @@ test('menu select-next action', (assert) => {
 
   const emptySubj = menu({view: identity, init: identity}, identity);
 
-  confirmSelectedAct(assert)(emptySubj.Action.SelectNext, [], [null], emptySubj);
+  confirmNothingSelectedAct(assert)(emptySubj.Action.SelectNext, [], emptySubj);
 
 });
 
 test('menu select-prev action', (assert) => {
-  assert.plan(11);
+  assert.plan(10+2);
 
   const subj = menu({view: identity, init: identity}, identity);
 
@@ -80,7 +96,7 @@ test('menu select-prev action', (assert) => {
 
   const emptySubj = menu({view: identity, init: identity}, identity);
 
-  confirmSelectedAct(assert)(emptySubj.Action.SelectPrev, [], [null], emptySubj);
+  confirmNothingSelectedAct(assert)(emptySubj.Action.SelectPrev, [], emptySubj);
 
 });
 
@@ -92,8 +108,8 @@ test('menu refresh action', (assert) => {
   let actual = subj.init([]);
   actual = subj.update(subj.Action.Refresh(["four","five"]), actual);
 
-  assert.equal(actual.selected, null, "selected is null after refresh");
-  assert.equal(actual.selectedValue, null, "selectedValue is null after refresh");
+  assert.ok(actual.selected.isNothing(), "selected is Nothing after refresh");
+  assert.ok(actual.selectedValue.isNothing(), "selectedValue is Nothing after refresh");
   assert.deepEqual(actual.items, ["four","five"], "items are changed after refresh");
  
 });

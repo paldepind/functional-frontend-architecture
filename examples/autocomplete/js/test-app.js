@@ -51,10 +51,10 @@ test('set-country action', (assert) => {
   let snapshots = [];
   start(action$, snapshots, app.init());
   
-  action$(app.Action.SetCountry('DE'));
+  action$(app.Action.SetCountry(Maybe('DE')));
 
   assert.equal(snapshots.length, 2, "one state change plus initial");
-  assert.ok(equals(snapshots[1].country, Maybe.Just('DE')), "set country to Just expected");
+  assert.ok(snapshots[1].country.equals(Maybe('DE')), "set country to Just expected");
 
 });
 
@@ -66,9 +66,10 @@ test('search action, success', (assert) => {
   let snapshots = [];
   const state$ = start(action$, snapshots, app.init());
   
-  action$(app.Action.SetCountry('US'));
+  action$(app.Action.SetCountry(Maybe('US')));
 
-  const searchAction = app.search.Action.Input(app.query(state$()), 'Philadelphia, PA');
+  const searchAction = app.search.Action.Input(app.query(state$()), 
+                                               Maybe('Philadelphia, PA'));
   action$(app.Action.Search(searchAction));
 
   setTimeout( () => {
@@ -86,9 +87,10 @@ test('search action, failure (404 not found)', (assert) => {
   let snapshots = [];
   const state$ = start(action$, snapshots, app.init());
   
-  action$(app.Action.SetCountry('US'));
+  action$(app.Action.SetCountry(Maybe('US')));
 
-  const searchAction = app.search.Action.Input(app.query(state$()), 'Flooby, MA');
+  const searchAction = app.search.Action.Input(app.query(state$()), 
+                                               Maybe('Flooby, MA'));
   action$(app.Action.Search(searchAction));
 
   setTimeout( () => {
@@ -106,7 +108,8 @@ test('search action, failure (no country set)', (assert) => {
   let snapshots = [];
   const state$ = start(action$, snapshots, app.init());
   
-  const searchAction = app.search.Action.Input(app.query(state$()), 'Philadelphia, PA');
+  const searchAction = app.search.Action.Input(app.query(state$()), 
+                                               Maybe('Philadelphia, PA'));
   action$(app.Action.Search(searchAction));
 
   setTimeout( () => {
@@ -124,9 +127,10 @@ test('search action, failure (place and state not parsed)', (assert) => {
   let snapshots = [];
   const state$ = start(action$, snapshots, app.init());
   
-  action$(app.Action.SetCountry('US'));
+  action$(app.Action.SetCountry(Maybe('US')));
 
-  const searchAction = app.search.Action.Input(app.query(state$()), 'Philadelphia PA');
+  const searchAction = app.search.Action.Input(app.query(state$()), 
+                                               Maybe('Philadelphia PA'));
   action$(app.Action.Search(searchAction));
 
   setTimeout( () => {
@@ -144,9 +148,10 @@ test('search action, failure (place blank)', (assert) => {
   let snapshots = [];
   const state$ = start(action$, snapshots, app.init());
   
-  action$(app.Action.SetCountry('US'));
+  action$(app.Action.SetCountry(Maybe('US')));
 
-  const searchAction = app.search.Action.Input(app.query(state$()), ', PA');
+  const searchAction = app.search.Action.Input(app.query(state$()), 
+                                               Maybe(', PA'));
   action$(app.Action.Search(searchAction));
 
   setTimeout( () => {
