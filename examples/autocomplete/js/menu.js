@@ -78,8 +78,15 @@ export default function menu(itemComponent,valueAccessor){
 
   const initStyle = () => { return {li: {}, ul: {}}; }
   const fixedStyle = {
-    ul: { 'list-style': 'none' },
-    li: { 'cursor': 'pointer' }
+    ul: { 
+      'list-style': 'none',
+      'padding': '0',
+      'margin-top': '0',
+      'margin-bottom': '0'
+    },
+    li: { 
+      'cursor': 'pointer',
+    }
   };
 
   const view = curry( ({style=initStyle(), action$}, model) => {

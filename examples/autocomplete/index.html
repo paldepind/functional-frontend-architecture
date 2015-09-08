@@ -34,28 +34,34 @@
         width: 30rem;
       }
 
-      .autocomplete > ul {
-        display: inline-block;
-        width: 30rem;
+      .autocomplete > .menu {
+        width: 29rem;
+        margin-left: 1rem;
+        background: white;
+        border-right: 1px solid lightgrey;
+        border-bottom: 1px solid lightgrey;
+        border-left: 1px solid lightgrey;
+        box-shadow: 1px 1px 2px 0 lightgrey;
+        -webkit-box-shadow: 1px 1px 2px 0 lightgrey;
+        -moz-box-shadow: 1px 1px 2px 0 lightgrey;
       }
       
-      .autocomplete > ul > li {
-        padding: 0.5rem;
-        border: 1px solid white;
+      .autocomplete > .menu > ul > li {
+        padding-left: 1rem;
       }
 
-      .autocomplete > ul > li.selected {
+      .autocomplete > .menu > ul > li.selected {
         background-color: lightyellow;
-        border: 1px solid lightgrey;
       }
 
-      .autocomplete > ul > li span {
+      .autocomplete > .menu > ul > li span {
         margin-right: 1rem;
       }
 
     </style>
   </head>
   <body>
+    <div id="search-results"></div>
     <div id="container"></div>
   </body>
 </html>

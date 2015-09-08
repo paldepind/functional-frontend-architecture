@@ -1,4 +1,4 @@
-/* globals window */
+/* globals window, document */
 
 import curry from 'ramda/src/curry'
 import compose from 'ramda/src/compose'
@@ -40,6 +40,7 @@ const targetValue = path(['target', 'value']);
 const nullEmpty = (x) => x.length === 0 ? null : x
 const noFx = (s) => [s,[]]
 
+////////////////////////////////////////////////////////////////////////////////
 // app constants
 
 const searchItem = {  // mini-component
@@ -56,6 +57,7 @@ const searchMenu = menu(searchItem, searchItemValue);
 const search = autocomplete(searchMenu);
 
 
+////////////////////////////////////////////////////////////////////////////////
 // autocomplete query
 
 // Object -> String -> Future (String, Array (Array String))
@@ -105,10 +107,7 @@ const parseInput = (str) => {
 };
 
 
-
-
 ///////////////////////////////////////////////////////////////////////////////
-
 // model
 
 const init = () => (
@@ -154,7 +153,7 @@ const view = curry( ({action$}, model) => (
     ]),
     search.view(
       { action$: forwardTo(action$, Action.Search), 
-        query:   query(model),
+        query:   query(model)
       },
       model.search
     )
@@ -163,7 +162,7 @@ const view = curry( ({action$}, model) => (
 
 const header = (model) => (
   model.country.isNothing() ? "Select a country"
-                            : model.search.menuVisible ? ""
+                            : model.search.isEditing ? ""
                             : "Enter a place and state or province, separated by a comma"
 )
 

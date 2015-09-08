@@ -6,6 +6,7 @@ import always from 'ramda/src/always'
 import T from 'ramda/src/T'
 import F from 'ramda/src/F'
 import assoc from 'ramda/src/assoc'
+import merge from 'ramda/src/merge'
 import lensProp from 'ramda/src/lensProp'
 import get from 'ramda/src/view'
 
@@ -32,7 +33,7 @@ export default function autocomplete(menu){
   const init = (value=null) => {
     return {
       menu: menu.init(),
-      menuVisible: false,
+      isEditing: false,
       value: value
     }
   }
@@ -61,7 +62,7 @@ export default function autocomplete(menu){
     Input: (query, str, model) => {
       const tasks = [ query(str,model).bimap( throwOr(clearMenu), refreshMenu ) ]; 
       return [
-        assoc('menuVisible', true, assoc('value', str, model)) ,
+        assoc('isEditing', true, assoc('value', str, model)) ,
         tasks
       ];
     },
@@ -70,9 +71,9 @@ export default function autocomplete(menu){
       return noFx( assoc('menu', menu.update(action, model.menu), model) )
     },
 
-    ShowMenu: compose(noFx, assoc('menuVisible', true)),
+    ShowMenu: compose(noFx, assoc('isEditing', true)),
 
-    HideMenu: compose(noFx, assoc('menuVisible', false))
+    HideMenu: compose(noFx, assoc('isEditing', false))
 
   });
 
@@ -91,11 +92,13 @@ export default function autocomplete(menu){
     const handleDown  = compose( menuAction$, always(menu.Action.SelectNext()) );
     const handleUp    = compose( menuAction$, always(menu.Action.SelectPrev()) );
 
+    const showMenu = model.isEditing && model.menu.items.length > 0;
+
     const input = (
       h('input', {
         on: {
           input: compose(action$, Action.Input(query), get(valueLens)),
-          keydown: !model.menuVisible ? noop 
+          keydown: !model.isEditing ? noop 
                      : caseKey([
                          [['Esc','Escape', 0x1B],    handleEsc],
                          [['Enter', 0x0A, 0x0D],     handleEnter],
@@ -110,18 +113,48 @@ export default function autocomplete(menu){
       })
     );
 
-    return (
-      h('div.autocomplete', 
-        model.menuVisible ? [input, menuView(model.menu)]
-                          : [input]
+    const menudiv = (
+      h('div.menu', {
+          style: style.menu,
+          hook: { insert: positionUnder('input'), 
+                  postpatch: repositionUnder('input') 
+          } 
+        }, 
+        [ menuView(model.menu) ]
       )
     );
+
+    return h('div.autocomplete', showMenu ? [input, menudiv] : [input] );
 
   });
 
   return {init, update, Action, view};
 }
 
+const positionUnder = curry( (selector, vnode) => {
+  let elm = vnode.elm,
+      targetElm = elm.parentNode.querySelector(selector);
+  if (!(elm && targetElm)) return;
+  const rect = targetElm.getBoundingClientRect();
+  elm.style.top = "" + (rect.top + rect.height + 1) + "px";
+  elm.style.left = "" + rect.left + "px";
+  return;
+});
+
+const repositionUnder = curry( (selector, oldVNode, vnode) => (
+  positionUnder(selector,vnode)
+));
+  
+
+const style = {
+  menu: {
+    position: 'absolute',
+    'z-index': '100',
+    opacity: '1', 
+    transition: 'opacity 0.2s', 
+    remove: { opacity: '0' }
+  }
+};
 
 // move to helpers?
 const caseKey = curry( (handlers,e) => {
