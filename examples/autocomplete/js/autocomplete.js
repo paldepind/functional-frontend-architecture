@@ -12,6 +12,7 @@ import get from 'ramda/src/view'
 
 import Type from 'union-type'
 import Future from 'ramda-fantasy/src/Future'
+import Maybe from 'ramda-fantasy/src/Maybe'
 import forwardTo from 'flyd-forwardto'
 
 import h from 'snabbdom/h'
@@ -19,9 +20,12 @@ import h from 'snabbdom/h'
 const noop = function(){};
 const noFx = (s) => [s, []];
 
+const isMaybe = (val) => Maybe.isNothing(val) || Maybe.isJust(val)
+const maybeEmpty = (val) => val.length === 0 ? Maybe.Nothing() : Maybe(val)
+
 const throwOr = (fn) => {
   return (x) => {
-    if (x instanceof Error) throw x; 
+    if (x instanceof Error) { throw x; return; }
     return fn(x);
   }
 }
@@ -34,20 +38,19 @@ export default function autocomplete(menu){
   const init = (value=null) => ({
     menu: menu.init(),
     isEditing: false,
-    value: value
+    value: Maybe(value)
   });
 
   const showMenu = (model) => model.isEditing && model.menu.items.length > 0;
 
-  const selectedOrInputValue = (model) => {
-    return (model.menu.selectedValue === null) ? model.value 
-                                               : model.menu.selectedValue;
-  }
+  const selectedOrInputValue = (model) => (
+    model.menu.selectedValue.getOrElse(model.value.getOrElse('')) 
+  );
 
   // update
 
   const Action = Type({
-    Input: [Function, String],
+    Input: [Function, isMaybe],
     UpdateMenu: [menu.Action],
     ShowMenu: [],
     HideMenu: []
@@ -101,7 +104,7 @@ export default function autocomplete(menu){
     return (
       h('input', {
         on: {
-          input: compose(action$, Action.Input(query), get(valueLens)),
+          input: compose(action$, Action.Input(query), maybeEmpty, get(valueLens)),
           keydown: !model.isEditing ? noop 
                      : caseKey([
                          [['Esc','Escape', 0x1B],    handleEsc],

@@ -16,7 +16,7 @@ import app from './app'
 
 const throwOr = (fn) => {
   return (x) => {
-    if (x instanceof Error) throw x; 
+    if (x instanceof Error) { throw x; return; }
     return fn(x);
   }
 }
@@ -33,7 +33,7 @@ const state$ = flyd.scan( flip(update), app.init(), action$);
 const vnode$ = flyd.map( app.view({action$}), state$);
 
 // enable this for debugging 
-// flyd.on( console.log.bind(console), state$ );
+flyd.on( console.log.bind(console), state$ );
 
 
 // Begin rendering when the DOM is ready

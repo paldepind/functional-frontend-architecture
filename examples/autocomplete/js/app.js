@@ -5,6 +5,7 @@ import compose from 'ramda/src/compose'
 import map from 'ramda/src/map'
 import chain from 'ramda/src/chain'
 import identity from 'ramda/src/identity'
+import unary from 'ramda/src/unary'
 import invoker from 'ramda/src/invoker'
 import ifElse from 'ramda/src/ifElse'
 import path from 'ramda/src/path'
@@ -31,13 +32,14 @@ import menu from './menu'
 
 // utils 
 
+const isMaybe = (val) => Maybe.isNothing(val) || Maybe.isJust(val)
+const maybeEmpty = (val) => val.length === 0 ? Maybe.Nothing() : Maybe(val)
 const rejectFut = (val) => Future((rej,res) => rej(val))
 const promToFut = (prom) => Future((rej, res) => prom.then(res, rej))
 const getJSON = compose( promToFut, invoker(0, 'json'))
 const getUrl = (url) => promToFut(window.fetch(new window.Request(url, {method: 'GET'})))
 const respIsOK = (r) => !!r.ok
 const targetValue = path(['target', 'value']);
-const nullEmpty = (x) => x.length === 0 ? null : x
 const noFx = (s) => [s,[]]
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -65,7 +67,7 @@ const query = (model) => (
   compose(
     chain( ifElse(respIsOK, parseResult, fetchFail) ),
     chain(fetchZips), 
-    toParams(model)  
+    unary(toParams(model))
   )
 );
 
@@ -85,26 +87,47 @@ const fetchZips = ([country, state, place]) => {
   return getUrl(`http://api.zippopotam.us/${country}/${state}/${place}`);
 }
 
-// Object -> String -> Future (String, Array String)
-const toParams = (model) => (str,_) => {
+// Object -> Maybe String -> Future (String, Array String)
+const toParams = (model) => (str) => {
   return new Future( (rej, res) => {
     const stateAndPlace = parseInput(str);
     const country = model.country;
-    if (stateAndPlace.length !== 2) { 
+    if (Maybe.isNothing(stateAndPlace)) { 
       rej("Enter place name and state or province, separated by a comma"); return; 
     }
     if (Maybe.isNothing(country))   { 
       rej("Select a country"); return; 
     }
-    map((c) => res(prepend(c,stateAndPlace)), country);
+    map((c) => 
+      map((s) => 
+        res(prepend(c,s)), 
+        stateAndPlace
+      ), 
+      country
+    );
+    return;
   });
 }
 
-const parseInput = (str) => {
-  const raw = map((part) => part.trim(), str.split(','));
-  if (raw.some((part) => part.length === 0)) return [];
-  return raw.reverse();
-};
+const parseInput = (str) => (
+  chain(
+    validateStateAndPlace,
+    map(parseStateAndPlace, str)
+  )
+);
+
+const parseStateAndPlace = (s) => (
+  s.split(',')
+   .map(invoker(0,'trim'))
+   .reverse()
+);
+
+const validateStateAndPlace = (parts) => (
+  (parts.length < 2 || 
+   parts.some((p) => p.length === 0)) ? Maybe.Nothing()
+                                      : Maybe(parts.slice(0,2))
+);
+
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -120,14 +143,14 @@ const init = () => ({
 // update
 
 const Action = Type({
-  SetCountry: [String],
+  SetCountry: [isMaybe],
   Search: [search.Action]
 });
 
 const update = Action.caseOn({
   
   SetCountry: (str,model) => (
-    noFx( assoc('country', Maybe(nullEmpty(str)), model) )
+    noFx( assoc('country', str, model) )
   ),
 
   Search: (action,model) => {
@@ -167,7 +190,7 @@ const headerView = (model) => (
 const countryMenuView = (action$, codes) => (
   h('select', {
       on: {
-        change: compose(action$, Action.SetCountry, targetValue) 
+        change: compose(action$, Action.SetCountry, maybeEmpty, targetValue) 
       }
     },
     map( (code) => h('option',code) , codes) 
