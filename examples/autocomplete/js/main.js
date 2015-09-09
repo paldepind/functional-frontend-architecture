@@ -13,14 +13,7 @@ import st from 'snabbdom/modules/style'
 const patch = snabbdom.init([cl,pr,at,ev,st]);
 
 import app from './app'
-
-const throwOr = (fn) => {
-  return (x) => {
-    if (x instanceof Error) throw x; 
-    return fn(x);
-  }
-}
-
+import throwOr from './helpers/throwor'
 
 const update = (action, state) => {
   const [state1,tasks] = app.update(action,state); 

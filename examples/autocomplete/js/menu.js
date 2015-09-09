@@ -7,12 +7,11 @@ import toString from 'ramda/src/toString'
 
 import Type from 'union-type'
 import Maybe from 'ramda-fantasy/src/Maybe'
-
 import h from 'snabbdom/h'
 
-const identity = (x) => x
+import isMaybe from './helpers/ismaybe'
 
-const isMaybe = (val) => Maybe.isNothing(val) || Maybe.isJust(val)
+const identity = (x) => x
 
 export default function menu(itemComponent,valueAccessor){
     

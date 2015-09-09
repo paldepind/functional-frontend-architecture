@@ -7,28 +7,20 @@ import T from 'ramda/src/T'
 import F from 'ramda/src/F'
 import assoc from 'ramda/src/assoc'
 import merge from 'ramda/src/merge'
-import lensProp from 'ramda/src/lensProp'
-import get from 'ramda/src/view'
 
 import Type from 'union-type'
 import Future from 'ramda-fantasy/src/Future'
 import Maybe from 'ramda-fantasy/src/Maybe'
 import forwardTo from 'flyd-forwardto'
-
 import h from 'snabbdom/h'
 
+import noFx from './helpers/nofx'
+import isMaybe from './helpers/ismaybe'
+import emptyToNothing from './helpers/emptytonothing'
+import targetValue from './helpers/targetvalue'
+import caseKey from './helpers/casekey'
+
 const noop = function(){};
-const noFx = (s) => [s, []];
-
-const isMaybe = (val) => Maybe.isNothing(val) || Maybe.isJust(val)
-const maybeEmpty = (val) => val.length === 0 ? Maybe.Nothing() : Maybe(val)
-
-const throwOr = (fn) => {
-  return (x) => {
-    if (x instanceof Error) throw x; 
-    return fn(x);
-  }
-}
 
 
 export default function autocomplete(menu){
@@ -111,7 +103,7 @@ export default function autocomplete(menu){
     return (
       h('input', {
         on: {
-          input: compose(action$, Action.Input(query), maybeEmpty, get(valueLens)),
+          input: compose(action$, Action.Input(query), emptyToNothing, targetValue),
           keydown: !model.isEditing ? noop 
                      : caseKey([
                          [['Esc','Escape', 0x1B],    handleEsc],
@@ -173,18 +165,4 @@ const repositionUnder = curry( (selector, oldVNode, vnode) => (
 ));
   
 
-
-// move to helpers
-
-const valueLens = compose( lensProp('target'), lensProp('value') );
-
-const caseKey = curry( (handlers,e) => {
-  const k = e.key || e.keyCode;
-  const mapHandlers = handlers.reduce((o,handler) => {
-            for (let i=0;i<handler[0].length;++i) 
-              o[handler[0][i]] = handler[1];
-            return o;
-          }, {});
-  return hasOwnProperty.call(mapHandlers,k) ? mapHandlers[k](e) : noop() ;
-});
 

@@ -19,12 +19,9 @@ import join from 'ramda/src/join'
 import allPass from 'ramda/src/allPass'
 
 import Type from 'union-type'
-
 import Future from 'ramda-fantasy/src/Future'
 import Maybe from 'ramda-fantasy/src/Maybe'
-
 import forwardTo from 'flyd-forwardto'
-
 import h from 'snabbdom/h'
 
 import autocomplete from './autocomplete'
@@ -32,16 +29,17 @@ import menu from './menu'
 
 // utils 
 
-const isMaybe = (val) => Maybe.isNothing(val) || Maybe.isJust(val)
-const maybeEmpty = (val) => val.length === 0 ? Maybe.Nothing() : Maybe(val)
+import isMaybe from './helpers/ismaybe'
+import emptyToNothing from './helpers/emptytonothing'
+import errorOr from './helpers/erroror'
+import targetValue from './helpers/targetvalue'
+import noFx from './helpers/nofx'
+
 const rejectFut = (val) => Future((rej,res) => rej(val))
-const errorOr = (fn) => (val) => (val instanceof Error ? val : fn(val))
 const promToFut = (prom) => Future((rej, res) => prom.then(res, rej))
 const getJSON = compose( promToFut, invoker(0, 'json'))
 const getUrl = (url) => promToFut(window.fetch(new window.Request(url, {method: 'GET'})))
 const respIsOK = (r) => !!r.ok
-const targetValue = path(['target', 'value']);
-const noFx = (s) => [s,[]]
 
 ////////////////////////////////////////////////////////////////////////////////
 // app constants
@@ -213,7 +211,7 @@ const view = curry( ({action$}, model) => (
 const countryMenuView = (action$, codes) => (
   h('select', {
       on: {
-        change: compose(action$, Action.SetCountry, maybeEmpty, targetValue) 
+        change: compose(action$, Action.SetCountry, emptyToNothing, targetValue) 
       }
     },
     map( (code) => h('option',code) , codes) 
