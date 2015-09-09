@@ -45,7 +45,7 @@ export default function menu(itemComponent,valueAccessor){
     SelectNext: [],
     SelectPrev: [],
     Refresh: [Array],
-    Clear: [String]
+    Clear: []
   });
 
   
@@ -68,7 +68,7 @@ export default function menu(itemComponent,valueAccessor){
 
     Refresh: init,
 
-    Clear: (_,model) => init([])
+    Clear: (_) => init([])
 
   });
 

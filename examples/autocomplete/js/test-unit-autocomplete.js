@@ -4,6 +4,7 @@ import Future from 'ramda-fantasy/src/Future'
 import Maybe from 'ramda-fantasy/src/Maybe'
 import prop from 'ramda/src/prop'
 import map from 'ramda/src/map'
+import compose from 'ramda/src/compose'
 
 import menu from './menu'
 import autocomplete from './autocomplete'
@@ -38,9 +39,14 @@ const mockTaskCalls = (rets,parse=identity,guard=T) => {
 }
 
 const start = (action$, snapshots, subj, init) => {
+  
+  // note this mimics the app action flow above the autocomplete component
+  const refreshMenu = compose(action$, subj.Action.RefreshMenu)
+  const clearMenu   = compose(action$, subj.Action.ClearMenu)
+  
   const state$ = flyd.map( (act) => {
                    const [s1,tasks] = subj.update(act,state$()); 
-                   tasks.map((t) => t.fork(throwOr(action$), action$));
+                   tasks.map((t) => t.fork(throwOr(clearMenu), refreshMenu));
                    return s1;
                  }, action$);
   flyd.on( (s) => {

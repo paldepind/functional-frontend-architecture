@@ -12,7 +12,9 @@ The primary aims of this example are to demonstrate:
   [zip-codes-future][zip] example, which this example builds upon.
 
 - How error conditions can be routed to actions, even to nested components,
-  using `Future.bimap` (using the [ramda-fantasy implementation][fut]).
+  using `Future.bimap` (using the [ramda-fantasy implementation][fut]). Contrast
+  this with the [file-uploader example][fup], which makes use of a (more 
+  Elm-like) Result type for routing.
 
 - Composition of a complex Future chain for processing input into query results.
 
@@ -69,6 +71,7 @@ Browse to `http://localhost:8080/index.html`.
 
 [wp]: https://en.wikipedia.org/wiki/Autocomplete
 [zip]: https://github.com/paldepind/functional-frontend-architecture/tree/master/examples/zip-codes-future
+[fup]: https://github.com/paldepind/functional-frontend-architecture/tree/master/examples/file-uploader
 [zippo]: http://zippopotam.us
 [fut]:  https://github.com/ramda/ramda-fantasy/tree/master/src/Future.js
 [maybe]:  https://github.com/ramda/ramda-fantasy/tree/master/src/Maybe.js

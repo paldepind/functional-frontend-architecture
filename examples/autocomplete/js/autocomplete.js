@@ -51,23 +51,30 @@ export default function autocomplete(menu){
 
   const Action = Type({
     Input: [Function, isMaybe],
+    RefreshMenu: [Array],
+    ClearMenu: [],
     UpdateMenu: [menu.Action],
     ShowMenu: [],
     HideMenu: []
   })
 
-  const refreshMenu = compose(Action.UpdateMenu, menu.Action.Refresh);
-  const clearMenu   = compose(Action.UpdateMenu, menu.Action.Clear);
-  
   const update = Action.caseOn({
     
     Input: (query, str, model) => {
-      const tasks = [ query(str,model).bimap( throwOr(clearMenu), refreshMenu ) ]; 
+      const tasks = [ query(str,model) ]; 
       return [
         assoc('isEditing', true, assoc('value', str, model)) ,
         tasks
       ];
     },
+
+    RefreshMenu: (items, model) => (
+      update( Action.UpdateMenu( menu.Action.Refresh(items) ), model )
+    ),
+
+    ClearMenu: (model) => (
+      update( Action.UpdateMenu( menu.Action.Clear() ), model )
+    ),
 
     UpdateMenu: (action, model) => (
       noFx( assoc('menu', menu.update(action, model.menu), model) )

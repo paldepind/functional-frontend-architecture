@@ -35,6 +35,7 @@ import menu from './menu'
 const isMaybe = (val) => Maybe.isNothing(val) || Maybe.isJust(val)
 const maybeEmpty = (val) => val.length === 0 ? Maybe.Nothing() : Maybe(val)
 const rejectFut = (val) => Future((rej,res) => rej(val))
+const errorOr = (fn) => (val) => (val instanceof Error ? val : fn(val))
 const promToFut = (prom) => Future((rej, res) => prom.then(res, rej))
 const getJSON = compose( promToFut, invoker(0, 'json'))
 const getUrl = (url) => promToFut(window.fetch(new window.Request(url, {method: 'GET'})))
@@ -80,7 +81,7 @@ const getZipsAndPlaces = (data) => {
 const parseResult = compose( map(getZipsAndPlaces), getJSON); 
 
 // Response -> Future (String, ())
-const fetchFail = (resp) => rejectFut("Not found");
+const fetchFail = (resp) => rejectFut("Not found, check your spelling.");
 
 // Array String -> Future ((), Response)
 const fetchZips = ([country, state, place]) => {
@@ -134,40 +135,67 @@ const validateStateAndPlace = (parts) => (
 // model
 
 const init = () => ({
-  message: Maybe.Nothing(),
+  message: Maybe(initMessage),
   country: Maybe.Nothing(),
   search: search.init() 
 });
 
+const initMessage = "Select a country, and enter a place name."
+
+const headerMessage = (model) => (
+  model.message.getOrElse(initMessage)
+)
 
 // update
 
 const Action = Type({
   SetCountry: [isMaybe],
-  Search: [search.Action]
+  Search: [search.Action],
+  SearchResultOk: [Array],
+  SearchResultErr: [String]
 });
 
 const update = Action.caseOn({
   
   SetCountry: (str,model) => (
-    noFx( assoc('country', str, model) )
+    noFx( assoc('message', (str.isNothing() ? Maybe(initMessage) : model.message),
+            assoc('country', str, model) 
+          ))
   ),
 
   Search: (action,model) => {
     const [s,tasks] = search.update(action, model.search);
     return [ 
       assoc('search', s, model),
-      map( (t) => t.bimap(Action.Search, Action.Search), tasks)  
+      map( (t) => t.bimap( errorOr(Action.SearchResultErr), Action.SearchResultOk), 
+           tasks
+      )  
     ];
+  },
+
+  SearchResultOk: (results, model) => {
+    const count = results.length;
+    const [s,_] = search.update(search.Action.RefreshMenu(results), model.search);
+    return noFx(assoc('message', Maybe.Just(`${count} postal codes found.`), 
+                  assoc('search', s, model)
+                ));
+  },
+  
+  SearchResultErr: (message, model) => {
+    const [s,_] = search.update(search.Action.ClearMenu(), model.search);
+    return noFx(assoc('message', Maybe.Just(message), 
+                  assoc('search', s, model)
+                ));
   }
+
 });
 
 // view
 
 const view = curry( ({action$}, model) => (
   h('div#app', [
-    h('h1', 'Zip codes autocomplete example'),
-    h('h2', headerView(model)),
+    h('h1', 'Postal codes autocomplete example'),
+    h('h2', headerMessage(model)),
     h('div.country', [
       h('label', {attrs: {'for': 'country'}}, 'Country'),
       countryMenuView(action$, ['', 'DE','ES','FR','US'])
@@ -181,11 +209,6 @@ const view = curry( ({action$}, model) => (
   ])
 ));
 
-const headerView = (model) => (
-  model.country.isNothing() ? "Select a country"
-                            : model.search.isEditing ? ""
-                            : "Enter a place and state or province, separated by a comma"
-)
 
 const countryMenuView = (action$, codes) => (
   h('select', {
