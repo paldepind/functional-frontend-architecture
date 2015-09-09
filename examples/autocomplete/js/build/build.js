@@ -1,29 +1,19 @@
+System.registerDynamic("npm:flyd@0.1.14", ["npm:flyd@0.1.14/lib/index"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = require("npm:flyd@0.1.14/lib/index");
+  global.define = __define;
+  return module.exports;
+});
+
 System.registerDynamic("npm:snabbdom@0.2.6", ["npm:snabbdom@0.2.6/snabbdom"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   module.exports = require("npm:snabbdom@0.2.6/snabbdom");
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/flip", ["npm:ramda@0.17.1/src/internal/_curry1", "npm:ramda@0.17.1/src/internal/_slice", "npm:ramda@0.17.1/src/curry"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _curry1 = require("npm:ramda@0.17.1/src/internal/_curry1");
-  var _slice = require("npm:ramda@0.17.1/src/internal/_slice");
-  var curry = require("npm:ramda@0.17.1/src/curry");
-  module.exports = _curry1(function flip(fn) {
-    return curry(function(a, b) {
-      var args = _slice(arguments);
-      args[0] = b;
-      args[1] = a;
-      return fn.apply(this, args);
-    });
-  });
   global.define = __define;
   return module.exports;
 });
@@ -45,12 +35,22 @@ System.registerDynamic("js/helpers/throwor.js", [], true, function(require, expo
   return module.exports;
 });
 
-System.registerDynamic("npm:flyd@0.1.14", ["npm:flyd@0.1.14/lib/index"], true, function(require, exports, module) {
+System.registerDynamic("npm:ramda@0.17.1/src/flip", ["npm:ramda@0.17.1/src/internal/_curry1", "npm:ramda@0.17.1/src/internal/_slice", "npm:ramda@0.17.1/src/curry"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = require("npm:flyd@0.1.14/lib/index");
+  var _curry1 = require("npm:ramda@0.17.1/src/internal/_curry1");
+  var _slice = require("npm:ramda@0.17.1/src/internal/_slice");
+  var curry = require("npm:ramda@0.17.1/src/curry");
+  module.exports = _curry1(function flip(fn) {
+    return curry(function(a, b) {
+      var args = _slice(arguments);
+      args[0] = b;
+      args[1] = a;
+      return fn.apply(this, args);
+    });
+  });
   global.define = __define;
   return module.exports;
 });
@@ -341,900 +341,6 @@ System.registerDynamic("npm:snabbdom@0.2.6/modules/style", [], true, function(re
     update: updateStyle,
     destroy: applyDestroyStyle,
     remove: applyRemoveStyle
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:union-type@0.1.6", ["npm:union-type@0.1.6/union-type"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = require("npm:union-type@0.1.6/union-type");
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:flyd-forwardto@0.0.2", ["npm:flyd-forwardto@0.0.2/forwardto"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = require("npm:flyd-forwardto@0.0.2/forwardto");
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("js/helpers/ismaybe.js", ["npm:ramda-fantasy@0.4.0/src/Maybe"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var Maybe = require("npm:ramda-fantasy@0.4.0/src/Maybe");
-  module.exports = function isMaybe(val) {
-    return Maybe.isNothing(val) || Maybe.isJust(val);
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("js/helpers/emptytonothing.js", ["npm:ramda-fantasy@0.4.0/src/Maybe"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var Maybe = require("npm:ramda-fantasy@0.4.0/src/Maybe");
-  module.exports = function emptyToNothing(val) {
-    return val.length === 0 ? Maybe.Nothing() : Maybe(val);
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("js/helpers/erroror.js", [], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = function errorOr(fn) {
-    return function(val) {
-      return val instanceof Error ? val : fn(val);
-    };
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("js/helpers/targetvalue.js", ["npm:ramda@0.17.1/src/path"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var path = require("npm:ramda@0.17.1/src/path");
-  module.exports = path(['target', 'value']);
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("js/helpers/nofx.js", [], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = function noFx(s) {
-    return [s, []];
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/map", ["npm:ramda@0.17.1/src/internal/_curry2", "npm:ramda@0.17.1/src/internal/_dispatchable", "npm:ramda@0.17.1/src/internal/_map", "npm:ramda@0.17.1/src/internal/_xmap"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
-  var _dispatchable = require("npm:ramda@0.17.1/src/internal/_dispatchable");
-  var _map = require("npm:ramda@0.17.1/src/internal/_map");
-  var _xmap = require("npm:ramda@0.17.1/src/internal/_xmap");
-  module.exports = _curry2(_dispatchable('map', _xmap, _map));
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/curry", ["npm:ramda@0.17.1/src/internal/_curry1", "npm:ramda@0.17.1/src/curryN"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _curry1 = require("npm:ramda@0.17.1/src/internal/_curry1");
-  var curryN = require("npm:ramda@0.17.1/src/curryN");
-  module.exports = _curry1(function curry(fn) {
-    return curryN(fn.length, fn);
-  });
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/chain", ["npm:ramda@0.17.1/src/internal/_curry2", "npm:ramda@0.17.1/src/internal/_dispatchable", "npm:ramda@0.17.1/src/internal/_xchain", "npm:ramda@0.17.1/src/map", "npm:ramda@0.17.1/src/unnest"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
-  var _dispatchable = require("npm:ramda@0.17.1/src/internal/_dispatchable");
-  var _xchain = require("npm:ramda@0.17.1/src/internal/_xchain");
-  var map = require("npm:ramda@0.17.1/src/map");
-  var unnest = require("npm:ramda@0.17.1/src/unnest");
-  module.exports = _curry2(_dispatchable('chain', _xchain, function chain(fn, list) {
-    return unnest(map(fn, list));
-  }));
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/compose", ["npm:ramda@0.17.1/src/pipe", "npm:ramda@0.17.1/src/reverse"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var pipe = require("npm:ramda@0.17.1/src/pipe");
-  var reverse = require("npm:ramda@0.17.1/src/reverse");
-  module.exports = function compose() {
-    if (arguments.length === 0) {
-      throw new Error('compose requires at least one argument');
-    }
-    return pipe.apply(this, reverse(arguments));
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/invoker", ["npm:ramda@0.17.1/src/internal/_curry2", "npm:ramda@0.17.1/src/internal/_slice", "npm:ramda@0.17.1/src/curryN", "npm:ramda@0.17.1/src/is", "npm:ramda@0.17.1/src/toString"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
-  var _slice = require("npm:ramda@0.17.1/src/internal/_slice");
-  var curryN = require("npm:ramda@0.17.1/src/curryN");
-  var is = require("npm:ramda@0.17.1/src/is");
-  var toString = require("npm:ramda@0.17.1/src/toString");
-  module.exports = _curry2(function invoker(arity, method) {
-    return curryN(arity + 1, function() {
-      var target = arguments[arity];
-      if (target != null && is(Function, target[method])) {
-        return target[method].apply(target, _slice(arguments, 0, arity));
-      }
-      throw new TypeError(toString(target) + ' does not have a method named "' + method + '"');
-    });
-  });
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/identity", ["npm:ramda@0.17.1/src/internal/_curry1", "npm:ramda@0.17.1/src/internal/_identity"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _curry1 = require("npm:ramda@0.17.1/src/internal/_curry1");
-  var _identity = require("npm:ramda@0.17.1/src/internal/_identity");
-  module.exports = _curry1(_identity);
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/ifElse", ["npm:ramda@0.17.1/src/internal/_curry3", "npm:ramda@0.17.1/src/curryN", "github:jspm/nodelibs-process@0.1.1"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  (function(process) {
-    var _curry3 = require("npm:ramda@0.17.1/src/internal/_curry3");
-    var curryN = require("npm:ramda@0.17.1/src/curryN");
-    module.exports = _curry3(function ifElse(condition, onTrue, onFalse) {
-      return curryN(Math.max(condition.length, onTrue.length, onFalse.length), function _ifElse() {
-        return condition.apply(this, arguments) ? onTrue.apply(this, arguments) : onFalse.apply(this, arguments);
-      });
-    });
-  })(require("github:jspm/nodelibs-process@0.1.1"));
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/unary", ["npm:ramda@0.17.1/src/internal/_curry1", "npm:ramda@0.17.1/src/nAry"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _curry1 = require("npm:ramda@0.17.1/src/internal/_curry1");
-  var nAry = require("npm:ramda@0.17.1/src/nAry");
-  module.exports = _curry1(function unary(fn) {
-    return nAry(1, fn);
-  });
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/props", ["npm:ramda@0.17.1/src/internal/_curry2"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
-  module.exports = _curry2(function props(ps, obj) {
-    var len = ps.length;
-    var out = [];
-    var idx = 0;
-    while (idx < len) {
-      out[idx] = obj[ps[idx]];
-      idx += 1;
-    }
-    return out;
-  });
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/path", ["npm:ramda@0.17.1/src/internal/_curry2"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
-  module.exports = _curry2(function path(paths, obj) {
-    if (obj == null) {
-      return;
-    } else {
-      var val = obj;
-      for (var idx = 0,
-          len = paths.length; idx < len && val != null; idx += 1) {
-        val = val[paths[idx]];
-      }
-      return val;
-    }
-  });
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/assoc", ["npm:ramda@0.17.1/src/internal/_curry3"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _curry3 = require("npm:ramda@0.17.1/src/internal/_curry3");
-  module.exports = _curry3(function assoc(prop, val, obj) {
-    var result = {};
-    for (var p in obj) {
-      result[p] = obj[p];
-    }
-    result[prop] = val;
-    return result;
-  });
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/prop", ["npm:ramda@0.17.1/src/internal/_curry2"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
-  module.exports = _curry2(function prop(p, obj) {
-    return obj[p];
-  });
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/prepend", ["npm:ramda@0.17.1/src/internal/_concat", "npm:ramda@0.17.1/src/internal/_curry2"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _concat = require("npm:ramda@0.17.1/src/internal/_concat");
-  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
-  module.exports = _curry2(function prepend(el, list) {
-    return _concat([el], list);
-  });
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/equals", ["npm:ramda@0.17.1/src/internal/_curry2", "npm:ramda@0.17.1/src/internal/_equals", "npm:ramda@0.17.1/src/internal/_hasMethod"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
-  var _equals = require("npm:ramda@0.17.1/src/internal/_equals");
-  var _hasMethod = require("npm:ramda@0.17.1/src/internal/_hasMethod");
-  module.exports = _curry2(function equals(a, b) {
-    return _hasMethod('equals', a) ? a.equals(b) : _hasMethod('equals', b) ? b.equals(a) : _equals(a, b, [], []);
-  });
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/join", ["npm:ramda@0.17.1/src/invoker"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var invoker = require("npm:ramda@0.17.1/src/invoker");
-  module.exports = invoker(1, 'join');
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/insert", ["npm:ramda@0.17.1/src/internal/_curry3", "npm:ramda@0.17.1/src/internal/_slice"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _curry3 = require("npm:ramda@0.17.1/src/internal/_curry3");
-  var _slice = require("npm:ramda@0.17.1/src/internal/_slice");
-  module.exports = _curry3(function insert(idx, elt, list) {
-    idx = idx < list.length && idx >= 0 ? idx : list.length;
-    var result = _slice(list);
-    result.splice(idx, 0, elt);
-    return result;
-  });
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda-fantasy@0.4.0/src/Future", ["npm:ramda@0.17.1"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var R = require("npm:ramda@0.17.1");
-  function Future(f) {
-    if (!(this instanceof Future)) {
-      return new Future(f);
-    }
-    this._fork = f;
-  }
-  Future.prototype.fork = function(reject, resolve) {
-    try {
-      this._fork(reject, resolve);
-    } catch (e) {
-      reject(e);
-    }
-  };
-  Future.prototype.map = function(f) {
-    return this.chain(function(a) {
-      return Future.of(f(a));
-    });
-  };
-  Future.prototype.ap = function(m) {
-    var self = this;
-    return new Future(function(rej, res) {
-      var applyFn,
-          val;
-      var doReject = R.once(rej);
-      function resolveIfDone() {
-        if (applyFn != null && val != null) {
-          return res(applyFn(val));
-        }
-      }
-      self.fork(doReject, function(fn) {
-        applyFn = fn;
-        resolveIfDone();
-      });
-      m.fork(doReject, function(v) {
-        val = v;
-        resolveIfDone();
-      });
-    });
-  };
-  Future.of = function(x) {
-    return new Future(function(_, resolve) {
-      return resolve(x);
-    });
-  };
-  Future.prototype.of = Future.of;
-  Future.prototype.chain = function(f) {
-    return new Future(function(reject, resolve) {
-      return this.fork(function(a) {
-        return reject(a);
-      }, function(b) {
-        return f(b).fork(reject, resolve);
-      });
-    }.bind(this));
-  };
-  Future.prototype.chainReject = function(f) {
-    return new Future(function(reject, resolve) {
-      return this.fork(function(a) {
-        return f(a).fork(reject, resolve);
-      }, function(b) {
-        return resolve(b);
-      });
-    }.bind(this));
-  };
-  Future.prototype.bimap = function(errFn, successFn) {
-    var self = this;
-    return new Future(function(reject, resolve) {
-      self.fork(function(err) {
-        reject(errFn(err));
-      }, function(val) {
-        resolve(successFn(val));
-      });
-    });
-  };
-  Future.reject = function(val) {
-    return new Future(function(reject) {
-      reject(val);
-    });
-  };
-  Future.prototype.toString = function() {
-    return 'Future(' + R.toString(this._fork) + ')';
-  };
-  Future.memoize = function(f) {
-    var status = 'IDLE';
-    var listeners = [];
-    var cachedValue;
-    var handleCompletion = R.curry(function(newStatus, cb, val) {
-      status = newStatus;
-      cachedValue = val;
-      cb(val);
-      R.forEach(function(listener) {
-        listener[status](cachedValue);
-      }, listeners);
-    });
-    function addListeners(reject, resolve) {
-      listeners.push({
-        REJECTED: reject,
-        RESOLVED: resolve
-      });
-    }
-    function doResolve(reject, resolve) {
-      status = 'PENDING';
-      return f.fork(handleCompletion('REJECTED', reject), handleCompletion('RESOLVED', resolve));
-    }
-    return new Future(function(reject, resolve) {
-      switch (status) {
-        case 'IDLE':
-          doResolve(reject, resolve);
-          break;
-        case 'PENDING':
-          addListeners(reject, resolve);
-          break;
-        case 'REJECTED':
-          reject(cachedValue);
-          break;
-        case 'RESOLVED':
-          resolve(cachedValue);
-          break;
-      }
-    });
-  };
-  module.exports = Future;
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/allPass", ["npm:ramda@0.17.1/src/internal/_curry1", "npm:ramda@0.17.1/src/internal/_predicateWrap", "npm:ramda@0.17.1/src/all"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _curry1 = require("npm:ramda@0.17.1/src/internal/_curry1");
-  var _predicateWrap = require("npm:ramda@0.17.1/src/internal/_predicateWrap");
-  var all = require("npm:ramda@0.17.1/src/all");
-  module.exports = _curry1(_predicateWrap(all));
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:snabbdom@0.2.6/h", ["npm:snabbdom@0.2.6/vnode", "npm:snabbdom@0.2.6/is"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var VNode = require("npm:snabbdom@0.2.6/vnode");
-  var is = require("npm:snabbdom@0.2.6/is");
-  module.exports = function h(sel, b, c) {
-    var data = {},
-        children,
-        text,
-        i;
-    if (arguments.length === 3) {
-      data = b;
-      if (is.array(c)) {
-        children = c;
-      } else if (is.primitive(c)) {
-        text = c;
-      }
-    } else if (arguments.length === 2) {
-      if (is.array(b)) {
-        children = b;
-      } else if (is.primitive(b)) {
-        text = b;
-      } else {
-        data = b;
-      }
-    }
-    if (is.array(children)) {
-      for (i = 0; i < children.length; ++i) {
-        if (is.primitive(children[i]))
-          children[i] = VNode(undefined, undefined, undefined, children[i]);
-      }
-    }
-    return VNode(sel, data, children, text, undefined);
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda-fantasy@0.4.0/src/Maybe", ["npm:ramda@0.17.1", "npm:ramda-fantasy@0.4.0/src/internal/util"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var R = require("npm:ramda@0.17.1");
-  var util = require("npm:ramda-fantasy@0.4.0/src/internal/util");
-  function Maybe(x) {
-    return x == null ? _nothing : Maybe.Just(x);
-  }
-  function _Just(x) {
-    this.value = x;
-  }
-  util.extend(_Just, Maybe);
-  function _Nothing() {}
-  util.extend(_Nothing, Maybe);
-  var _nothing = new _Nothing();
-  Maybe.Nothing = function() {
-    return _nothing;
-  };
-  Maybe.Just = function(x) {
-    return new _Just(x);
-  };
-  Maybe.of = Maybe.Just;
-  Maybe.prototype.of = Maybe.Just;
-  Maybe.isJust = function(x) {
-    return x instanceof _Just;
-  };
-  Maybe.isNothing = function(x) {
-    return x === _nothing;
-  };
-  Maybe.maybe = R.curry(function(nothingVal, justFn, m) {
-    return m.reduce(function(_, x) {
-      return justFn(x);
-    }, nothingVal);
-  });
-  _Just.prototype.map = function(f) {
-    return this.of(f(this.value));
-  };
-  _Nothing.prototype.map = util.returnThis;
-  _Just.prototype.ap = function(m) {
-    return m.map(this.value);
-  };
-  _Nothing.prototype.ap = util.returnThis;
-  _Just.prototype.chain = util.baseMap;
-  _Nothing.prototype.chain = util.returnThis;
-  _Just.prototype.datatype = _Just;
-  _Nothing.prototype.datatype = _Nothing;
-  _Just.prototype.equals = util.getEquals(_Just);
-  _Nothing.prototype.equals = function(that) {
-    return that === _nothing;
-  };
-  Maybe.prototype.isNothing = function() {
-    return this === _nothing;
-  };
-  Maybe.prototype.isJust = function() {
-    return this instanceof _Just;
-  };
-  _Just.prototype.getOrElse = function() {
-    return this.value;
-  };
-  _Nothing.prototype.getOrElse = function(a) {
-    return a;
-  };
-  _Just.prototype.reduce = function(f, x) {
-    return f(x, this.value);
-  };
-  _Nothing.prototype.reduce = function(f, x) {
-    return x;
-  };
-  _Just.prototype.toString = function() {
-    return 'Maybe.Just(' + R.toString(this.value) + ')';
-  };
-  _Nothing.prototype.toString = function() {
-    return 'Maybe.Nothing()';
-  };
-  module.exports = Maybe;
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:snabbdom@0.2.6/snabbdom", ["npm:snabbdom@0.2.6/vnode", "npm:snabbdom@0.2.6/is"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  'use strict';
-  var VNode = require("npm:snabbdom@0.2.6/vnode");
-  var is = require("npm:snabbdom@0.2.6/is");
-  function isUndef(s) {
-    return s === undefined;
-  }
-  function isDef(s) {
-    return s !== undefined;
-  }
-  function emptyNodeAt(elm) {
-    return VNode(elm.tagName, {}, [], undefined, elm);
-  }
-  var emptyNode = VNode('', {}, [], undefined, undefined);
-  var insertedVnodeQueue;
-  function sameVnode(vnode1, vnode2) {
-    return vnode1.key === vnode2.key && vnode1.sel === vnode2.sel;
-  }
-  function createKeyToOldIdx(children, beginIdx, endIdx) {
-    var i,
-        map = {},
-        key;
-    for (i = beginIdx; i <= endIdx; ++i) {
-      key = children[i].key;
-      if (isDef(key))
-        map[key] = i;
-    }
-    return map;
-  }
-  function createRmCb(childElm, listeners) {
-    return function() {
-      if (--listeners === 0)
-        childElm.parentElement.removeChild(childElm);
-    };
-  }
-  var hooks = ['create', 'update', 'remove', 'destroy', 'pre', 'post'];
-  function init(modules) {
-    var i,
-        j,
-        cbs = {};
-    for (i = 0; i < hooks.length; ++i) {
-      cbs[hooks[i]] = [];
-      for (j = 0; j < modules.length; ++j) {
-        if (modules[j][hooks[i]] !== undefined)
-          cbs[hooks[i]].push(modules[j][hooks[i]]);
-      }
-    }
-    function createElm(vnode) {
-      var i,
-          data = vnode.data;
-      if (isDef(data)) {
-        if (isDef(i = data.hook) && isDef(i = i.init))
-          i(vnode);
-        if (isDef(i = data.vnode))
-          vnode = i;
-      }
-      var elm,
-          children = vnode.children,
-          sel = vnode.sel;
-      if (isDef(sel)) {
-        var hashIdx = sel.indexOf('#');
-        var dotIdx = sel.indexOf('.', hashIdx);
-        var hash = hashIdx > 0 ? hashIdx : sel.length;
-        var dot = dotIdx > 0 ? dotIdx : sel.length;
-        var tag = hashIdx !== -1 || dotIdx !== -1 ? sel.slice(0, Math.min(hash, dot)) : sel;
-        elm = vnode.elm = isDef(data) && isDef(i = data.ns) ? document.createElementNS(i, tag) : document.createElement(tag);
-        if (hash < dot)
-          elm.id = sel.slice(hash + 1, dot);
-        if (dotIdx > 0)
-          elm.className = sel.slice(dot + 1).replace(/\./g, ' ');
-        if (is.array(children)) {
-          for (i = 0; i < children.length; ++i) {
-            elm.appendChild(createElm(children[i]));
-          }
-        } else if (is.primitive(vnode.text)) {
-          elm.appendChild(document.createTextNode(vnode.text));
-        }
-        for (i = 0; i < cbs.create.length; ++i)
-          cbs.create[i](emptyNode, vnode);
-        i = vnode.data.hook;
-        if (isDef(i)) {
-          if (i.create)
-            i.create(emptyNode, vnode);
-          if (i.insert)
-            insertedVnodeQueue.push(vnode);
-        }
-      } else {
-        elm = vnode.elm = document.createTextNode(vnode.text);
-      }
-      return vnode.elm;
-    }
-    function addVnodes(parentElm, before, vnodes, startIdx, endIdx) {
-      for (; startIdx <= endIdx; ++startIdx) {
-        parentElm.insertBefore(createElm(vnodes[startIdx]), before);
-      }
-    }
-    function invokeDestroyHook(vnode) {
-      var i = vnode.data,
-          j;
-      if (isDef(i)) {
-        if (isDef(i = i.hook) && isDef(i = i.destroy))
-          i(vnode);
-        for (i = 0; i < cbs.destroy.length; ++i)
-          cbs.destroy[i](vnode);
-        if (isDef(i = vnode.children)) {
-          for (j = 0; j < vnode.children.length; ++j) {
-            invokeDestroyHook(vnode.children[j]);
-          }
-        }
-      }
-    }
-    function removeVnodes(parentElm, vnodes, startIdx, endIdx) {
-      for (; startIdx <= endIdx; ++startIdx) {
-        var i,
-            listeners,
-            rm,
-            ch = vnodes[startIdx];
-        if (isDef(ch)) {
-          if (isDef(ch.sel)) {
-            invokeDestroyHook(ch);
-            listeners = cbs.remove.length + 1;
-            rm = createRmCb(ch.elm, listeners);
-            for (i = 0; i < cbs.remove.length; ++i)
-              cbs.remove[i](ch, rm);
-            if (isDef(i = ch.data) && isDef(i = i.hook) && isDef(i = i.remove)) {
-              i(ch, rm);
-            } else {
-              rm();
-            }
-          } else {
-            parentElm.removeChild(ch.elm);
-          }
-        }
-      }
-    }
-    function updateChildren(parentElm, oldCh, newCh) {
-      var oldStartIdx = 0,
-          newStartIdx = 0;
-      var oldEndIdx = oldCh.length - 1;
-      var oldStartVnode = oldCh[0];
-      var oldEndVnode = oldCh[oldEndIdx];
-      var newEndIdx = newCh.length - 1;
-      var newStartVnode = newCh[0];
-      var newEndVnode = newCh[newEndIdx];
-      var oldKeyToIdx,
-          idxInOld,
-          elmToMove,
-          before;
-      while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) {
-        if (isUndef(oldStartVnode)) {
-          oldStartVnode = oldCh[++oldStartIdx];
-        } else if (isUndef(oldEndVnode)) {
-          oldEndVnode = oldCh[--oldEndIdx];
-        } else if (sameVnode(oldStartVnode, newStartVnode)) {
-          patchVnode(oldStartVnode, newStartVnode);
-          oldStartVnode = oldCh[++oldStartIdx];
-          newStartVnode = newCh[++newStartIdx];
-        } else if (sameVnode(oldEndVnode, newEndVnode)) {
-          patchVnode(oldEndVnode, newEndVnode);
-          oldEndVnode = oldCh[--oldEndIdx];
-          newEndVnode = newCh[--newEndIdx];
-        } else if (sameVnode(oldStartVnode, newEndVnode)) {
-          patchVnode(oldStartVnode, newEndVnode);
-          parentElm.insertBefore(oldStartVnode.elm, oldEndVnode.elm.nextSibling);
-          oldStartVnode = oldCh[++oldStartIdx];
-          newEndVnode = newCh[--newEndIdx];
-        } else if (sameVnode(oldEndVnode, newStartVnode)) {
-          patchVnode(oldEndVnode, newStartVnode);
-          parentElm.insertBefore(oldEndVnode.elm, oldStartVnode.elm);
-          oldEndVnode = oldCh[--oldEndIdx];
-          newStartVnode = newCh[++newStartIdx];
-        } else {
-          if (isUndef(oldKeyToIdx))
-            oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx);
-          idxInOld = oldKeyToIdx[newStartVnode.key];
-          if (isUndef(idxInOld)) {
-            parentElm.insertBefore(createElm(newStartVnode), oldStartVnode.elm);
-            newStartVnode = newCh[++newStartIdx];
-          } else {
-            elmToMove = oldCh[idxInOld];
-            patchVnode(elmToMove, newStartVnode);
-            oldCh[idxInOld] = undefined;
-            parentElm.insertBefore(elmToMove.elm, oldStartVnode.elm);
-            newStartVnode = newCh[++newStartIdx];
-          }
-        }
-      }
-      if (oldStartIdx > oldEndIdx) {
-        before = isUndef(newCh[newEndIdx + 1]) ? null : newCh[newEndIdx + 1].elm;
-        addVnodes(parentElm, before, newCh, newStartIdx, newEndIdx);
-      } else if (newStartIdx > newEndIdx) {
-        removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx);
-      }
-    }
-    function patchVnode(oldVnode, vnode) {
-      var i,
-          hook;
-      if (isDef(i = vnode.data) && isDef(hook = i.hook) && isDef(i = hook.prepatch)) {
-        i(oldVnode, vnode);
-      }
-      if (isDef(i = oldVnode.data) && isDef(i = i.vnode))
-        oldVnode = i;
-      if (isDef(i = vnode.data) && isDef(i = i.vnode))
-        vnode = i;
-      var elm = vnode.elm = oldVnode.elm,
-          oldCh = oldVnode.children,
-          ch = vnode.children;
-      if (oldVnode === vnode)
-        return;
-      if (isDef(vnode.data)) {
-        for (i = 0; i < cbs.update.length; ++i)
-          cbs.update[i](oldVnode, vnode);
-        i = vnode.data.hook;
-        if (isDef(i) && isDef(i = i.update))
-          i(oldVnode, vnode);
-      }
-      if (isUndef(vnode.text)) {
-        if (isDef(oldCh) && isDef(ch)) {
-          if (oldCh !== ch)
-            updateChildren(elm, oldCh, ch);
-        } else if (isDef(ch)) {
-          addVnodes(elm, null, ch, 0, ch.length - 1);
-        } else if (isDef(oldCh)) {
-          removeVnodes(elm, oldCh, 0, oldCh.length - 1);
-        }
-      } else if (oldVnode.text !== vnode.text) {
-        elm.textContent = vnode.text;
-      }
-      if (isDef(hook) && isDef(i = hook.postpatch)) {
-        i(oldVnode, vnode);
-      }
-      return vnode;
-    }
-    return function(oldVnode, vnode) {
-      var i;
-      insertedVnodeQueue = [];
-      for (i = 0; i < cbs.pre.length; ++i)
-        cbs.pre[i]();
-      if (oldVnode instanceof Element) {
-        if (oldVnode.parentElement !== null) {
-          createElm(vnode);
-          oldVnode.parentElement.replaceChild(vnode.elm, oldVnode);
-        } else {
-          oldVnode = emptyNodeAt(oldVnode);
-          patchVnode(oldVnode, vnode);
-        }
-      } else {
-        patchVnode(oldVnode, vnode);
-      }
-      for (i = 0; i < insertedVnodeQueue.length; ++i) {
-        insertedVnodeQueue[i].data.hook.insert(insertedVnodeQueue[i]);
-      }
-      insertedVnodeQueue = undefined;
-      for (i = 0; i < cbs.post.length; ++i)
-        cbs.post[i]();
-      return vnode;
-    };
-  }
-  module.exports = {init: init};
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/internal/_curry1", [], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = function _curry1(fn) {
-    return function f1(a) {
-      if (arguments.length === 0) {
-        return f1;
-      } else if (a != null && a['@@functional/placeholder'] === true) {
-        return f1;
-      } else {
-        return fn.apply(this, arguments);
-      }
-    };
   };
   global.define = __define;
   return module.exports;
@@ -1539,6 +645,900 @@ System.registerDynamic("npm:flyd@0.1.14/lib/index", ["npm:ramda@0.14.0/src/curry
   return module.exports;
 });
 
+System.registerDynamic("npm:snabbdom@0.2.6/snabbdom", ["npm:snabbdom@0.2.6/vnode", "npm:snabbdom@0.2.6/is"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  'use strict';
+  var VNode = require("npm:snabbdom@0.2.6/vnode");
+  var is = require("npm:snabbdom@0.2.6/is");
+  function isUndef(s) {
+    return s === undefined;
+  }
+  function isDef(s) {
+    return s !== undefined;
+  }
+  function emptyNodeAt(elm) {
+    return VNode(elm.tagName, {}, [], undefined, elm);
+  }
+  var emptyNode = VNode('', {}, [], undefined, undefined);
+  var insertedVnodeQueue;
+  function sameVnode(vnode1, vnode2) {
+    return vnode1.key === vnode2.key && vnode1.sel === vnode2.sel;
+  }
+  function createKeyToOldIdx(children, beginIdx, endIdx) {
+    var i,
+        map = {},
+        key;
+    for (i = beginIdx; i <= endIdx; ++i) {
+      key = children[i].key;
+      if (isDef(key))
+        map[key] = i;
+    }
+    return map;
+  }
+  function createRmCb(childElm, listeners) {
+    return function() {
+      if (--listeners === 0)
+        childElm.parentElement.removeChild(childElm);
+    };
+  }
+  var hooks = ['create', 'update', 'remove', 'destroy', 'pre', 'post'];
+  function init(modules) {
+    var i,
+        j,
+        cbs = {};
+    for (i = 0; i < hooks.length; ++i) {
+      cbs[hooks[i]] = [];
+      for (j = 0; j < modules.length; ++j) {
+        if (modules[j][hooks[i]] !== undefined)
+          cbs[hooks[i]].push(modules[j][hooks[i]]);
+      }
+    }
+    function createElm(vnode) {
+      var i,
+          data = vnode.data;
+      if (isDef(data)) {
+        if (isDef(i = data.hook) && isDef(i = i.init))
+          i(vnode);
+        if (isDef(i = data.vnode))
+          vnode = i;
+      }
+      var elm,
+          children = vnode.children,
+          sel = vnode.sel;
+      if (isDef(sel)) {
+        var hashIdx = sel.indexOf('#');
+        var dotIdx = sel.indexOf('.', hashIdx);
+        var hash = hashIdx > 0 ? hashIdx : sel.length;
+        var dot = dotIdx > 0 ? dotIdx : sel.length;
+        var tag = hashIdx !== -1 || dotIdx !== -1 ? sel.slice(0, Math.min(hash, dot)) : sel;
+        elm = vnode.elm = isDef(data) && isDef(i = data.ns) ? document.createElementNS(i, tag) : document.createElement(tag);
+        if (hash < dot)
+          elm.id = sel.slice(hash + 1, dot);
+        if (dotIdx > 0)
+          elm.className = sel.slice(dot + 1).replace(/\./g, ' ');
+        if (is.array(children)) {
+          for (i = 0; i < children.length; ++i) {
+            elm.appendChild(createElm(children[i]));
+          }
+        } else if (is.primitive(vnode.text)) {
+          elm.appendChild(document.createTextNode(vnode.text));
+        }
+        for (i = 0; i < cbs.create.length; ++i)
+          cbs.create[i](emptyNode, vnode);
+        i = vnode.data.hook;
+        if (isDef(i)) {
+          if (i.create)
+            i.create(emptyNode, vnode);
+          if (i.insert)
+            insertedVnodeQueue.push(vnode);
+        }
+      } else {
+        elm = vnode.elm = document.createTextNode(vnode.text);
+      }
+      return vnode.elm;
+    }
+    function addVnodes(parentElm, before, vnodes, startIdx, endIdx) {
+      for (; startIdx <= endIdx; ++startIdx) {
+        parentElm.insertBefore(createElm(vnodes[startIdx]), before);
+      }
+    }
+    function invokeDestroyHook(vnode) {
+      var i = vnode.data,
+          j;
+      if (isDef(i)) {
+        if (isDef(i = i.hook) && isDef(i = i.destroy))
+          i(vnode);
+        for (i = 0; i < cbs.destroy.length; ++i)
+          cbs.destroy[i](vnode);
+        if (isDef(i = vnode.children)) {
+          for (j = 0; j < vnode.children.length; ++j) {
+            invokeDestroyHook(vnode.children[j]);
+          }
+        }
+      }
+    }
+    function removeVnodes(parentElm, vnodes, startIdx, endIdx) {
+      for (; startIdx <= endIdx; ++startIdx) {
+        var i,
+            listeners,
+            rm,
+            ch = vnodes[startIdx];
+        if (isDef(ch)) {
+          if (isDef(ch.sel)) {
+            invokeDestroyHook(ch);
+            listeners = cbs.remove.length + 1;
+            rm = createRmCb(ch.elm, listeners);
+            for (i = 0; i < cbs.remove.length; ++i)
+              cbs.remove[i](ch, rm);
+            if (isDef(i = ch.data) && isDef(i = i.hook) && isDef(i = i.remove)) {
+              i(ch, rm);
+            } else {
+              rm();
+            }
+          } else {
+            parentElm.removeChild(ch.elm);
+          }
+        }
+      }
+    }
+    function updateChildren(parentElm, oldCh, newCh) {
+      var oldStartIdx = 0,
+          newStartIdx = 0;
+      var oldEndIdx = oldCh.length - 1;
+      var oldStartVnode = oldCh[0];
+      var oldEndVnode = oldCh[oldEndIdx];
+      var newEndIdx = newCh.length - 1;
+      var newStartVnode = newCh[0];
+      var newEndVnode = newCh[newEndIdx];
+      var oldKeyToIdx,
+          idxInOld,
+          elmToMove,
+          before;
+      while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) {
+        if (isUndef(oldStartVnode)) {
+          oldStartVnode = oldCh[++oldStartIdx];
+        } else if (isUndef(oldEndVnode)) {
+          oldEndVnode = oldCh[--oldEndIdx];
+        } else if (sameVnode(oldStartVnode, newStartVnode)) {
+          patchVnode(oldStartVnode, newStartVnode);
+          oldStartVnode = oldCh[++oldStartIdx];
+          newStartVnode = newCh[++newStartIdx];
+        } else if (sameVnode(oldEndVnode, newEndVnode)) {
+          patchVnode(oldEndVnode, newEndVnode);
+          oldEndVnode = oldCh[--oldEndIdx];
+          newEndVnode = newCh[--newEndIdx];
+        } else if (sameVnode(oldStartVnode, newEndVnode)) {
+          patchVnode(oldStartVnode, newEndVnode);
+          parentElm.insertBefore(oldStartVnode.elm, oldEndVnode.elm.nextSibling);
+          oldStartVnode = oldCh[++oldStartIdx];
+          newEndVnode = newCh[--newEndIdx];
+        } else if (sameVnode(oldEndVnode, newStartVnode)) {
+          patchVnode(oldEndVnode, newStartVnode);
+          parentElm.insertBefore(oldEndVnode.elm, oldStartVnode.elm);
+          oldEndVnode = oldCh[--oldEndIdx];
+          newStartVnode = newCh[++newStartIdx];
+        } else {
+          if (isUndef(oldKeyToIdx))
+            oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx);
+          idxInOld = oldKeyToIdx[newStartVnode.key];
+          if (isUndef(idxInOld)) {
+            parentElm.insertBefore(createElm(newStartVnode), oldStartVnode.elm);
+            newStartVnode = newCh[++newStartIdx];
+          } else {
+            elmToMove = oldCh[idxInOld];
+            patchVnode(elmToMove, newStartVnode);
+            oldCh[idxInOld] = undefined;
+            parentElm.insertBefore(elmToMove.elm, oldStartVnode.elm);
+            newStartVnode = newCh[++newStartIdx];
+          }
+        }
+      }
+      if (oldStartIdx > oldEndIdx) {
+        before = isUndef(newCh[newEndIdx + 1]) ? null : newCh[newEndIdx + 1].elm;
+        addVnodes(parentElm, before, newCh, newStartIdx, newEndIdx);
+      } else if (newStartIdx > newEndIdx) {
+        removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx);
+      }
+    }
+    function patchVnode(oldVnode, vnode) {
+      var i,
+          hook;
+      if (isDef(i = vnode.data) && isDef(hook = i.hook) && isDef(i = hook.prepatch)) {
+        i(oldVnode, vnode);
+      }
+      if (isDef(i = oldVnode.data) && isDef(i = i.vnode))
+        oldVnode = i;
+      if (isDef(i = vnode.data) && isDef(i = i.vnode))
+        vnode = i;
+      var elm = vnode.elm = oldVnode.elm,
+          oldCh = oldVnode.children,
+          ch = vnode.children;
+      if (oldVnode === vnode)
+        return;
+      if (isDef(vnode.data)) {
+        for (i = 0; i < cbs.update.length; ++i)
+          cbs.update[i](oldVnode, vnode);
+        i = vnode.data.hook;
+        if (isDef(i) && isDef(i = i.update))
+          i(oldVnode, vnode);
+      }
+      if (isUndef(vnode.text)) {
+        if (isDef(oldCh) && isDef(ch)) {
+          if (oldCh !== ch)
+            updateChildren(elm, oldCh, ch);
+        } else if (isDef(ch)) {
+          addVnodes(elm, null, ch, 0, ch.length - 1);
+        } else if (isDef(oldCh)) {
+          removeVnodes(elm, oldCh, 0, oldCh.length - 1);
+        }
+      } else if (oldVnode.text !== vnode.text) {
+        elm.textContent = vnode.text;
+      }
+      if (isDef(hook) && isDef(i = hook.postpatch)) {
+        i(oldVnode, vnode);
+      }
+      return vnode;
+    }
+    return function(oldVnode, vnode) {
+      var i;
+      insertedVnodeQueue = [];
+      for (i = 0; i < cbs.pre.length; ++i)
+        cbs.pre[i]();
+      if (oldVnode instanceof Element) {
+        if (oldVnode.parentElement !== null) {
+          createElm(vnode);
+          oldVnode.parentElement.replaceChild(vnode.elm, oldVnode);
+        } else {
+          oldVnode = emptyNodeAt(oldVnode);
+          patchVnode(oldVnode, vnode);
+        }
+      } else {
+        patchVnode(oldVnode, vnode);
+      }
+      for (i = 0; i < insertedVnodeQueue.length; ++i) {
+        insertedVnodeQueue[i].data.hook.insert(insertedVnodeQueue[i]);
+      }
+      insertedVnodeQueue = undefined;
+      for (i = 0; i < cbs.post.length; ++i)
+        cbs.post[i]();
+      return vnode;
+    };
+  }
+  module.exports = {init: init};
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:flyd-forwardto@0.0.2", ["npm:flyd-forwardto@0.0.2/forwardto"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = require("npm:flyd-forwardto@0.0.2/forwardto");
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:union-type@0.1.6", ["npm:union-type@0.1.6/union-type"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = require("npm:union-type@0.1.6/union-type");
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("js/helpers/ismaybe.js", ["npm:ramda-fantasy@0.4.0/src/Maybe"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var Maybe = require("npm:ramda-fantasy@0.4.0/src/Maybe");
+  module.exports = function isMaybe(val) {
+    return Maybe.isNothing(val) || Maybe.isJust(val);
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("js/helpers/erroror.js", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function errorOr(fn) {
+    return function(val) {
+      return val instanceof Error ? val : fn(val);
+    };
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("js/helpers/emptytonothing.js", ["npm:ramda-fantasy@0.4.0/src/Maybe"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var Maybe = require("npm:ramda-fantasy@0.4.0/src/Maybe");
+  module.exports = function emptyToNothing(val) {
+    return val.length === 0 ? Maybe.Nothing() : Maybe(val);
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("js/helpers/nofx.js", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function noFx(s) {
+    return [s, []];
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("js/helpers/targetvalue.js", ["npm:ramda@0.17.1/src/path"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var path = require("npm:ramda@0.17.1/src/path");
+  module.exports = path(['target', 'value']);
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/curry", ["npm:ramda@0.17.1/src/internal/_curry1", "npm:ramda@0.17.1/src/curryN"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _curry1 = require("npm:ramda@0.17.1/src/internal/_curry1");
+  var curryN = require("npm:ramda@0.17.1/src/curryN");
+  module.exports = _curry1(function curry(fn) {
+    return curryN(fn.length, fn);
+  });
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/compose", ["npm:ramda@0.17.1/src/pipe", "npm:ramda@0.17.1/src/reverse"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var pipe = require("npm:ramda@0.17.1/src/pipe");
+  var reverse = require("npm:ramda@0.17.1/src/reverse");
+  module.exports = function compose() {
+    if (arguments.length === 0) {
+      throw new Error('compose requires at least one argument');
+    }
+    return pipe.apply(this, reverse(arguments));
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/chain", ["npm:ramda@0.17.1/src/internal/_curry2", "npm:ramda@0.17.1/src/internal/_dispatchable", "npm:ramda@0.17.1/src/internal/_xchain", "npm:ramda@0.17.1/src/map", "npm:ramda@0.17.1/src/unnest"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
+  var _dispatchable = require("npm:ramda@0.17.1/src/internal/_dispatchable");
+  var _xchain = require("npm:ramda@0.17.1/src/internal/_xchain");
+  var map = require("npm:ramda@0.17.1/src/map");
+  var unnest = require("npm:ramda@0.17.1/src/unnest");
+  module.exports = _curry2(_dispatchable('chain', _xchain, function chain(fn, list) {
+    return unnest(map(fn, list));
+  }));
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/map", ["npm:ramda@0.17.1/src/internal/_curry2", "npm:ramda@0.17.1/src/internal/_dispatchable", "npm:ramda@0.17.1/src/internal/_map", "npm:ramda@0.17.1/src/internal/_xmap"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
+  var _dispatchable = require("npm:ramda@0.17.1/src/internal/_dispatchable");
+  var _map = require("npm:ramda@0.17.1/src/internal/_map");
+  var _xmap = require("npm:ramda@0.17.1/src/internal/_xmap");
+  module.exports = _curry2(_dispatchable('map', _xmap, _map));
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/identity", ["npm:ramda@0.17.1/src/internal/_curry1", "npm:ramda@0.17.1/src/internal/_identity"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _curry1 = require("npm:ramda@0.17.1/src/internal/_curry1");
+  var _identity = require("npm:ramda@0.17.1/src/internal/_identity");
+  module.exports = _curry1(_identity);
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/unary", ["npm:ramda@0.17.1/src/internal/_curry1", "npm:ramda@0.17.1/src/nAry"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _curry1 = require("npm:ramda@0.17.1/src/internal/_curry1");
+  var nAry = require("npm:ramda@0.17.1/src/nAry");
+  module.exports = _curry1(function unary(fn) {
+    return nAry(1, fn);
+  });
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/ifElse", ["npm:ramda@0.17.1/src/internal/_curry3", "npm:ramda@0.17.1/src/curryN", "github:jspm/nodelibs-process@0.1.1"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  (function(process) {
+    var _curry3 = require("npm:ramda@0.17.1/src/internal/_curry3");
+    var curryN = require("npm:ramda@0.17.1/src/curryN");
+    module.exports = _curry3(function ifElse(condition, onTrue, onFalse) {
+      return curryN(Math.max(condition.length, onTrue.length, onFalse.length), function _ifElse() {
+        return condition.apply(this, arguments) ? onTrue.apply(this, arguments) : onFalse.apply(this, arguments);
+      });
+    });
+  })(require("github:jspm/nodelibs-process@0.1.1"));
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/invoker", ["npm:ramda@0.17.1/src/internal/_curry2", "npm:ramda@0.17.1/src/internal/_slice", "npm:ramda@0.17.1/src/curryN", "npm:ramda@0.17.1/src/is", "npm:ramda@0.17.1/src/toString"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
+  var _slice = require("npm:ramda@0.17.1/src/internal/_slice");
+  var curryN = require("npm:ramda@0.17.1/src/curryN");
+  var is = require("npm:ramda@0.17.1/src/is");
+  var toString = require("npm:ramda@0.17.1/src/toString");
+  module.exports = _curry2(function invoker(arity, method) {
+    return curryN(arity + 1, function() {
+      var target = arguments[arity];
+      if (target != null && is(Function, target[method])) {
+        return target[method].apply(target, _slice(arguments, 0, arity));
+      }
+      throw new TypeError(toString(target) + ' does not have a method named "' + method + '"');
+    });
+  });
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/props", ["npm:ramda@0.17.1/src/internal/_curry2"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
+  module.exports = _curry2(function props(ps, obj) {
+    var len = ps.length;
+    var out = [];
+    var idx = 0;
+    while (idx < len) {
+      out[idx] = obj[ps[idx]];
+      idx += 1;
+    }
+    return out;
+  });
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/path", ["npm:ramda@0.17.1/src/internal/_curry2"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
+  module.exports = _curry2(function path(paths, obj) {
+    if (obj == null) {
+      return;
+    } else {
+      var val = obj;
+      for (var idx = 0,
+          len = paths.length; idx < len && val != null; idx += 1) {
+        val = val[paths[idx]];
+      }
+      return val;
+    }
+  });
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/equals", ["npm:ramda@0.17.1/src/internal/_curry2", "npm:ramda@0.17.1/src/internal/_equals", "npm:ramda@0.17.1/src/internal/_hasMethod"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
+  var _equals = require("npm:ramda@0.17.1/src/internal/_equals");
+  var _hasMethod = require("npm:ramda@0.17.1/src/internal/_hasMethod");
+  module.exports = _curry2(function equals(a, b) {
+    return _hasMethod('equals', a) ? a.equals(b) : _hasMethod('equals', b) ? b.equals(a) : _equals(a, b, [], []);
+  });
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/prop", ["npm:ramda@0.17.1/src/internal/_curry2"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
+  module.exports = _curry2(function prop(p, obj) {
+    return obj[p];
+  });
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/prepend", ["npm:ramda@0.17.1/src/internal/_concat", "npm:ramda@0.17.1/src/internal/_curry2"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _concat = require("npm:ramda@0.17.1/src/internal/_concat");
+  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
+  module.exports = _curry2(function prepend(el, list) {
+    return _concat([el], list);
+  });
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/assoc", ["npm:ramda@0.17.1/src/internal/_curry3"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _curry3 = require("npm:ramda@0.17.1/src/internal/_curry3");
+  module.exports = _curry3(function assoc(prop, val, obj) {
+    var result = {};
+    for (var p in obj) {
+      result[p] = obj[p];
+    }
+    result[prop] = val;
+    return result;
+  });
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/join", ["npm:ramda@0.17.1/src/invoker"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var invoker = require("npm:ramda@0.17.1/src/invoker");
+  module.exports = invoker(1, 'join');
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/insert", ["npm:ramda@0.17.1/src/internal/_curry3", "npm:ramda@0.17.1/src/internal/_slice"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _curry3 = require("npm:ramda@0.17.1/src/internal/_curry3");
+  var _slice = require("npm:ramda@0.17.1/src/internal/_slice");
+  module.exports = _curry3(function insert(idx, elt, list) {
+    idx = idx < list.length && idx >= 0 ? idx : list.length;
+    var result = _slice(list);
+    result.splice(idx, 0, elt);
+    return result;
+  });
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda-fantasy@0.4.0/src/Future", ["npm:ramda@0.17.1"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var R = require("npm:ramda@0.17.1");
+  function Future(f) {
+    if (!(this instanceof Future)) {
+      return new Future(f);
+    }
+    this._fork = f;
+  }
+  Future.prototype.fork = function(reject, resolve) {
+    try {
+      this._fork(reject, resolve);
+    } catch (e) {
+      reject(e);
+    }
+  };
+  Future.prototype.map = function(f) {
+    return this.chain(function(a) {
+      return Future.of(f(a));
+    });
+  };
+  Future.prototype.ap = function(m) {
+    var self = this;
+    return new Future(function(rej, res) {
+      var applyFn,
+          val;
+      var doReject = R.once(rej);
+      function resolveIfDone() {
+        if (applyFn != null && val != null) {
+          return res(applyFn(val));
+        }
+      }
+      self.fork(doReject, function(fn) {
+        applyFn = fn;
+        resolveIfDone();
+      });
+      m.fork(doReject, function(v) {
+        val = v;
+        resolveIfDone();
+      });
+    });
+  };
+  Future.of = function(x) {
+    return new Future(function(_, resolve) {
+      return resolve(x);
+    });
+  };
+  Future.prototype.of = Future.of;
+  Future.prototype.chain = function(f) {
+    return new Future(function(reject, resolve) {
+      return this.fork(function(a) {
+        return reject(a);
+      }, function(b) {
+        return f(b).fork(reject, resolve);
+      });
+    }.bind(this));
+  };
+  Future.prototype.chainReject = function(f) {
+    return new Future(function(reject, resolve) {
+      return this.fork(function(a) {
+        return f(a).fork(reject, resolve);
+      }, function(b) {
+        return resolve(b);
+      });
+    }.bind(this));
+  };
+  Future.prototype.bimap = function(errFn, successFn) {
+    var self = this;
+    return new Future(function(reject, resolve) {
+      self.fork(function(err) {
+        reject(errFn(err));
+      }, function(val) {
+        resolve(successFn(val));
+      });
+    });
+  };
+  Future.reject = function(val) {
+    return new Future(function(reject) {
+      reject(val);
+    });
+  };
+  Future.prototype.toString = function() {
+    return 'Future(' + R.toString(this._fork) + ')';
+  };
+  Future.memoize = function(f) {
+    var status = 'IDLE';
+    var listeners = [];
+    var cachedValue;
+    var handleCompletion = R.curry(function(newStatus, cb, val) {
+      status = newStatus;
+      cachedValue = val;
+      cb(val);
+      R.forEach(function(listener) {
+        listener[status](cachedValue);
+      }, listeners);
+    });
+    function addListeners(reject, resolve) {
+      listeners.push({
+        REJECTED: reject,
+        RESOLVED: resolve
+      });
+    }
+    function doResolve(reject, resolve) {
+      status = 'PENDING';
+      return f.fork(handleCompletion('REJECTED', reject), handleCompletion('RESOLVED', resolve));
+    }
+    return new Future(function(reject, resolve) {
+      switch (status) {
+        case 'IDLE':
+          doResolve(reject, resolve);
+          break;
+        case 'PENDING':
+          addListeners(reject, resolve);
+          break;
+        case 'REJECTED':
+          reject(cachedValue);
+          break;
+        case 'RESOLVED':
+          resolve(cachedValue);
+          break;
+      }
+    });
+  };
+  module.exports = Future;
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/allPass", ["npm:ramda@0.17.1/src/internal/_curry1", "npm:ramda@0.17.1/src/internal/_predicateWrap", "npm:ramda@0.17.1/src/all"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _curry1 = require("npm:ramda@0.17.1/src/internal/_curry1");
+  var _predicateWrap = require("npm:ramda@0.17.1/src/internal/_predicateWrap");
+  var all = require("npm:ramda@0.17.1/src/all");
+  module.exports = _curry1(_predicateWrap(all));
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:snabbdom@0.2.6/h", ["npm:snabbdom@0.2.6/vnode", "npm:snabbdom@0.2.6/is"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var VNode = require("npm:snabbdom@0.2.6/vnode");
+  var is = require("npm:snabbdom@0.2.6/is");
+  module.exports = function h(sel, b, c) {
+    var data = {},
+        children,
+        text,
+        i;
+    if (arguments.length === 3) {
+      data = b;
+      if (is.array(c)) {
+        children = c;
+      } else if (is.primitive(c)) {
+        text = c;
+      }
+    } else if (arguments.length === 2) {
+      if (is.array(b)) {
+        children = b;
+      } else if (is.primitive(b)) {
+        text = b;
+      } else {
+        data = b;
+      }
+    }
+    if (is.array(children)) {
+      for (i = 0; i < children.length; ++i) {
+        if (is.primitive(children[i]))
+          children[i] = VNode(undefined, undefined, undefined, children[i]);
+      }
+    }
+    return VNode(sel, data, children, text, undefined);
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda-fantasy@0.4.0/src/Maybe", ["npm:ramda@0.17.1", "npm:ramda-fantasy@0.4.0/src/internal/util"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var R = require("npm:ramda@0.17.1");
+  var util = require("npm:ramda-fantasy@0.4.0/src/internal/util");
+  function Maybe(x) {
+    return x == null ? _nothing : Maybe.Just(x);
+  }
+  function _Just(x) {
+    this.value = x;
+  }
+  util.extend(_Just, Maybe);
+  function _Nothing() {}
+  util.extend(_Nothing, Maybe);
+  var _nothing = new _Nothing();
+  Maybe.Nothing = function() {
+    return _nothing;
+  };
+  Maybe.Just = function(x) {
+    return new _Just(x);
+  };
+  Maybe.of = Maybe.Just;
+  Maybe.prototype.of = Maybe.Just;
+  Maybe.isJust = function(x) {
+    return x instanceof _Just;
+  };
+  Maybe.isNothing = function(x) {
+    return x === _nothing;
+  };
+  Maybe.maybe = R.curry(function(nothingVal, justFn, m) {
+    return m.reduce(function(_, x) {
+      return justFn(x);
+    }, nothingVal);
+  });
+  _Just.prototype.map = function(f) {
+    return this.of(f(this.value));
+  };
+  _Nothing.prototype.map = util.returnThis;
+  _Just.prototype.ap = function(m) {
+    return m.map(this.value);
+  };
+  _Nothing.prototype.ap = util.returnThis;
+  _Just.prototype.chain = util.baseMap;
+  _Nothing.prototype.chain = util.returnThis;
+  _Just.prototype.datatype = _Just;
+  _Nothing.prototype.datatype = _Nothing;
+  _Just.prototype.equals = util.getEquals(_Just);
+  _Nothing.prototype.equals = function(that) {
+    return that === _nothing;
+  };
+  Maybe.prototype.isNothing = function() {
+    return this === _nothing;
+  };
+  Maybe.prototype.isJust = function() {
+    return this instanceof _Just;
+  };
+  _Just.prototype.getOrElse = function() {
+    return this.value;
+  };
+  _Nothing.prototype.getOrElse = function(a) {
+    return a;
+  };
+  _Just.prototype.reduce = function(f, x) {
+    return f(x, this.value);
+  };
+  _Nothing.prototype.reduce = function(f, x) {
+    return x;
+  };
+  _Just.prototype.toString = function() {
+    return 'Maybe.Just(' + R.toString(this.value) + ')';
+  };
+  _Nothing.prototype.toString = function() {
+    return 'Maybe.Nothing()';
+  };
+  module.exports = Maybe;
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/internal/_curry1", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function _curry1(fn) {
+    return function f1(a) {
+      if (arguments.length === 0) {
+        return f1;
+      } else if (a != null && a['@@functional/placeholder'] === true) {
+        return f1;
+      } else {
+        return fn.apply(this, arguments);
+      }
+    };
+  };
+  global.define = __define;
+  return module.exports;
+});
+
 System.registerDynamic("npm:ramda@0.17.1/src/internal/_slice", [], true, function(require, exports, module) {
   ;
   var global = this,
@@ -1606,6 +1606,66 @@ System.registerDynamic("npm:snabbdom@0.2.6/is", [], true, function(require, expo
   return module.exports;
 });
 
+System.registerDynamic("npm:ramda@0.14.0/src/curryN", ["npm:ramda@0.14.0/src/__", "npm:ramda@0.14.0/src/internal/_curry2", "npm:ramda@0.14.0/src/internal/_slice", "npm:ramda@0.14.0/src/arity"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var __ = require("npm:ramda@0.14.0/src/__");
+  var _curry2 = require("npm:ramda@0.14.0/src/internal/_curry2");
+  var _slice = require("npm:ramda@0.14.0/src/internal/_slice");
+  var arity = require("npm:ramda@0.14.0/src/arity");
+  module.exports = _curry2(function curryN(length, fn) {
+    return arity(length, function() {
+      var n = arguments.length;
+      var shortfall = length - n;
+      var idx = n;
+      while (--idx >= 0) {
+        if (arguments[idx] === __) {
+          shortfall += 1;
+        }
+      }
+      if (shortfall <= 0) {
+        return fn.apply(this, arguments);
+      } else {
+        var initialArgs = _slice(arguments);
+        return curryN(shortfall, function() {
+          var currentArgs = _slice(arguments);
+          var combinedArgs = [];
+          var idx = -1;
+          while (++idx < n) {
+            var val = initialArgs[idx];
+            combinedArgs[idx] = (val === __ ? currentArgs.shift() : val);
+          }
+          return fn.apply(this, combinedArgs.concat(currentArgs));
+        });
+      }
+    });
+  });
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:snabbdom@0.2.6/vnode", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function(sel, data, children, text, elm) {
+    var key = data === undefined ? undefined : data.key;
+    return {
+      sel: sel,
+      data: data,
+      children: children,
+      text: text,
+      elm: elm,
+      key: key
+    };
+  };
+  global.define = __define;
+  return module.exports;
+});
+
 System.registerDynamic("npm:flyd-forwardto@0.0.2/forwardto", ["npm:flyd@0.1.14"], true, function(require, exports, module) {
   ;
   var global = this,
@@ -1619,78 +1679,6 @@ System.registerDynamic("npm:flyd-forwardto@0.0.2/forwardto", ["npm:flyd@0.1.14"]
     }, s);
     return s;
   });
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:union-type@0.1.6/union-type", ["npm:ramda@0.15.1/src/curryN"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var curryN = require("npm:ramda@0.15.1/src/curryN");
-  function isString(s) {
-    return typeof s === 'string';
-  }
-  function isNumber(n) {
-    return typeof n === 'number';
-  }
-  function isObject(value) {
-    var type = typeof value;
-    return !!value && (type == 'object' || type == 'function');
-  }
-  function isFunction(f) {
-    return typeof f === 'function';
-  }
-  var isArray = Array.isArray || function(a) {
-    return 'length' in a;
-  };
-  var mapConstrToFn = curryN(2, function(group, constr) {
-    return constr === String ? isString : constr === Number ? isNumber : constr === Object ? isObject : constr === Array ? isArray : constr === Function ? isFunction : constr === undefined ? group : constr;
-  });
-  function Constructor(group, name, validators) {
-    validators = validators.map(mapConstrToFn(group));
-    var constructor = curryN(validators.length, function() {
-      var val = [],
-          v,
-          validator;
-      for (var i = 0; i < arguments.length; ++i) {
-        v = arguments[i];
-        validator = validators[i];
-        if ((typeof validator === 'function' && validator(v)) || (v !== undefined && v !== null && v.of === validator)) {
-          val[i] = arguments[i];
-        } else {
-          throw new TypeError('wrong value ' + v + ' passed to location ' + i + ' in ' + name);
-        }
-      }
-      val.of = group;
-      val.name = name;
-      return val;
-    });
-    return constructor;
-  }
-  function rawCase(type, cases, action, arg) {
-    if (type !== action.of)
-      throw new TypeError('wrong type passed to case');
-    var name = action.name in cases ? action.name : '_' in cases ? '_' : undefined;
-    if (name === undefined) {
-      throw new Error('unhandled value passed to case');
-    } else {
-      return cases[name].apply(undefined, arg !== undefined ? action.concat([arg]) : action);
-    }
-  }
-  var typeCase = curryN(3, rawCase);
-  var caseOn = curryN(4, rawCase);
-  function Type(desc) {
-    var obj = {};
-    for (var key in desc) {
-      obj[key] = Constructor(obj, key, desc[key]);
-    }
-    obj.case = typeCase(obj);
-    obj.caseOn = caseOn(obj);
-    return obj;
-  }
-  module.exports = Type;
   global.define = __define;
   return module.exports;
 });
@@ -1711,6 +1699,16 @@ System.registerDynamic("js/helpers/casekey.js", ["npm:ramda@0.17.1/src/curry"], 
     }, {});
     return hasOwnProperty.call(mapHandlers, k) ? mapHandlers[k](e) : noop();
   });
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:flyd-aftersilence@0.1.0", ["npm:flyd-aftersilence@0.1.0/aftersilence"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = require("npm:flyd-aftersilence@0.1.0/aftersilence");
   global.define = __define;
   return module.exports;
 });
@@ -1793,6 +1791,141 @@ System.registerDynamic("npm:ramda@0.17.1/src/toString", ["npm:ramda@0.17.1/src/i
   return module.exports;
 });
 
+System.registerDynamic("npm:union-type@0.1.6/union-type", ["npm:ramda@0.15.1/src/curryN"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var curryN = require("npm:ramda@0.15.1/src/curryN");
+  function isString(s) {
+    return typeof s === 'string';
+  }
+  function isNumber(n) {
+    return typeof n === 'number';
+  }
+  function isObject(value) {
+    var type = typeof value;
+    return !!value && (type == 'object' || type == 'function');
+  }
+  function isFunction(f) {
+    return typeof f === 'function';
+  }
+  var isArray = Array.isArray || function(a) {
+    return 'length' in a;
+  };
+  var mapConstrToFn = curryN(2, function(group, constr) {
+    return constr === String ? isString : constr === Number ? isNumber : constr === Object ? isObject : constr === Array ? isArray : constr === Function ? isFunction : constr === undefined ? group : constr;
+  });
+  function Constructor(group, name, validators) {
+    validators = validators.map(mapConstrToFn(group));
+    var constructor = curryN(validators.length, function() {
+      var val = [],
+          v,
+          validator;
+      for (var i = 0; i < arguments.length; ++i) {
+        v = arguments[i];
+        validator = validators[i];
+        if ((typeof validator === 'function' && validator(v)) || (v !== undefined && v !== null && v.of === validator)) {
+          val[i] = arguments[i];
+        } else {
+          throw new TypeError('wrong value ' + v + ' passed to location ' + i + ' in ' + name);
+        }
+      }
+      val.of = group;
+      val.name = name;
+      return val;
+    });
+    return constructor;
+  }
+  function rawCase(type, cases, action, arg) {
+    if (type !== action.of)
+      throw new TypeError('wrong type passed to case');
+    var name = action.name in cases ? action.name : '_' in cases ? '_' : undefined;
+    if (name === undefined) {
+      throw new Error('unhandled value passed to case');
+    } else {
+      return cases[name].apply(undefined, arg !== undefined ? action.concat([arg]) : action);
+    }
+  }
+  var typeCase = curryN(3, rawCase);
+  var caseOn = curryN(4, rawCase);
+  function Type(desc) {
+    var obj = {};
+    for (var key in desc) {
+      obj[key] = Constructor(obj, key, desc[key]);
+    }
+    obj.case = typeCase(obj);
+    obj.caseOn = caseOn(obj);
+    return obj;
+  }
+  module.exports = Type;
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/last", ["npm:ramda@0.17.1/src/nth"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var nth = require("npm:ramda@0.17.1/src/nth");
+  module.exports = nth(-1);
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/curryN", ["npm:ramda@0.17.1/src/internal/_arity", "npm:ramda@0.17.1/src/internal/_curry1", "npm:ramda@0.17.1/src/internal/_curry2", "npm:ramda@0.17.1/src/internal/_curryN"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _arity = require("npm:ramda@0.17.1/src/internal/_arity");
+  var _curry1 = require("npm:ramda@0.17.1/src/internal/_curry1");
+  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
+  var _curryN = require("npm:ramda@0.17.1/src/internal/_curryN");
+  module.exports = _curry2(function curryN(length, fn) {
+    if (length === 1) {
+      return _curry1(fn);
+    }
+    return _arity(length, _curryN(length, [], fn));
+  });
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/pipe", ["npm:ramda@0.17.1/src/internal/_pipe", "npm:ramda@0.17.1/src/curryN", "npm:ramda@0.17.1/src/reduce", "npm:ramda@0.17.1/src/tail"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _pipe = require("npm:ramda@0.17.1/src/internal/_pipe");
+  var curryN = require("npm:ramda@0.17.1/src/curryN");
+  var reduce = require("npm:ramda@0.17.1/src/reduce");
+  var tail = require("npm:ramda@0.17.1/src/tail");
+  module.exports = function pipe() {
+    if (arguments.length === 0) {
+      throw new Error('pipe requires at least one argument');
+    }
+    return curryN(arguments[0].length, reduce(_pipe, arguments[0], tail(arguments)));
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/reverse", ["npm:ramda@0.17.1/src/internal/_curry1", "npm:ramda@0.17.1/src/internal/_slice"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _curry1 = require("npm:ramda@0.17.1/src/internal/_curry1");
+  var _slice = require("npm:ramda@0.17.1/src/internal/_slice");
+  module.exports = _curry1(function reverse(list) {
+    return _slice(list).reverse();
+  });
+  global.define = __define;
+  return module.exports;
+});
+
 System.registerDynamic("npm:ramda@0.17.1/src/internal/_dispatchable", ["npm:ramda@0.17.1/src/internal/_isArray", "npm:ramda@0.17.1/src/internal/_isTransformer", "npm:ramda@0.17.1/src/internal/_slice"], true, function(require, exports, module) {
   ;
   var global = this,
@@ -1861,21 +1994,29 @@ System.registerDynamic("npm:ramda@0.17.1/src/internal/_curry2", ["npm:ramda@0.17
   return module.exports;
 });
 
-System.registerDynamic("npm:ramda@0.17.1/src/internal/_map", [], true, function(require, exports, module) {
+System.registerDynamic("npm:ramda@0.17.1/src/internal/_xchain", ["npm:ramda@0.17.1/src/internal/_curry2", "npm:ramda@0.17.1/src/internal/_flatCat", "npm:ramda@0.17.1/src/map"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = function _map(fn, list) {
-    var idx = 0,
-        len = list.length,
-        result = Array(len);
-    while (idx < len) {
-      result[idx] = fn(list[idx]);
-      idx += 1;
-    }
-    return result;
-  };
+  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
+  var _flatCat = require("npm:ramda@0.17.1/src/internal/_flatCat");
+  var map = require("npm:ramda@0.17.1/src/map");
+  module.exports = _curry2(function _xchain(f, xf) {
+    return map(f, _flatCat(xf));
+  });
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/unnest", ["npm:ramda@0.17.1/src/internal/_curry1", "npm:ramda@0.17.1/src/internal/_makeFlat"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _curry1 = require("npm:ramda@0.17.1/src/internal/_curry1");
+  var _makeFlat = require("npm:ramda@0.17.1/src/internal/_makeFlat");
+  module.exports = _curry1(_makeFlat(false));
   global.define = __define;
   return module.exports;
 });
@@ -1905,93 +2046,80 @@ System.registerDynamic("npm:ramda@0.17.1/src/internal/_xmap", ["npm:ramda@0.17.1
   return module.exports;
 });
 
-System.registerDynamic("npm:ramda@0.17.1/src/internal/_xchain", ["npm:ramda@0.17.1/src/internal/_curry2", "npm:ramda@0.17.1/src/internal/_flatCat", "npm:ramda@0.17.1/src/map"], true, function(require, exports, module) {
+System.registerDynamic("npm:ramda@0.17.1/src/internal/_map", [], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
-  var _flatCat = require("npm:ramda@0.17.1/src/internal/_flatCat");
-  var map = require("npm:ramda@0.17.1/src/map");
-  module.exports = _curry2(function _xchain(f, xf) {
-    return map(f, _flatCat(xf));
-  });
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/curryN", ["npm:ramda@0.17.1/src/internal/_arity", "npm:ramda@0.17.1/src/internal/_curry1", "npm:ramda@0.17.1/src/internal/_curry2", "npm:ramda@0.17.1/src/internal/_curryN"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _arity = require("npm:ramda@0.17.1/src/internal/_arity");
-  var _curry1 = require("npm:ramda@0.17.1/src/internal/_curry1");
-  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
-  var _curryN = require("npm:ramda@0.17.1/src/internal/_curryN");
-  module.exports = _curry2(function curryN(length, fn) {
-    if (length === 1) {
-      return _curry1(fn);
+  module.exports = function _map(fn, list) {
+    var idx = 0,
+        len = list.length,
+        result = Array(len);
+    while (idx < len) {
+      result[idx] = fn(list[idx]);
+      idx += 1;
     }
-    return _arity(length, _curryN(length, [], fn));
-  });
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/unnest", ["npm:ramda@0.17.1/src/internal/_curry1", "npm:ramda@0.17.1/src/internal/_makeFlat"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _curry1 = require("npm:ramda@0.17.1/src/internal/_curry1");
-  var _makeFlat = require("npm:ramda@0.17.1/src/internal/_makeFlat");
-  module.exports = _curry1(_makeFlat(false));
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/pipe", ["npm:ramda@0.17.1/src/internal/_pipe", "npm:ramda@0.17.1/src/curryN", "npm:ramda@0.17.1/src/reduce", "npm:ramda@0.17.1/src/tail"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _pipe = require("npm:ramda@0.17.1/src/internal/_pipe");
-  var curryN = require("npm:ramda@0.17.1/src/curryN");
-  var reduce = require("npm:ramda@0.17.1/src/reduce");
-  var tail = require("npm:ramda@0.17.1/src/tail");
-  module.exports = function pipe() {
-    if (arguments.length === 0) {
-      throw new Error('pipe requires at least one argument');
-    }
-    return curryN(arguments[0].length, reduce(_pipe, arguments[0], tail(arguments)));
+    return result;
   };
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:ramda@0.17.1/src/reverse", ["npm:ramda@0.17.1/src/internal/_curry1", "npm:ramda@0.17.1/src/internal/_slice"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _curry1 = require("npm:ramda@0.17.1/src/internal/_curry1");
-  var _slice = require("npm:ramda@0.17.1/src/internal/_slice");
-  module.exports = _curry1(function reverse(list) {
-    return _slice(list).reverse();
-  });
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/is", ["npm:ramda@0.17.1/src/internal/_curry2"], true, function(require, exports, module) {
+System.registerDynamic("npm:ramda@0.17.1/src/nAry", ["npm:ramda@0.17.1/src/internal/_curry2"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
-  module.exports = _curry2(function is(Ctor, val) {
-    return val != null && val.constructor === Ctor || val instanceof Ctor;
+  module.exports = _curry2(function nAry(n, fn) {
+    switch (n) {
+      case 0:
+        return function() {
+          return fn.call(this);
+        };
+      case 1:
+        return function(a0) {
+          return fn.call(this, a0);
+        };
+      case 2:
+        return function(a0, a1) {
+          return fn.call(this, a0, a1);
+        };
+      case 3:
+        return function(a0, a1, a2) {
+          return fn.call(this, a0, a1, a2);
+        };
+      case 4:
+        return function(a0, a1, a2, a3) {
+          return fn.call(this, a0, a1, a2, a3);
+        };
+      case 5:
+        return function(a0, a1, a2, a3, a4) {
+          return fn.call(this, a0, a1, a2, a3, a4);
+        };
+      case 6:
+        return function(a0, a1, a2, a3, a4, a5) {
+          return fn.call(this, a0, a1, a2, a3, a4, a5);
+        };
+      case 7:
+        return function(a0, a1, a2, a3, a4, a5, a6) {
+          return fn.call(this, a0, a1, a2, a3, a4, a5, a6);
+        };
+      case 8:
+        return function(a0, a1, a2, a3, a4, a5, a6, a7) {
+          return fn.call(this, a0, a1, a2, a3, a4, a5, a6, a7);
+        };
+      case 9:
+        return function(a0, a1, a2, a3, a4, a5, a6, a7, a8) {
+          return fn.call(this, a0, a1, a2, a3, a4, a5, a6, a7, a8);
+        };
+      case 10:
+        return function(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9) {
+          return fn.call(this, a0, a1, a2, a3, a4, a5, a6, a7, a8, a9);
+        };
+      default:
+        throw new Error('First argument to nAry must be a non-negative integer no greater than ten');
+    }
   });
   global.define = __define;
   return module.exports;
@@ -2005,16 +2133,6 @@ System.registerDynamic("npm:ramda@0.17.1/src/internal/_identity", [], true, func
   module.exports = function _identity(x) {
     return x;
   };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("github:jspm/nodelibs-process@0.1.1", ["github:jspm/nodelibs-process@0.1.1/index"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = require("github:jspm/nodelibs-process@0.1.1/index");
   global.define = __define;
   return module.exports;
 });
@@ -2086,90 +2204,12 @@ System.registerDynamic("npm:ramda@0.17.1/src/internal/_curry3", ["npm:ramda@0.17
   return module.exports;
 });
 
-System.registerDynamic("npm:ramda@0.17.1/src/internal/_concat", [], true, function(require, exports, module) {
+System.registerDynamic("github:jspm/nodelibs-process@0.1.1", ["github:jspm/nodelibs-process@0.1.1/index"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = function _concat(set1, set2) {
-    set1 = set1 || [];
-    set2 = set2 || [];
-    var idx;
-    var len1 = set1.length;
-    var len2 = set2.length;
-    var result = [];
-    idx = 0;
-    while (idx < len1) {
-      result[result.length] = set1[idx];
-      idx += 1;
-    }
-    idx = 0;
-    while (idx < len2) {
-      result[result.length] = set2[idx];
-      idx += 1;
-    }
-    return result;
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/nAry", ["npm:ramda@0.17.1/src/internal/_curry2"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
-  module.exports = _curry2(function nAry(n, fn) {
-    switch (n) {
-      case 0:
-        return function() {
-          return fn.call(this);
-        };
-      case 1:
-        return function(a0) {
-          return fn.call(this, a0);
-        };
-      case 2:
-        return function(a0, a1) {
-          return fn.call(this, a0, a1);
-        };
-      case 3:
-        return function(a0, a1, a2) {
-          return fn.call(this, a0, a1, a2);
-        };
-      case 4:
-        return function(a0, a1, a2, a3) {
-          return fn.call(this, a0, a1, a2, a3);
-        };
-      case 5:
-        return function(a0, a1, a2, a3, a4) {
-          return fn.call(this, a0, a1, a2, a3, a4);
-        };
-      case 6:
-        return function(a0, a1, a2, a3, a4, a5) {
-          return fn.call(this, a0, a1, a2, a3, a4, a5);
-        };
-      case 7:
-        return function(a0, a1, a2, a3, a4, a5, a6) {
-          return fn.call(this, a0, a1, a2, a3, a4, a5, a6);
-        };
-      case 8:
-        return function(a0, a1, a2, a3, a4, a5, a6, a7) {
-          return fn.call(this, a0, a1, a2, a3, a4, a5, a6, a7);
-        };
-      case 9:
-        return function(a0, a1, a2, a3, a4, a5, a6, a7, a8) {
-          return fn.call(this, a0, a1, a2, a3, a4, a5, a6, a7, a8);
-        };
-      case 10:
-        return function(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9) {
-          return fn.call(this, a0, a1, a2, a3, a4, a5, a6, a7, a8, a9);
-        };
-      default:
-        throw new Error('First argument to nAry must be a non-negative integer no greater than ten');
-    }
-  });
+  module.exports = require("github:jspm/nodelibs-process@0.1.1/index");
   global.define = __define;
   return module.exports;
 });
@@ -2232,6 +2272,83 @@ System.registerDynamic("npm:ramda@0.17.1/src/internal/_equals", ["npm:ramda@0.17
   return module.exports;
 });
 
+System.registerDynamic("npm:ramda@0.17.1/src/is", ["npm:ramda@0.17.1/src/internal/_curry2"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
+  module.exports = _curry2(function is(Ctor, val) {
+    return val != null && val.constructor === Ctor || val instanceof Ctor;
+  });
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/internal/_hasMethod", ["npm:ramda@0.17.1/src/internal/_isArray"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _isArray = require("npm:ramda@0.17.1/src/internal/_isArray");
+  module.exports = function _hasMethod(methodName, obj) {
+    return obj != null && !_isArray(obj) && typeof obj[methodName] === 'function';
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/internal/_concat", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function _concat(set1, set2) {
+    set1 = set1 || [];
+    set2 = set2 || [];
+    var idx;
+    var len1 = set1.length;
+    var len2 = set2.length;
+    var result = [];
+    idx = 0;
+    while (idx < len1) {
+      result[result.length] = set1[idx];
+      idx += 1;
+    }
+    idx = 0;
+    while (idx < len2) {
+      result[result.length] = set2[idx];
+      idx += 1;
+    }
+    return result;
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/internal/_predicateWrap", ["npm:ramda@0.17.1/src/internal/_arity", "npm:ramda@0.17.1/src/internal/_slice", "npm:ramda@0.17.1/src/pluck"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _arity = require("npm:ramda@0.17.1/src/internal/_arity");
+  var _slice = require("npm:ramda@0.17.1/src/internal/_slice");
+  var pluck = require("npm:ramda@0.17.1/src/pluck");
+  module.exports = function _predicateWrap(predPicker) {
+    return function(preds) {
+      var predIterator = function() {
+        var args = arguments;
+        return predPicker(function(predicate) {
+          return predicate.apply(null, args);
+        }, preds);
+      };
+      return arguments.length > 1 ? predIterator.apply(null, _slice(arguments, 1)) : _arity(Math.max.apply(Math, pluck('length', preds)), predIterator);
+    };
+  };
+  global.define = __define;
+  return module.exports;
+});
+
 System.registerDynamic("npm:ramda@0.17.1", ["npm:ramda@0.17.1/dist/ramda"], true, function(require, exports, module) {
   ;
   var global = this,
@@ -2260,62 +2377,6 @@ System.registerDynamic("npm:ramda@0.17.1/src/all", ["npm:ramda@0.17.1/src/intern
     }
     return true;
   }));
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/internal/_hasMethod", ["npm:ramda@0.17.1/src/internal/_isArray"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _isArray = require("npm:ramda@0.17.1/src/internal/_isArray");
-  module.exports = function _hasMethod(methodName, obj) {
-    return obj != null && !_isArray(obj) && typeof obj[methodName] === 'function';
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:snabbdom@0.2.6/vnode", [], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = function(sel, data, children, text, elm) {
-    var key = data === undefined ? undefined : data.key;
-    return {
-      sel: sel,
-      data: data,
-      children: children,
-      text: text,
-      elm: elm,
-      key: key
-    };
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/internal/_predicateWrap", ["npm:ramda@0.17.1/src/internal/_arity", "npm:ramda@0.17.1/src/internal/_slice", "npm:ramda@0.17.1/src/pluck"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _arity = require("npm:ramda@0.17.1/src/internal/_arity");
-  var _slice = require("npm:ramda@0.17.1/src/internal/_slice");
-  var pluck = require("npm:ramda@0.17.1/src/pluck");
-  module.exports = function _predicateWrap(predPicker) {
-    return function(preds) {
-      var predIterator = function() {
-        var args = arguments;
-        return predPicker(function(predicate) {
-          return predicate.apply(null, args);
-        }, preds);
-      };
-      return arguments.length > 1 ? predIterator.apply(null, _slice(arguments, 1)) : _arity(Math.max.apply(Math, pluck('length', preds)), predIterator);
-    };
-  };
   global.define = __define;
   return module.exports;
 });
@@ -2364,46 +2425,6 @@ System.registerDynamic("npm:ramda-fantasy@0.4.0/src/internal/util", ["npm:ramda@
   return module.exports;
 });
 
-System.registerDynamic("npm:ramda@0.14.0/src/curryN", ["npm:ramda@0.14.0/src/__", "npm:ramda@0.14.0/src/internal/_curry2", "npm:ramda@0.14.0/src/internal/_slice", "npm:ramda@0.14.0/src/arity"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var __ = require("npm:ramda@0.14.0/src/__");
-  var _curry2 = require("npm:ramda@0.14.0/src/internal/_curry2");
-  var _slice = require("npm:ramda@0.14.0/src/internal/_slice");
-  var arity = require("npm:ramda@0.14.0/src/arity");
-  module.exports = _curry2(function curryN(length, fn) {
-    return arity(length, function() {
-      var n = arguments.length;
-      var shortfall = length - n;
-      var idx = n;
-      while (--idx >= 0) {
-        if (arguments[idx] === __) {
-          shortfall += 1;
-        }
-      }
-      if (shortfall <= 0) {
-        return fn.apply(this, arguments);
-      } else {
-        var initialArgs = _slice(arguments);
-        return curryN(shortfall, function() {
-          var currentArgs = _slice(arguments);
-          var combinedArgs = [];
-          var idx = -1;
-          while (++idx < n) {
-            var val = initialArgs[idx];
-            combinedArgs[idx] = (val === __ ? currentArgs.shift() : val);
-          }
-          return fn.apply(this, combinedArgs.concat(currentArgs));
-        });
-      }
-    });
-  });
-  global.define = __define;
-  return module.exports;
-});
-
 System.registerDynamic("npm:core-js@1.1.3/library/fn/is-iterable", ["npm:core-js@1.1.3/library/modules/web.dom.iterable", "npm:core-js@1.1.3/library/modules/es6.string.iterator", "npm:core-js@1.1.3/library/modules/core.is-iterable"], true, function(require, exports, module) {
   ;
   var global = this,
@@ -2428,17 +2449,166 @@ System.registerDynamic("npm:core-js@1.1.3/library/fn/get-iterator", ["npm:core-j
   return module.exports;
 });
 
-System.registerDynamic("npm:ramda@0.15.1/src/curryN", ["npm:ramda@0.15.1/src/internal/_curry2", "npm:ramda@0.15.1/src/internal/_curryN", "npm:ramda@0.15.1/src/arity"], true, function(require, exports, module) {
+System.registerDynamic("npm:ramda@0.14.0/src/internal/_slice", [], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var _curry2 = require("npm:ramda@0.15.1/src/internal/_curry2");
-  var _curryN = require("npm:ramda@0.15.1/src/internal/_curryN");
-  var arity = require("npm:ramda@0.15.1/src/arity");
-  module.exports = _curry2(function curryN(length, fn) {
-    return arity(length, _curryN(length, [], fn));
+  module.exports = function _slice(args, from, to) {
+    switch (arguments.length) {
+      case 1:
+        return _slice(args, 0, args.length);
+      case 2:
+        return _slice(args, from, args.length);
+      default:
+        var list = [];
+        var idx = -1;
+        var len = Math.max(0, Math.min(args.length, to) - from);
+        while (++idx < len) {
+          list[idx] = args[from + idx];
+        }
+        return list;
+    }
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.14.0/src/__", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = {ramda: 'placeholder'};
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.14.0/src/internal/_curry2", ["npm:ramda@0.14.0/src/__", "npm:ramda@0.14.0/src/internal/_curry1"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var __ = require("npm:ramda@0.14.0/src/__");
+  var _curry1 = require("npm:ramda@0.14.0/src/internal/_curry1");
+  module.exports = function _curry2(fn) {
+    return function f2(a, b) {
+      var n = arguments.length;
+      if (n === 0) {
+        return f2;
+      } else if (n === 1 && a === __) {
+        return f2;
+      } else if (n === 1) {
+        return _curry1(function(b) {
+          return fn(a, b);
+        });
+      } else if (n === 2 && a === __ && b === __) {
+        return f2;
+      } else if (n === 2 && a === __) {
+        return _curry1(function(a) {
+          return fn(a, b);
+        });
+      } else if (n === 2 && b === __) {
+        return _curry1(function(b) {
+          return fn(a, b);
+        });
+      } else {
+        return fn(a, b);
+      }
+    };
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.14.0/src/arity", ["npm:ramda@0.14.0/src/internal/_curry2"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _curry2 = require("npm:ramda@0.14.0/src/internal/_curry2");
+  module.exports = _curry2(function(n, fn) {
+    switch (n) {
+      case 0:
+        return function() {
+          return fn.apply(this, arguments);
+        };
+      case 1:
+        return function(a0) {
+          void a0;
+          return fn.apply(this, arguments);
+        };
+      case 2:
+        return function(a0, a1) {
+          void a1;
+          return fn.apply(this, arguments);
+        };
+      case 3:
+        return function(a0, a1, a2) {
+          void a2;
+          return fn.apply(this, arguments);
+        };
+      case 4:
+        return function(a0, a1, a2, a3) {
+          void a3;
+          return fn.apply(this, arguments);
+        };
+      case 5:
+        return function(a0, a1, a2, a3, a4) {
+          void a4;
+          return fn.apply(this, arguments);
+        };
+      case 6:
+        return function(a0, a1, a2, a3, a4, a5) {
+          void a5;
+          return fn.apply(this, arguments);
+        };
+      case 7:
+        return function(a0, a1, a2, a3, a4, a5, a6) {
+          void a6;
+          return fn.apply(this, arguments);
+        };
+      case 8:
+        return function(a0, a1, a2, a3, a4, a5, a6, a7) {
+          void a7;
+          return fn.apply(this, arguments);
+        };
+      case 9:
+        return function(a0, a1, a2, a3, a4, a5, a6, a7, a8) {
+          void a8;
+          return fn.apply(this, arguments);
+        };
+      case 10:
+        return function(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9) {
+          void a9;
+          return fn.apply(this, arguments);
+        };
+      default:
+        throw new Error('First argument to arity must be a non-negative integer no greater than ten');
+    }
   });
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:flyd-aftersilence@0.1.0/aftersilence", ["npm:flyd@0.1.14"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var flyd = require("npm:flyd@0.1.14");
+  module.exports = function(dur, s) {
+    var scheduled;
+    var buffer = [];
+    return flyd.stream([s], function(self) {
+      buffer.push(s());
+      clearTimeout(scheduled);
+      scheduled = setTimeout(function() {
+        self(buffer);
+        buffer = [];
+      }, dur);
+    });
+  };
   global.define = __define;
   return module.exports;
 });
@@ -2541,115 +2711,17 @@ System.registerDynamic("npm:ramda@0.17.1/src/keys", ["npm:ramda@0.17.1/src/inter
   return module.exports;
 });
 
-System.registerDynamic("npm:ramda@0.17.1/src/internal/_isArray", [], true, function(require, exports, module) {
+System.registerDynamic("npm:ramda@0.15.1/src/curryN", ["npm:ramda@0.15.1/src/internal/_curry2", "npm:ramda@0.15.1/src/internal/_curryN", "npm:ramda@0.15.1/src/arity"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = Array.isArray || function _isArray(val) {
-    return (val != null && val.length >= 0 && Object.prototype.toString.call(val) === '[object Array]');
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/internal/_isTransformer", [], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = function _isTransformer(obj) {
-    return typeof obj['@@transducer/step'] === 'function';
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/internal/_flatCat", ["npm:ramda@0.17.1/src/internal/_forceReduced", "npm:ramda@0.17.1/src/internal/_reduce", "npm:ramda@0.17.1/src/internal/_xfBase", "npm:ramda@0.17.1/src/isArrayLike"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _forceReduced = require("npm:ramda@0.17.1/src/internal/_forceReduced");
-  var _reduce = require("npm:ramda@0.17.1/src/internal/_reduce");
-  var _xfBase = require("npm:ramda@0.17.1/src/internal/_xfBase");
-  var isArrayLike = require("npm:ramda@0.17.1/src/isArrayLike");
-  module.exports = (function() {
-    var preservingReduced = function(xf) {
-      return {
-        '@@transducer/init': _xfBase.init,
-        '@@transducer/result': function(result) {
-          return xf['@@transducer/result'](result);
-        },
-        '@@transducer/step': function(result, input) {
-          var ret = xf['@@transducer/step'](result, input);
-          return ret['@@transducer/reduced'] ? _forceReduced(ret) : ret;
-        }
-      };
-    };
-    return function _xcat(xf) {
-      var rxf = preservingReduced(xf);
-      return {
-        '@@transducer/init': _xfBase.init,
-        '@@transducer/result': function(result) {
-          return rxf['@@transducer/result'](result);
-        },
-        '@@transducer/step': function(result, input) {
-          return !isArrayLike(input) ? _reduce(rxf, result, [input]) : _reduce(rxf, result, input);
-        }
-      };
-    };
-  }());
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/internal/_xfBase", [], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = {
-    init: function() {
-      return this.xf['@@transducer/init']();
-    },
-    result: function(result) {
-      return this.xf['@@transducer/result'](result);
-    }
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/internal/_curryN", ["npm:ramda@0.17.1/src/internal/_arity"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _arity = require("npm:ramda@0.17.1/src/internal/_arity");
-  module.exports = function _curryN(length, received, fn) {
-    return function() {
-      var combined = [];
-      var argsIdx = 0;
-      var left = length;
-      var combinedIdx = 0;
-      while (combinedIdx < received.length || argsIdx < arguments.length) {
-        var result;
-        if (combinedIdx < received.length && (received[combinedIdx] == null || received[combinedIdx]['@@functional/placeholder'] !== true || argsIdx >= arguments.length)) {
-          result = received[combinedIdx];
-        } else {
-          result = arguments[argsIdx];
-          argsIdx += 1;
-        }
-        combined[combinedIdx] = result;
-        if (result == null || result['@@functional/placeholder'] !== true) {
-          left -= 1;
-        }
-        combinedIdx += 1;
-      }
-      return left <= 0 ? fn.apply(this, combined) : _arity(left, _curryN(length, combined, fn));
-    };
-  };
+  var _curry2 = require("npm:ramda@0.15.1/src/internal/_curry2");
+  var _curryN = require("npm:ramda@0.15.1/src/internal/_curryN");
+  var arity = require("npm:ramda@0.15.1/src/arity");
+  module.exports = _curry2(function curryN(length, fn) {
+    return arity(length, _curryN(length, [], fn));
+  });
   global.define = __define;
   return module.exports;
 });
@@ -2713,6 +2785,116 @@ System.registerDynamic("npm:ramda@0.17.1/src/internal/_arity", [], true, functio
   return module.exports;
 });
 
+System.registerDynamic("npm:ramda@0.17.1/src/nth", ["npm:ramda@0.17.1/src/internal/_curry2", "npm:ramda@0.17.1/src/internal/_isString"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
+  var _isString = require("npm:ramda@0.17.1/src/internal/_isString");
+  module.exports = _curry2(function nth(offset, list) {
+    var idx = offset < 0 ? list.length + offset : offset;
+    return _isString(list) ? list.charAt(idx) : list[idx];
+  });
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/reduce", ["npm:ramda@0.17.1/src/internal/_curry3", "npm:ramda@0.17.1/src/internal/_reduce"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _curry3 = require("npm:ramda@0.17.1/src/internal/_curry3");
+  var _reduce = require("npm:ramda@0.17.1/src/internal/_reduce");
+  module.exports = _curry3(_reduce);
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/internal/_curryN", ["npm:ramda@0.17.1/src/internal/_arity"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _arity = require("npm:ramda@0.17.1/src/internal/_arity");
+  module.exports = function _curryN(length, received, fn) {
+    return function() {
+      var combined = [];
+      var argsIdx = 0;
+      var left = length;
+      var combinedIdx = 0;
+      while (combinedIdx < received.length || argsIdx < arguments.length) {
+        var result;
+        if (combinedIdx < received.length && (received[combinedIdx] == null || received[combinedIdx]['@@functional/placeholder'] !== true || argsIdx >= arguments.length)) {
+          result = received[combinedIdx];
+        } else {
+          result = arguments[argsIdx];
+          argsIdx += 1;
+        }
+        combined[combinedIdx] = result;
+        if (result == null || result['@@functional/placeholder'] !== true) {
+          left -= 1;
+        }
+        combinedIdx += 1;
+      }
+      return left <= 0 ? fn.apply(this, combined) : _arity(left, _curryN(length, combined, fn));
+    };
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/tail", ["npm:ramda@0.17.1/src/internal/_checkForMethod", "npm:ramda@0.17.1/src/slice"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _checkForMethod = require("npm:ramda@0.17.1/src/internal/_checkForMethod");
+  var slice = require("npm:ramda@0.17.1/src/slice");
+  module.exports = _checkForMethod('tail', slice(1, Infinity));
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/internal/_pipe", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function _pipe(f, g) {
+    return function() {
+      return g.call(this, f.apply(this, arguments));
+    };
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/internal/_isTransformer", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function _isTransformer(obj) {
+    return typeof obj['@@transducer/step'] === 'function';
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/internal/_isArray", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = Array.isArray || function _isArray(val) {
+    return (val != null && val.length >= 0 && Object.prototype.toString.call(val) === '[object Array]');
+  };
+  global.define = __define;
+  return module.exports;
+});
+
 System.registerDynamic("npm:ramda@0.17.1/src/internal/_makeFlat", ["npm:ramda@0.17.1/src/isArrayLike"], true, function(require, exports, module) {
   ;
   var global = this,
@@ -2748,39 +2930,67 @@ System.registerDynamic("npm:ramda@0.17.1/src/internal/_makeFlat", ["npm:ramda@0.
   return module.exports;
 });
 
-System.registerDynamic("npm:ramda@0.17.1/src/reduce", ["npm:ramda@0.17.1/src/internal/_curry3", "npm:ramda@0.17.1/src/internal/_reduce"], true, function(require, exports, module) {
+System.registerDynamic("npm:ramda@0.17.1/src/internal/_flatCat", ["npm:ramda@0.17.1/src/internal/_forceReduced", "npm:ramda@0.17.1/src/internal/_reduce", "npm:ramda@0.17.1/src/internal/_xfBase", "npm:ramda@0.17.1/src/isArrayLike"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var _curry3 = require("npm:ramda@0.17.1/src/internal/_curry3");
+  var _forceReduced = require("npm:ramda@0.17.1/src/internal/_forceReduced");
   var _reduce = require("npm:ramda@0.17.1/src/internal/_reduce");
-  module.exports = _curry3(_reduce);
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/tail", ["npm:ramda@0.17.1/src/internal/_checkForMethod", "npm:ramda@0.17.1/src/slice"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _checkForMethod = require("npm:ramda@0.17.1/src/internal/_checkForMethod");
-  var slice = require("npm:ramda@0.17.1/src/slice");
-  module.exports = _checkForMethod('tail', slice(1, Infinity));
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/internal/_pipe", [], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = function _pipe(f, g) {
-    return function() {
-      return g.call(this, f.apply(this, arguments));
+  var _xfBase = require("npm:ramda@0.17.1/src/internal/_xfBase");
+  var isArrayLike = require("npm:ramda@0.17.1/src/isArrayLike");
+  module.exports = (function() {
+    var preservingReduced = function(xf) {
+      return {
+        '@@transducer/init': _xfBase.init,
+        '@@transducer/result': function(result) {
+          return xf['@@transducer/result'](result);
+        },
+        '@@transducer/step': function(result, input) {
+          var ret = xf['@@transducer/step'](result, input);
+          return ret['@@transducer/reduced'] ? _forceReduced(ret) : ret;
+        }
+      };
     };
+    return function _xcat(xf) {
+      var rxf = preservingReduced(xf);
+      return {
+        '@@transducer/init': _xfBase.init,
+        '@@transducer/result': function(result) {
+          return rxf['@@transducer/result'](result);
+        },
+        '@@transducer/step': function(result, input) {
+          return !isArrayLike(input) ? _reduce(rxf, result, [input]) : _reduce(rxf, result, input);
+        }
+      };
+    };
+  }());
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("github:jspm/nodelibs-process@0.1.1/index", ["npm:process@0.10.1"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = System._nodeRequire ? process : require("npm:process@0.10.1");
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/internal/_xfBase", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = {
+    init: function() {
+      return this.xf['@@transducer/init']();
+    },
+    result: function(result) {
+      return this.xf['@@transducer/result'](result);
+    }
   };
   global.define = __define;
   return module.exports;
@@ -2824,52 +3034,6 @@ System.registerDynamic("npm:ramda@0.17.1/src/type", ["npm:ramda@0.17.1/src/inter
   module.exports = _curry1(function type(val) {
     return val === null ? 'Null' : val === undefined ? 'Undefined' : Object.prototype.toString.call(val).slice(8, -1);
   });
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("github:jspm/nodelibs-process@0.1.1/index", ["npm:process@0.10.1"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = System._nodeRequire ? process : require("npm:process@0.10.1");
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/internal/_xall", ["npm:ramda@0.17.1/src/internal/_curry2", "npm:ramda@0.17.1/src/internal/_reduced", "npm:ramda@0.17.1/src/internal/_xfBase"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
-  var _reduced = require("npm:ramda@0.17.1/src/internal/_reduced");
-  var _xfBase = require("npm:ramda@0.17.1/src/internal/_xfBase");
-  module.exports = (function() {
-    function XAll(f, xf) {
-      this.xf = xf;
-      this.f = f;
-      this.all = true;
-    }
-    XAll.prototype['@@transducer/init'] = _xfBase.init;
-    XAll.prototype['@@transducer/result'] = function(result) {
-      if (this.all) {
-        result = this.xf['@@transducer/step'](result, true);
-      }
-      return this.xf['@@transducer/result'](result);
-    };
-    XAll.prototype['@@transducer/step'] = function(result, input) {
-      if (!this.f(input)) {
-        this.all = false;
-        result = _reduced(this.xf['@@transducer/step'](result, false));
-      }
-      return result;
-    };
-    return _curry2(function _xall(f, xf) {
-      return new XAll(f, xf);
-    });
-  })();
   global.define = __define;
   return module.exports;
 });
@@ -5440,144 +5604,38 @@ System.registerDynamic("npm:ramda@0.17.1/dist/ramda", ["github:jspm/nodelibs-pro
   return module.exports;
 });
 
-System.registerDynamic("npm:ramda@0.14.0/src/internal/_curry2", ["npm:ramda@0.14.0/src/__", "npm:ramda@0.14.0/src/internal/_curry1"], true, function(require, exports, module) {
+System.registerDynamic("npm:ramda@0.17.1/src/internal/_xall", ["npm:ramda@0.17.1/src/internal/_curry2", "npm:ramda@0.17.1/src/internal/_reduced", "npm:ramda@0.17.1/src/internal/_xfBase"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var __ = require("npm:ramda@0.14.0/src/__");
-  var _curry1 = require("npm:ramda@0.14.0/src/internal/_curry1");
-  module.exports = function _curry2(fn) {
-    return function f2(a, b) {
-      var n = arguments.length;
-      if (n === 0) {
-        return f2;
-      } else if (n === 1 && a === __) {
-        return f2;
-      } else if (n === 1) {
-        return _curry1(function(b) {
-          return fn(a, b);
-        });
-      } else if (n === 2 && a === __ && b === __) {
-        return f2;
-      } else if (n === 2 && a === __) {
-        return _curry1(function(a) {
-          return fn(a, b);
-        });
-      } else if (n === 2 && b === __) {
-        return _curry1(function(b) {
-          return fn(a, b);
-        });
-      } else {
-        return fn(a, b);
+  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
+  var _reduced = require("npm:ramda@0.17.1/src/internal/_reduced");
+  var _xfBase = require("npm:ramda@0.17.1/src/internal/_xfBase");
+  module.exports = (function() {
+    function XAll(f, xf) {
+      this.xf = xf;
+      this.f = f;
+      this.all = true;
+    }
+    XAll.prototype['@@transducer/init'] = _xfBase.init;
+    XAll.prototype['@@transducer/result'] = function(result) {
+      if (this.all) {
+        result = this.xf['@@transducer/step'](result, true);
       }
+      return this.xf['@@transducer/result'](result);
     };
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.14.0/src/__", [], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = {ramda: 'placeholder'};
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.14.0/src/internal/_slice", [], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = function _slice(args, from, to) {
-    switch (arguments.length) {
-      case 1:
-        return _slice(args, 0, args.length);
-      case 2:
-        return _slice(args, from, args.length);
-      default:
-        var list = [];
-        var idx = -1;
-        var len = Math.max(0, Math.min(args.length, to) - from);
-        while (++idx < len) {
-          list[idx] = args[from + idx];
-        }
-        return list;
-    }
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.14.0/src/arity", ["npm:ramda@0.14.0/src/internal/_curry2"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _curry2 = require("npm:ramda@0.14.0/src/internal/_curry2");
-  module.exports = _curry2(function(n, fn) {
-    switch (n) {
-      case 0:
-        return function() {
-          return fn.apply(this, arguments);
-        };
-      case 1:
-        return function(a0) {
-          void a0;
-          return fn.apply(this, arguments);
-        };
-      case 2:
-        return function(a0, a1) {
-          void a1;
-          return fn.apply(this, arguments);
-        };
-      case 3:
-        return function(a0, a1, a2) {
-          void a2;
-          return fn.apply(this, arguments);
-        };
-      case 4:
-        return function(a0, a1, a2, a3) {
-          void a3;
-          return fn.apply(this, arguments);
-        };
-      case 5:
-        return function(a0, a1, a2, a3, a4) {
-          void a4;
-          return fn.apply(this, arguments);
-        };
-      case 6:
-        return function(a0, a1, a2, a3, a4, a5) {
-          void a5;
-          return fn.apply(this, arguments);
-        };
-      case 7:
-        return function(a0, a1, a2, a3, a4, a5, a6) {
-          void a6;
-          return fn.apply(this, arguments);
-        };
-      case 8:
-        return function(a0, a1, a2, a3, a4, a5, a6, a7) {
-          void a7;
-          return fn.apply(this, arguments);
-        };
-      case 9:
-        return function(a0, a1, a2, a3, a4, a5, a6, a7, a8) {
-          void a8;
-          return fn.apply(this, arguments);
-        };
-      case 10:
-        return function(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9) {
-          void a9;
-          return fn.apply(this, arguments);
-        };
-      default:
-        throw new Error('First argument to arity must be a non-negative integer no greater than ten');
-    }
-  });
+    XAll.prototype['@@transducer/step'] = function(result, input) {
+      if (!this.f(input)) {
+        this.all = false;
+        result = _reduced(this.xf['@@transducer/step'](result, false));
+      }
+      return result;
+    };
+    return _curry2(function _xall(f, xf) {
+      return new XAll(f, xf);
+    });
+  })();
   global.define = __define;
   return module.exports;
 });
@@ -5653,6 +5711,100 @@ System.registerDynamic("npm:core-js@1.1.3/library/modules/core.get-iterator", ["
       throw TypeError(it + ' is not iterable!');
     return anObject(iterFn.call(it));
   };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.14.0/src/internal/_curry1", ["npm:ramda@0.14.0/src/__"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var __ = require("npm:ramda@0.14.0/src/__");
+  module.exports = function _curry1(fn) {
+    return function f1(a) {
+      if (arguments.length === 0) {
+        return f1;
+      } else if (a === __) {
+        return f1;
+      } else {
+        return fn(a);
+      }
+    };
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/internal/_quote", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function _quote(s) {
+    return '"' + s.replace(/"/g, '\\"') + '"';
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/internal/_contains", ["npm:ramda@0.17.1/src/internal/_indexOf"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _indexOf = require("npm:ramda@0.17.1/src/internal/_indexOf");
+  module.exports = function _contains(a, list) {
+    return _indexOf(list, a, 0) >= 0;
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/reject", ["npm:ramda@0.17.1/src/internal/_complement", "npm:ramda@0.17.1/src/internal/_curry2", "npm:ramda@0.17.1/src/filter"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _complement = require("npm:ramda@0.17.1/src/internal/_complement");
+  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
+  var filter = require("npm:ramda@0.17.1/src/filter");
+  module.exports = _curry2(function reject(fn, list) {
+    return filter(_complement(fn), list);
+  });
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/internal/_toISOString", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = (function() {
+    var pad = function pad(n) {
+      return (n < 10 ? '0' : '') + n;
+    };
+    return typeof Date.prototype.toISOString === 'function' ? function _toISOString(d) {
+      return d.toISOString();
+    } : function _toISOString(d) {
+      return (d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()) + 'T' + pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds()) + '.' + (d.getUTCMilliseconds() / 1000).toFixed(3).slice(2, 5) + 'Z');
+    };
+  }());
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/test", ["npm:ramda@0.17.1/src/internal/_cloneRegExp", "npm:ramda@0.17.1/src/internal/_curry2"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _cloneRegExp = require("npm:ramda@0.17.1/src/internal/_cloneRegExp");
+  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
+  module.exports = _curry2(function test(pattern, str) {
+    return _cloneRegExp(pattern).test(str);
+  });
   global.define = __define;
   return module.exports;
 });
@@ -5786,61 +5938,14 @@ System.registerDynamic("npm:ramda@0.15.1/src/arity", ["npm:ramda@0.15.1/src/inte
   return module.exports;
 });
 
-System.registerDynamic("npm:ramda@0.17.1/src/internal/_quote", [], true, function(require, exports, module) {
+System.registerDynamic("npm:ramda@0.17.1/src/internal/_isString", [], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = function _quote(s) {
-    return '"' + s.replace(/"/g, '\\"') + '"';
+  module.exports = function _isString(x) {
+    return Object.prototype.toString.call(x) === '[object String]';
   };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/internal/_contains", ["npm:ramda@0.17.1/src/internal/_indexOf"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _indexOf = require("npm:ramda@0.17.1/src/internal/_indexOf");
-  module.exports = function _contains(a, list) {
-    return _indexOf(list, a, 0) >= 0;
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/reject", ["npm:ramda@0.17.1/src/internal/_complement", "npm:ramda@0.17.1/src/internal/_curry2", "npm:ramda@0.17.1/src/filter"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _complement = require("npm:ramda@0.17.1/src/internal/_complement");
-  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
-  var filter = require("npm:ramda@0.17.1/src/filter");
-  module.exports = _curry2(function reject(fn, list) {
-    return filter(_complement(fn), list);
-  });
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/internal/_toISOString", [], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = (function() {
-    var pad = function pad(n) {
-      return (n < 10 ? '0' : '') + n;
-    };
-    return typeof Date.prototype.toISOString === 'function' ? function _toISOString(d) {
-      return d.toISOString();
-    } : function _toISOString(d) {
-      return (d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()) + 'T' + pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds()) + '.' + (d.getUTCMilliseconds() / 1000).toFixed(3).slice(2, 5) + 'Z');
-    };
-  }());
   global.define = __define;
   return module.exports;
 });
@@ -5906,16 +6011,37 @@ System.registerDynamic("npm:ramda@0.17.1/src/internal/_reduce", ["npm:ramda@0.17
   return module.exports;
 });
 
-System.registerDynamic("npm:ramda@0.17.1/src/test", ["npm:ramda@0.17.1/src/internal/_cloneRegExp", "npm:ramda@0.17.1/src/internal/_curry2"], true, function(require, exports, module) {
+System.registerDynamic("npm:ramda@0.17.1/src/slice", ["npm:ramda@0.17.1/src/internal/_checkForMethod", "npm:ramda@0.17.1/src/internal/_curry3"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var _cloneRegExp = require("npm:ramda@0.17.1/src/internal/_cloneRegExp");
-  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
-  module.exports = _curry2(function test(pattern, str) {
-    return _cloneRegExp(pattern).test(str);
-  });
+  var _checkForMethod = require("npm:ramda@0.17.1/src/internal/_checkForMethod");
+  var _curry3 = require("npm:ramda@0.17.1/src/internal/_curry3");
+  module.exports = _curry3(_checkForMethod('slice', function slice(fromIndex, toIndex, list) {
+    return Array.prototype.slice.call(list, fromIndex, toIndex);
+  }));
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/internal/_checkForMethod", ["npm:ramda@0.17.1/src/internal/_isArray", "npm:ramda@0.17.1/src/internal/_slice"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _isArray = require("npm:ramda@0.17.1/src/internal/_isArray");
+  var _slice = require("npm:ramda@0.17.1/src/internal/_slice");
+  module.exports = function _checkForMethod(methodname, fn) {
+    return function() {
+      var length = arguments.length;
+      if (length === 0) {
+        return fn();
+      }
+      var obj = arguments[length - 1];
+      return (_isArray(obj) || typeof obj[methodname] !== 'function') ? fn.apply(this, arguments) : obj[methodname].apply(obj, _slice(arguments, 0, length - 1));
+    };
+  };
   global.define = __define;
   return module.exports;
 });
@@ -5970,37 +6096,12 @@ System.registerDynamic("npm:ramda@0.17.1/src/internal/_forceReduced", [], true, 
   return module.exports;
 });
 
-System.registerDynamic("npm:ramda@0.17.1/src/slice", ["npm:ramda@0.17.1/src/internal/_checkForMethod", "npm:ramda@0.17.1/src/internal/_curry3"], true, function(require, exports, module) {
+System.registerDynamic("npm:process@0.10.1", ["npm:process@0.10.1/browser"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var _checkForMethod = require("npm:ramda@0.17.1/src/internal/_checkForMethod");
-  var _curry3 = require("npm:ramda@0.17.1/src/internal/_curry3");
-  module.exports = _curry3(_checkForMethod('slice', function slice(fromIndex, toIndex, list) {
-    return Array.prototype.slice.call(list, fromIndex, toIndex);
-  }));
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/internal/_checkForMethod", ["npm:ramda@0.17.1/src/internal/_isArray", "npm:ramda@0.17.1/src/internal/_slice"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _isArray = require("npm:ramda@0.17.1/src/internal/_isArray");
-  var _slice = require("npm:ramda@0.17.1/src/internal/_slice");
-  module.exports = function _checkForMethod(methodname, fn) {
-    return function() {
-      var length = arguments.length;
-      if (length === 0) {
-        return fn();
-      }
-      var obj = arguments[length - 1];
-      return (_isArray(obj) || typeof obj[methodname] !== 'function') ? fn.apply(this, arguments) : obj[methodname].apply(obj, _slice(arguments, 0, length - 1));
-    };
-  };
+  module.exports = require("npm:process@0.10.1/browser");
   global.define = __define;
   return module.exports;
 });
@@ -6014,37 +6115,6 @@ System.registerDynamic("npm:ramda@0.17.1/src/internal/_reduced", [], true, funct
     return x && x['@@transducer/reduced'] ? x : {
       '@@transducer/value': x,
       '@@transducer/reduced': true
-    };
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:process@0.10.1", ["npm:process@0.10.1/browser"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = require("npm:process@0.10.1/browser");
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.14.0/src/internal/_curry1", ["npm:ramda@0.14.0/src/__"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var __ = require("npm:ramda@0.14.0/src/__");
-  module.exports = function _curry1(fn) {
-    return function f1(a) {
-      if (arguments.length === 0) {
-        return f1;
-      } else if (a === __) {
-        return f1;
-      } else {
-        return fn(a);
-      }
     };
   };
   global.define = __define;
@@ -6192,20 +6262,6 @@ System.registerDynamic("npm:core-js@1.1.3/library/modules/$.iterators", [], true
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.1.3/library/modules/$.wks", ["npm:core-js@1.1.3/library/modules/$.shared", "npm:core-js@1.1.3/library/modules/$.global", "npm:core-js@1.1.3/library/modules/$.uid"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var store = require("npm:core-js@1.1.3/library/modules/$.shared")('wks'),
-      Symbol = require("npm:core-js@1.1.3/library/modules/$.global").Symbol;
-  module.exports = function(name) {
-    return store[name] || (store[name] = Symbol && Symbol[name] || (Symbol || require("npm:core-js@1.1.3/library/modules/$.uid"))('Symbol.' + name));
-  };
-  global.define = __define;
-  return module.exports;
-});
-
 System.registerDynamic("npm:core-js@1.1.3/library/modules/$.classof", ["npm:core-js@1.1.3/library/modules/$.cof", "npm:core-js@1.1.3/library/modules/$.wks"], true, function(require, exports, module) {
   ;
   var global = this,
@@ -6226,6 +6282,20 @@ System.registerDynamic("npm:core-js@1.1.3/library/modules/$.classof", ["npm:core
   return module.exports;
 });
 
+System.registerDynamic("npm:core-js@1.1.3/library/modules/$.wks", ["npm:core-js@1.1.3/library/modules/$.shared", "npm:core-js@1.1.3/library/modules/$.global", "npm:core-js@1.1.3/library/modules/$.uid"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var store = require("npm:core-js@1.1.3/library/modules/$.shared")('wks'),
+      Symbol = require("npm:core-js@1.1.3/library/modules/$.global").Symbol;
+  module.exports = function(name) {
+    return store[name] || (store[name] = Symbol && Symbol[name] || (Symbol || require("npm:core-js@1.1.3/library/modules/$.uid"))('Symbol.' + name));
+  };
+  global.define = __define;
+  return module.exports;
+});
+
 System.registerDynamic("npm:core-js@1.1.3/library/modules/$.core", [], true, function(require, exports, module) {
   ;
   var global = this,
@@ -6234,21 +6304,6 @@ System.registerDynamic("npm:core-js@1.1.3/library/modules/$.core", [], true, fun
   var core = module.exports = {};
   if (typeof __e == 'number')
     __e = core;
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:core-js@1.1.3/library/modules/$.an-object", ["npm:core-js@1.1.3/library/modules/$.is-object"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var isObject = require("npm:core-js@1.1.3/library/modules/$.is-object");
-  module.exports = function(it) {
-    if (!isObject(it))
-      throw TypeError(it + ' is not an object!');
-    return it;
-  };
   global.define = __define;
   return module.exports;
 });
@@ -6269,35 +6324,16 @@ System.registerDynamic("npm:core-js@1.1.3/library/modules/core.get-iterator-meth
   return module.exports;
 });
 
-System.registerDynamic("npm:ramda@0.15.1/src/internal/_curry1", [], true, function(require, exports, module) {
+System.registerDynamic("npm:core-js@1.1.3/library/modules/$.an-object", ["npm:core-js@1.1.3/library/modules/$.is-object"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = function _curry1(fn) {
-    return function f1(a) {
-      if (arguments.length === 0) {
-        return f1;
-      } else if (a != null && a['@@functional/placeholder'] === true) {
-        return f1;
-      } else {
-        return fn(a);
-      }
-    };
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/internal/_complement", [], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = function _complement(f) {
-    return function() {
-      return !f.apply(this, arguments);
-    };
+  var isObject = require("npm:core-js@1.1.3/library/modules/$.is-object");
+  module.exports = function(it) {
+    if (!isObject(it))
+      throw TypeError(it + ' is not an object!');
+    return it;
   };
   global.define = __define;
   return module.exports;
@@ -6323,6 +6359,32 @@ System.registerDynamic("npm:ramda@0.17.1/src/internal/_indexOf", ["npm:ramda@0.1
   return module.exports;
 });
 
+System.registerDynamic("npm:ramda@0.17.1/src/internal/_complement", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function _complement(f) {
+    return function() {
+      return !f.apply(this, arguments);
+    };
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/internal/_cloneRegExp", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function _cloneRegExp(pattern) {
+    return new RegExp(pattern.source, (pattern.global ? 'g' : '') + (pattern.ignoreCase ? 'i' : '') + (pattern.multiline ? 'm' : '') + (pattern.sticky ? 'y' : '') + (pattern.unicode ? 'u' : ''));
+  };
+  global.define = __define;
+  return module.exports;
+});
+
 System.registerDynamic("npm:ramda@0.17.1/src/filter", ["npm:ramda@0.17.1/src/internal/_curry2", "npm:ramda@0.17.1/src/internal/_dispatchable", "npm:ramda@0.17.1/src/internal/_filter", "npm:ramda@0.17.1/src/internal/_xfilter"], true, function(require, exports, module) {
   ;
   var global = this,
@@ -6333,6 +6395,42 @@ System.registerDynamic("npm:ramda@0.17.1/src/filter", ["npm:ramda@0.17.1/src/int
   var _filter = require("npm:ramda@0.17.1/src/internal/_filter");
   var _xfilter = require("npm:ramda@0.17.1/src/internal/_xfilter");
   module.exports = _curry2(_dispatchable('filter', _xfilter, _filter));
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.17.1/src/bind", ["npm:ramda@0.17.1/src/internal/_arity", "npm:ramda@0.17.1/src/internal/_curry2"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _arity = require("npm:ramda@0.17.1/src/internal/_arity");
+  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
+  module.exports = _curry2(function bind(fn, thisObj) {
+    return _arity(fn.length, function() {
+      return fn.apply(thisObj, arguments);
+    });
+  });
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:ramda@0.15.1/src/internal/_curry1", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function _curry1(fn) {
+    return function f1(a) {
+      if (arguments.length === 0) {
+        return f1;
+      } else if (a != null && a['@@functional/placeholder'] === true) {
+        return f1;
+      } else {
+        return fn(a);
+      }
+    };
+  };
   global.define = __define;
   return module.exports;
 });
@@ -6359,22 +6457,6 @@ System.registerDynamic("npm:ramda@0.17.1/src/internal/_xwrap", [], true, functio
       return new XWrap(fn);
     };
   }());
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:ramda@0.17.1/src/bind", ["npm:ramda@0.17.1/src/internal/_arity", "npm:ramda@0.17.1/src/internal/_curry2"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var _arity = require("npm:ramda@0.17.1/src/internal/_arity");
-  var _curry2 = require("npm:ramda@0.17.1/src/internal/_curry2");
-  module.exports = _curry2(function bind(fn, thisObj) {
-    return _arity(fn.length, function() {
-      return fn.apply(thisObj, arguments);
-    });
-  });
   global.define = __define;
   return module.exports;
 });
@@ -6441,18 +6523,6 @@ System.registerDynamic("npm:process@0.10.1/browser", [], true, function(require,
   return module.exports;
 });
 
-System.registerDynamic("npm:ramda@0.17.1/src/internal/_cloneRegExp", [], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = function _cloneRegExp(pattern) {
-    return new RegExp(pattern.source, (pattern.global ? 'g' : '') + (pattern.ignoreCase ? 'i' : '') + (pattern.multiline ? 'm' : '') + (pattern.sticky ? 'y' : '') + (pattern.unicode ? 'u' : ''));
-  };
-  global.define = __define;
-  return module.exports;
-});
-
 System.registerDynamic("npm:core-js@1.1.3/library/modules/$.to-integer", [], true, function(require, exports, module) {
   ;
   var global = this,
@@ -6463,30 +6533,6 @@ System.registerDynamic("npm:core-js@1.1.3/library/modules/$.to-integer", [], tru
   module.exports = function(it) {
     return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
   };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:core-js@1.1.3/library/modules/$.defined", [], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = function(it) {
-    if (it == undefined)
-      throw TypeError("Can't call method on  " + it);
-    return it;
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:core-js@1.1.3/library/modules/$.library", [], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = true;
   global.define = __define;
   return module.exports;
 });
@@ -6549,6 +6595,53 @@ System.registerDynamic("npm:core-js@1.1.3/library/modules/$.def", ["npm:core-js@
   return module.exports;
 });
 
+System.registerDynamic("npm:core-js@1.1.3/library/modules/$.defined", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function(it) {
+    if (it == undefined)
+      throw TypeError("Can't call method on  " + it);
+    return it;
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.1.3/library/modules/$.redef", ["npm:core-js@1.1.3/library/modules/$.hide"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = require("npm:core-js@1.1.3/library/modules/$.hide");
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.1.3/library/modules/$.library", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = true;
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.1.3/library/modules/$.has", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var hasOwnProperty = {}.hasOwnProperty;
+  module.exports = function(it, key) {
+    return hasOwnProperty.call(it, key);
+  };
+  global.define = __define;
+  return module.exports;
+});
+
 System.registerDynamic("npm:core-js@1.1.3/library/modules/$.hide", ["npm:core-js@1.1.3/library/modules/$", "npm:core-js@1.1.3/library/modules/$.property-desc", "npm:core-js@1.1.3/library/modules/$.support-desc"], true, function(require, exports, module) {
   ;
   var global = this,
@@ -6585,16 +6678,6 @@ System.registerDynamic("npm:core-js@1.1.3/library/modules/$.iter-create", ["npm:
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.1.3/library/modules/$.redef", ["npm:core-js@1.1.3/library/modules/$.hide"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = require("npm:core-js@1.1.3/library/modules/$.hide");
-  global.define = __define;
-  return module.exports;
-});
-
 System.registerDynamic("npm:core-js@1.1.3/library/modules/$", [], true, function(require, exports, module) {
   ;
   var global = this,
@@ -6612,19 +6695,6 @@ System.registerDynamic("npm:core-js@1.1.3/library/modules/$", [], true, function
     getNames: $Object.getOwnPropertyNames,
     getSymbols: $Object.getOwnPropertySymbols,
     each: [].forEach
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:core-js@1.1.3/library/modules/$.has", [], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var hasOwnProperty = {}.hasOwnProperty;
-  module.exports = function(it, key) {
-    return hasOwnProperty.call(it, key);
   };
   global.define = __define;
   return module.exports;
@@ -6656,6 +6726,16 @@ System.registerDynamic("npm:core-js@1.1.3/library/modules/$.iter-buggy", [], tru
   return module.exports;
 });
 
+System.registerDynamic("npm:core-js@1.1.3/library/modules/$.unscope", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function() {};
+  global.define = __define;
+  return module.exports;
+});
+
 System.registerDynamic("npm:core-js@1.1.3/library/modules/$.iter-step", [], true, function(require, exports, module) {
   ;
   var global = this,
@@ -6671,29 +6751,6 @@ System.registerDynamic("npm:core-js@1.1.3/library/modules/$.iter-step", [], true
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.1.3/library/modules/$.unscope", [], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = function() {};
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:core-js@1.1.3/library/modules/$.global", [], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var UNDEFINED = 'undefined';
-  var global = module.exports = typeof window != UNDEFINED && window.Math == Math ? window : typeof self != UNDEFINED && self.Math == Math ? self : Function('return this')();
-  if (typeof __g == 'number')
-    __g = global;
-  global.define = __define;
-  return module.exports;
-});
-
 System.registerDynamic("npm:core-js@1.1.3/library/modules/$.to-iobject", ["npm:core-js@1.1.3/library/modules/$.iobject", "npm:core-js@1.1.3/library/modules/$.defined"], true, function(require, exports, module) {
   ;
   var global = this,
@@ -6703,6 +6760,19 @@ System.registerDynamic("npm:core-js@1.1.3/library/modules/$.to-iobject", ["npm:c
       defined = require("npm:core-js@1.1.3/library/modules/$.defined");
   module.exports = function(it) {
     return IObject(defined(it));
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.1.3/library/modules/$.cof", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var toString = {}.toString;
+  module.exports = function(it) {
+    return toString.call(it).slice(8, -1);
   };
   global.define = __define;
   return module.exports;
@@ -6723,6 +6793,19 @@ System.registerDynamic("npm:core-js@1.1.3/library/modules/$.shared", ["npm:core-
   return module.exports;
 });
 
+System.registerDynamic("npm:core-js@1.1.3/library/modules/$.global", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var UNDEFINED = 'undefined';
+  var global = module.exports = typeof window != UNDEFINED && window.Math == Math ? window : typeof self != UNDEFINED && self.Math == Math ? self : Function('return this')();
+  if (typeof __g == 'number')
+    __g = global;
+  global.define = __define;
+  return module.exports;
+});
+
 System.registerDynamic("npm:core-js@1.1.3/library/modules/$.uid", [], true, function(require, exports, module) {
   ;
   var global = this,
@@ -6732,19 +6815,6 @@ System.registerDynamic("npm:core-js@1.1.3/library/modules/$.uid", [], true, func
       px = Math.random();
   module.exports = function(key) {
     return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("npm:core-js@1.1.3/library/modules/$.cof", [], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var toString = {}.toString;
-  module.exports = function(it) {
-    return toString.call(it).slice(8, -1);
   };
   global.define = __define;
   return module.exports;
@@ -7200,7 +7270,8 @@ System.register('js/app.js', ['npm:babel-runtime@5.8.20/helpers/sliced-to-array'
       view = curry(function (_ref5, model) {
         var action$ = _ref5.action$;
         return h('div#app', [h('h1', 'Postal codes autocomplete example'), h('h2', headerMessage(model)), h('div.country', [h('label', { attrs: { 'for': 'country' } }, 'Country'), countryMenuView(action$, ['', 'DE', 'ES', 'FR', 'US'])]), search.view({ action$: forwardTo(action$, Action.Search),
-          query: query(model)
+          query: query(model),
+          delay: 500
         }, model.search)]);
       });
 
@@ -7220,10 +7291,10 @@ System.register('js/app.js', ['npm:babel-runtime@5.8.20/helpers/sliced-to-array'
     }
   };
 });
-System.register('js/autocomplete.js', ['npm:ramda@0.17.1/src/curry', 'npm:ramda@0.17.1/src/compose', 'npm:ramda@0.17.1/src/map', 'npm:ramda@0.17.1/src/always', 'npm:ramda@0.17.1/src/T', 'npm:ramda@0.17.1/src/F', 'npm:ramda@0.17.1/src/assoc', 'npm:ramda@0.17.1/src/merge', 'npm:union-type@0.1.6', 'npm:ramda-fantasy@0.4.0/src/Future', 'npm:ramda-fantasy@0.4.0/src/Maybe', 'npm:flyd-forwardto@0.0.2', 'npm:snabbdom@0.2.6/h', 'js/helpers/nofx.js', 'js/helpers/ismaybe.js', 'js/helpers/emptytonothing.js', 'js/helpers/targetvalue.js', 'js/helpers/casekey.js'], function (_export) {
+System.register('js/autocomplete.js', ['npm:ramda@0.17.1/src/curry', 'npm:ramda@0.17.1/src/compose', 'npm:ramda@0.17.1/src/map', 'npm:ramda@0.17.1/src/always', 'npm:ramda@0.17.1/src/T', 'npm:ramda@0.17.1/src/F', 'npm:ramda@0.17.1/src/assoc', 'npm:ramda@0.17.1/src/merge', 'npm:ramda@0.17.1/src/last', 'npm:union-type@0.1.6', 'npm:ramda-fantasy@0.4.0/src/Future', 'npm:ramda-fantasy@0.4.0/src/Maybe', 'npm:flyd@0.1.14', 'npm:flyd-forwardto@0.0.2', 'npm:flyd-aftersilence@0.1.0', 'npm:snabbdom@0.2.6/h', 'js/helpers/nofx.js', 'js/helpers/ismaybe.js', 'js/helpers/emptytonothing.js', 'js/helpers/targetvalue.js', 'js/helpers/casekey.js'], function (_export) {
   'use strict';
 
-  var curry, compose, map, always, T, F, assoc, merge, Type, Future, Maybe, forwardTo, h, noFx, isMaybe, emptyToNothing, targetValue, caseKey, noop, positionUnder, repositionUnder;
+  var curry, compose, map, always, T, F, assoc, merge, last, Type, Future, Maybe, flyd, forwardTo, debounce, h, noFx, isMaybe, emptyToNothing, targetValue, caseKey, noop, positionUnder, repositionUnder;
 
   // hooks
 
@@ -7291,15 +7362,22 @@ System.register('js/autocomplete.js', ['npm:ramda@0.17.1/src/curry', 'npm:ramda@
     var view = curry(function (_ref, model) {
       var query = _ref.query;
       var action$ = _ref.action$;
+      var _ref$delay = _ref.delay;
+      var delay = _ref$delay === undefined ? 0 : _ref$delay;
 
       var menuAction$ = forwardTo(action$, Action.UpdateMenu);
-      var input = inputView(action$, menuAction$, query, model);
-      var menudiv = menuView(menu.view({ action$: menuAction$ }), style.menu, model.menu);
+      var inputAction$ = flyd.stream();
+      flyd.on(action$, map(last, debounce(delay, inputAction$)));
+
+      var mview = menu.view({ action$: menuAction$ });
+
+      var input = inputView(action$, inputAction$, menuAction$, query, model);
+      var menudiv = menuView(mview, style.menu, model.menu);
 
       return h('div.autocomplete', showMenu(model) ? [input, menudiv] : [input]);
     });
 
-    var inputView = function inputView(action$, menuAction$, query, model) {
+    var inputView = function inputView(action$, inputAction$, menuAction$, query, model) {
 
       var handleEsc = compose(action$, always(Action.HideMenu()));
       var handleEnter = handleEsc;
@@ -7308,7 +7386,7 @@ System.register('js/autocomplete.js', ['npm:ramda@0.17.1/src/curry', 'npm:ramda@
 
       return h('input', {
         on: {
-          input: compose(action$, Action.Input(query), emptyToNothing, targetValue),
+          input: compose(inputAction$, Action.Input(query), emptyToNothing, targetValue),
           keydown: !model.isEditing ? noop : caseKey([[['Esc', 'Escape', 0x1B], handleEsc], [['Enter', 0x0A, 0x0D], handleEnter], [['Down', 'DownArrow', 0x28], handleDown], [['Up', 'UpArrow', 0x26], handleUp]]),
           blur: [action$, Action.HideMenu()]
         },
@@ -7359,14 +7437,20 @@ System.register('js/autocomplete.js', ['npm:ramda@0.17.1/src/curry', 'npm:ramda@
       assoc = _npmRamda0171SrcAssoc['default'];
     }, function (_npmRamda0171SrcMerge) {
       merge = _npmRamda0171SrcMerge['default'];
+    }, function (_npmRamda0171SrcLast) {
+      last = _npmRamda0171SrcLast['default'];
     }, function (_npmUnionType016) {
       Type = _npmUnionType016['default'];
     }, function (_npmRamdaFantasy040SrcFuture) {
       Future = _npmRamdaFantasy040SrcFuture['default'];
     }, function (_npmRamdaFantasy040SrcMaybe) {
       Maybe = _npmRamdaFantasy040SrcMaybe['default'];
+    }, function (_npmFlyd0114) {
+      flyd = _npmFlyd0114['default'];
     }, function (_npmFlydForwardto002) {
       forwardTo = _npmFlydForwardto002['default'];
+    }, function (_npmFlydAftersilence010) {
+      debounce = _npmFlydAftersilence010['default'];
     }, function (_npmSnabbdom026H) {
       h = _npmSnabbdom026H['default'];
     }, function (_jsHelpersNofxJs) {

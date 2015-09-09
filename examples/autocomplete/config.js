@@ -19,6 +19,7 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.20",
     "core-js": "npm:core-js@1.1.3",
     "flyd": "npm:flyd@0.1.14",
+    "flyd-aftersilence": "npm:flyd-aftersilence@0.1.0",
     "flyd-forwardto": "npm:flyd-forwardto@0.0.2",
     "ramda": "npm:ramda@0.17.1",
     "ramda-fantasy": "npm:ramda-fantasy@0.4.0",
@@ -89,6 +90,9 @@ System.config({
     },
     "npm:core-util-is@1.0.1": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0"
+    },
+    "npm:flyd-aftersilence@0.1.0": {
+      "flyd": "npm:flyd@0.1.14"
     },
     "npm:flyd-forwardto@0.0.2": {
       "flyd": "npm:flyd@0.1.14"

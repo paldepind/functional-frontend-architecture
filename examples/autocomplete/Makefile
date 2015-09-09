@@ -32,6 +32,6 @@ init:
 	@jspm init .
 
 init-deps:
-	@jspm install npm:ramda npm:ramda-fantasy npm:union-type npm:snabbdom npm:flyd npm:flyd-forwardto
+	@jspm install npm:ramda npm:ramda-fantasy npm:union-type npm:snabbdom npm:flyd npm:flyd-forwardto npm:flyd-aftersilence
 
 .PHONY: init init-deps init-test-deps clean-deps clean jshint build test-build test-server

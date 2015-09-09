@@ -7,11 +7,14 @@ import T from 'ramda/src/T'
 import F from 'ramda/src/F'
 import assoc from 'ramda/src/assoc'
 import merge from 'ramda/src/merge'
+import last from 'ramda/src/last'
 
 import Type from 'union-type'
 import Future from 'ramda-fantasy/src/Future'
 import Maybe from 'ramda-fantasy/src/Maybe'
+import flyd from 'flyd'
 import forwardTo from 'flyd-forwardto'
+import debounce from 'flyd-aftersilence'
 import h from 'snabbdom/h'
 
 import noFx from './helpers/nofx'
@@ -81,20 +84,22 @@ export default function autocomplete(menu){
 
   // view
 
-  const view = curry( ({query, action$}, model) => {
+  const view = curry( ({query, action$, delay=0}, model) => {
+    const menuAction$ = forwardTo(action$, Action.UpdateMenu);
+    const inputAction$ = flyd.stream();
+    flyd.on( action$, map(last, debounce(delay, inputAction$)) );
 
-    const menuAction$ = forwardTo(action$, Action.UpdateMenu)
-    const input = inputView(action$, menuAction$, query, model);
-    const menudiv = menuView(menu.view({action$: menuAction$}), 
-                             style.menu, 
-                             model.menu);
+    const mview = menu.view({action$: menuAction$});
+
+    const input = inputView(action$, inputAction$, menuAction$, query, model);
+    const menudiv = menuView(mview, style.menu, model.menu);
 
     return h('div.autocomplete', showMenu(model) ? [input, menudiv] : [input] );
 
   });
 
-  const inputView = (action$, menuAction$, query, model) => {
-    
+  const inputView = (action$, inputAction$, menuAction$, query, model) => {
+
     const handleEsc   = compose( action$, always(Action.HideMenu()) );
     const handleEnter = handleEsc;
     const handleDown  = compose( menuAction$, always(menu.Action.SelectNext()) );
@@ -103,7 +108,11 @@ export default function autocomplete(menu){
     return (
       h('input', {
         on: {
-          input: compose(action$, Action.Input(query), emptyToNothing, targetValue),
+          input: compose(inputAction$, 
+                         Action.Input(query), 
+                         emptyToNothing, 
+                         targetValue
+                 ),
           keydown: !model.isEditing ? noop 
                      : caseKey([
                          [['Esc','Escape', 0x1B],    handleEsc],

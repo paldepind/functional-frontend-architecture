@@ -27,7 +27,7 @@ The primary aims of this example are to demonstrate:
 - Using snabbdom hooks to reposition the (absolute-positioned) menu relative to
   the input.
 
-- Input debouncing (planned, not yet implemented).
+- Input debouncing using [flyd-aftersilence][debounce]. (Impure, but easy!)
 
 - Build toolchain using `make`, [jspm][jspm], and [tape][tape], [testem][testem] 
   with [source-map-support][sms] for tests.
@@ -76,6 +76,7 @@ Browse to `http://localhost:8080/index.html`.
 [fut]:  https://github.com/ramda/ramda-fantasy/tree/master/src/Future.js
 [maybe]:  https://github.com/ramda/ramda-fantasy/tree/master/src/Maybe.js
 [flyd]: https://github.com/paldepind/flyd
+[debounce]: https://github.com/paldepind/flyd-aftersilence
 [jspm]: http://jspm.io
 [tape]: https://github.com/substack/tape
 [testem]: https://github.com/airportyh/testem

@@ -200,7 +200,8 @@ const view = curry( ({action$}, model) => (
     ]),
     search.view(
       { action$: forwardTo(action$, Action.Search), 
-        query:   query(model)
+        query:   query(model),
+        delay:   500
       },
       model.search
     )

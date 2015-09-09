@@ -6,6 +6,7 @@
     "directories": {},
     "dependencies": {
       "flyd": "npm:flyd@^0.1.14",
+      "flyd-aftersilence": "npm:flyd-aftersilence@^0.1.0",
       "flyd-forwardto": "npm:flyd-forwardto@^0.0.2",
       "ramda": "npm:ramda@^0.17.1",
       "ramda-fantasy": "npm:ramda-fantasy@^0.4.0",
