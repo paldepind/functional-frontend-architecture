@@ -1,0 +1,29 @@
+{
+  "devDependencies": {
+    "testem": "^0.9.3"
+  },
+  "jspm": {
+    "directories": {},
+    "dependencies": {
+      "flyd": "npm:flyd@^0.1.14",
+      "flyd-aftersilence": "npm:flyd-aftersilence@^0.1.0",
+      "flyd-forwardto": "npm:flyd-forwardto@^0.0.2",
+      "ramda": "npm:ramda@^0.17.1",
+      "ramda-fantasy": "npm:ramda-fantasy@^0.4.0",
+      "snabbdom": "npm:snabbdom@^0.2.6",
+      "source-map-support": "npm:source-map-support@^0.3.2",
+      "union-type": "npm:union-type@^0.1.6"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.22",
+      "babel-runtime": "npm:babel-runtime@^5.8.20",
+      "core-js": "npm:core-js@^1.1.0",
+      "tape": "npm:tape@^4.0.1"
+    }
+  },
+  "jshintConfig": {
+    "esnext": true,
+    "asi": true,
+    "laxcomma": true
+  }
+}

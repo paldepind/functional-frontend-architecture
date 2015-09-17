@@ -1,0 +1,21 @@
+{
+  "launchers": {
+    "Node": {
+      "command": "node js/build/test-build.js",
+      "protocol": "tap"
+    },
+    "TAP": {
+      "command": "node js/build/test-build.js"
+    }
+  },
+  "framework": "tap",
+  "src_files": [
+    "js/*.js"
+  ],
+  "serve_files": [
+    "js/build/test-build.js"
+  ],
+  "before_tests": "make test-build",
+  "launch_in_dev": ["Node","TAP","PhantomJS"]
+
+}

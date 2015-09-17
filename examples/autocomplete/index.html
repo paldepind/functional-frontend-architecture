@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Zip Codes: Autocomplete</title>
+    <script src="jspm_packages/system.js"></script>
+    <script src="config.js"></script>
+    <script type="text/javascript" src="js/build/build.js"></script>
+    <script>
+      System.import('js/main');
+    </script>
+    <style>
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: sans-serif;
+        font-size: 1.2em;
+        line-height: 2em;
+      }
+
+      label, select, input {
+        font-size: 1.2em;
+        margin-right: 0.5em;
+      }
+
+      .country, .autocomplete {
+        display: inline-block;
+      }
+
+      .autocomplete input {
+        width: 30rem;
+      }
+
+      .autocomplete > .menu {
+        width: 29rem;
+        margin-left: 1rem;
+        background: white;
+        border-right: 1px solid lightgrey;
+        border-bottom: 1px solid lightgrey;
+        border-left: 1px solid lightgrey;
+        box-shadow: 1px 1px 2px 0 lightgrey;
+        -webkit-box-shadow: 1px 1px 2px 0 lightgrey;
+        -moz-box-shadow: 1px 1px 2px 0 lightgrey;
+      }
+      
+      .autocomplete > .menu > ul > li {
+        padding-left: 1rem;
+      }
+
+      .autocomplete > .menu > ul > li.selected {
+        background-color: lightyellow;
+      }
+
+      .autocomplete > .menu > ul > li span {
+        margin-right: 1rem;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+  </body>
+</html>
+
