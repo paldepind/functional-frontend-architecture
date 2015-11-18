@@ -10,7 +10,7 @@ The entire state is contained in a single data structure. Things can happen
 and the state should change accordingly. The number of things that can happen
 is described as a set of _actions_. Actions flow unidirectionally down the
 application. Actions are handled by pure _update_ functions. Such a function
-takes an action and a state and returns a new state. The state is handled to a
+takes an action and a state and returns a new state. The state is handed to a
 _view_ function that returns a virtual DOM representation. A module is an
 encapsulated set of actions, an update function and a view function. Modules
 can be nested inside other modules and modules can contain other modules. This
