@@ -59,7 +59,7 @@ makes the architecture nestable and modular.
   i.e. it renders a list of chosen files, shows their upload progress, and
   allows users to cancel uploads. It demonstrates asynchronous side effects
   and a realistic stand-alone reuseable component or 'widget'.
-* [Hot module reloading](examples/hot-module-roloading) – Demonstrates how
+* [Hot module reloading](examples/hot-module-reloading) – Demonstrates how
   simple it is to use webpack's hot module replacement to achieve live code
   editing without browser refreshes.
 * [Modal](examples/modal) – Demonstrates a technique for implementing modals.
