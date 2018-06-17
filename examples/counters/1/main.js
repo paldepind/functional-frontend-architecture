@@ -23,9 +23,9 @@ const update = (model, action) => Action.case({
 // View
 const view = R.curry((actions$, model) =>
   h('div', {style: countStyle}, [
-    h('button', {on: {click: [actions$, Action.Decrement()]}}, '–'),
+    h('button', {on: {click: [actions$, Action.Decrement]}}, '–'),
     h('div', {style: countStyle}, model),
-    h('button', {on: {click: [actions$, Action.Increment()]}}, '+'),
+    h('button', {on: {click: [actions$, Action.Increment]}}, '+'),
   ]));
 
 const countStyle = {
