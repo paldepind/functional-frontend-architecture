@@ -18,13 +18,11 @@ npm install
 Then build the code with
 
 ```shell
-browserify main.js -t babelify --outfile build.js
+npm run build
 ```
 
 With live reloading,
 
 ```shell
-npm install -g watchify browser-sync
-watchify main.js -v -t babelify --outfile build.js \
-  & browser-sync start --server --files="index.html, build.js"
+npm run dev
 ```
