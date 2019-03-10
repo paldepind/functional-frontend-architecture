@@ -13,6 +13,7 @@
     "babelify": "^6.1.1",
     "browser-sync": "^2.26.3",
     "browserify": "^16.2.3",
+    "treis": "^2.6.0",
     "watchify": "^3.11.1"
   },
   "dependencies": {
