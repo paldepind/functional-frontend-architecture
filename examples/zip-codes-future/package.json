@@ -4,6 +4,10 @@
   "description": "Zip code checker using futures",
   "main": "index.js",
   "scripts": {
+    "build": "browserify main.js -t babelify --outfile build.js",
+    "watch": "watchify main.js -v -t babelify --outfile build.js",
+    "sync-serve": "browser-sync start --server --files='index.html, build.js'",
+    "dev": "npm run watch & npm run sync-serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Simon Friis Vindum",
