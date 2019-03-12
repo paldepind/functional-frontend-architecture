@@ -9,9 +9,10 @@ const treis = require('treis')
 
 const c = R.compose // tiny alias to make the code leaner and more readable
 const promToFut = (prom) => Future((rej, res) => prom.then(res, rej))
+const thunkToFut = (thunk) => Future((rej, res) => thunk().then(res, rej))
 const getJSON = R.invoker(0, 'json')
 const targetValue = R.path(['target', 'value'])
-const getUrl = (url) => promToFut(fetch(new Request(url, {method: 'GET'})))
+const getUrl = (url) => c(thunkToFut, R.thunkify(fetch))(new Request(url, { method: 'GET' }))
 const respIsOk = (r) => r.ok === true
 
 // Model
