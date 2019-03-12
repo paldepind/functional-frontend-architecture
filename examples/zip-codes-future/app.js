@@ -70,7 +70,7 @@ const view = (actions, model) => {
     Invalid: () => [h('div', 'Please type a valid US zip code!')],
     Loading: () => [h('div', 'Loading ...')],
     NotFound: () => [h('div', 'Not found :(')],
-    Names: R.map(R.partial(h, 'div')),
+    Names: R.map(R.partial(h, ['div'])),
   }, model.state);
   return h('div', R.prepend(field, messages));
 }
