@@ -71,8 +71,8 @@ const view = (actions, model) => {
     Loading: () => [h('div', 'Loading ...')],
     NotFound: () => [h('div', 'Not found :(')],
     Names: R.map(R.partial(h, ['div'])),
-  }, model.state);
-  return h('div', R.prepend(field, messages));
+  }, model.state)
+  return h('div', R.prepend(field, messages))
 }
 
 module.exports = {init, Action, update, view}
