@@ -11,20 +11,18 @@ for the asynchron requests.
 
 Install the dependencies.
 
-```javascript
+```shell
 npm install
 ```
 
 Then build the code with
 
-```javascript
-browserify main.js -t babelify --outfile build.js
+```shell
+npm run build
 ```
 
 With live reloading,
 
-```javascript
-npm install -g watchify browser-sync
-watchify main.js -v -t babelify --outfile build.js \
-  & browser-sync start --server --files="index.html, build.js"
+```shell
+npm run dev
 ```

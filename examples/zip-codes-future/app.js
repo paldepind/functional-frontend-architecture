@@ -1,6 +1,6 @@
 const R = require('ramda')
 const Type = require('union-type')
-const h = require('snabbdom/h')
+const h = require('snabbdom/h').default
 const Future = require('ramda-fantasy/src/Future')
 const treis = require('treis')
 
@@ -9,9 +9,10 @@ const treis = require('treis')
 
 const c = R.compose // tiny alias to make the code leaner and more readable
 const promToFut = (prom) => Future((rej, res) => prom.then(res, rej))
+const thunkToFut = (thunk) => Future((rej, res) => thunk().then(res, rej))
 const getJSON = R.invoker(0, 'json')
 const targetValue = R.path(['target', 'value'])
-const getUrl = (url) => promToFut(fetch(new Request(url, {method: 'GET'})))
+const getUrl = (url) => c(thunkToFut, R.thunkify(fetch))(new Request(url, { method: 'GET' }))
 const respIsOk = (r) => r.ok === true
 
 // Model
@@ -25,7 +26,7 @@ const USState = Type({
 
 const init = () => ({
   zipCode: '',
-  state: USState.Invalid(),
+  state: USState.Invalid,
 })
 
 // Update
@@ -43,7 +44,7 @@ const isZip = c(R.not, R.isEmpty, R.match(/^\d{5}$/))
 const createChangeStateAction = c(Action.ChangeState, USState.Names, places)
 
 const updateStateFromResp = c(R.map(createChangeStateAction), promToFut, getJSON)
-const updateStateToNotFound = c(Future.of, Action.ChangeState, USState.NotFound)
+const updateStateToNotFound = c(Future.of, Action.ChangeState, R.always(USState.NotFound))
 const lookupZipCode = c(R.chain(R.ifElse(respIsOk, updateStateFromResp, updateStateToNotFound)), fetchZip)
 
 const zipLens = R.lensProp('zipCode')
@@ -52,7 +53,7 @@ const stateLens = R.lensProp('state')
 const update = Action.caseOn({
   ChangeZipCode: (newZip, model) => {
     const validZip = isZip(newZip)
-    const newState = validZip ? USState.Loading() : USState.Invalid()
+    const newState = validZip ? USState.Loading : USState.Invalid
     const newModel = c(R.set(zipLens, newZip), R.set(stateLens, newState))(model)
     return [newModel, validZip ? [lookupZipCode(newZip)] : []]
   },
@@ -70,9 +71,9 @@ const view = (actions, model) => {
     Invalid: () => [h('div', 'Please type a valid US zip code!')],
     Loading: () => [h('div', 'Loading ...')],
     NotFound: () => [h('div', 'Not found :(')],
-    Names: R.map(R.partial(h, 'div')),
-  }, model.state);
-  return h('div', R.prepend(field, messages));
+    Names: R.map(R.partial(h, ['div'])),
+  }, model.state)
+  return h('div', R.prepend(field, messages))
 }
 
 module.exports = {init, Action, update, view}
