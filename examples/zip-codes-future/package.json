@@ -21,7 +21,7 @@
     "watchify": "^3.11.1"
   },
   "dependencies": {
-    "ramda": "^0.17.1",
+    "ramda": "^0.26.1",
     "ramda-fantasy": "^0.8.0",
     "snabbdom": "^0.7.3",
     "union-type": "^0.1.6"
