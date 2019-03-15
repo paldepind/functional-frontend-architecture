@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "ramda": "^0.17.1",
-    "ramda-fantasy": "^0.4.0",
+    "ramda-fantasy": "^0.8.0",
     "snabbdom": "^0.7.3",
     "union-type": "^0.1.6"
   }

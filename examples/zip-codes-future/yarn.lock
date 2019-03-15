@@ -2890,22 +2890,27 @@ querystring@0.2.0:
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
   integrity sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=
 
-ramda-fantasy@^0.4.0:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/ramda-fantasy/-/ramda-fantasy-0.4.1.tgz#5977f7b97195f74866aef3ff8d0dbbb2483dfa01"
-  integrity sha1-WXf3uXGV90hmrvP/jQ27skg9+gE=
+ramda-fantasy@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/ramda-fantasy/-/ramda-fantasy-0.8.0.tgz#9e8c37d93ec0a70796cfc10873dd9c50850390f6"
+  integrity sha1-now32T7ApweWz8EIc92cUIUDkPY=
   dependencies:
-    ramda ">=0.15.0 <0.18.0"
+    ramda ">=0.15.0"
 
-"ramda@>=0.15.0 <0.18.0", ramda@^0.17.1:
-  version "0.17.1"
-  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.17.1.tgz#4c198147d3ab54e8c15255f11730e2116f6e6073"
-  integrity sha1-TBmBR9OrVOjBUlXxFzDiEW9uYHM=
+ramda@>=0.15.0:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
+  integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
 
 ramda@^0.15.0:
   version "0.15.1"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.15.1.tgz#b227f79e9ff0acee1955d582f18681eb02c4dc2a"
   integrity sha1-sif3np/wrO4ZVdWC8YaB6wLE3Co=
+
+ramda@^0.17.1:
+  version "0.17.1"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.17.1.tgz#4c198147d3ab54e8c15255f11730e2116f6e6073"
+  integrity sha1-TBmBR9OrVOjBUlXxFzDiEW9uYHM=
 
 ramda@^0.18.0:
   version "0.18.0"
