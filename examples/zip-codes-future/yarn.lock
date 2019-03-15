@@ -2902,15 +2902,15 @@ ramda@>=0.15.0, ramda@^0.26.1:
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
   integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
 
-ramda@^0.15.0:
-  version "0.15.1"
-  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.15.1.tgz#b227f79e9ff0acee1955d582f18681eb02c4dc2a"
-  integrity sha1-sif3np/wrO4ZVdWC8YaB6wLE3Co=
-
 ramda@^0.18.0:
   version "0.18.0"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.18.0.tgz#c6e3c5d4b9ab1f7906727fdeeb039152a85d4db3"
   integrity sha1-xuPF1LmrH3kGcn/e6wORUqhdTbM=
+
+ramda@^0.24.0:
+  version "0.24.1"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.24.1.tgz#c3b7755197f35b8dc3502228262c4c91ddb6b857"
+  integrity sha1-w7d1UZfzW43DUCIoJixMkd22uFc=
 
 randomatic@^3.0.0:
   version "3.1.1"
@@ -3835,12 +3835,12 @@ undeclared-identifiers@^1.1.2:
     simple-concat "^1.0.0"
     xtend "^4.0.1"
 
-union-type@^0.1.6:
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/union-type/-/union-type-0.1.6.tgz#4ccf9d39a70534cb95bbd8a03ba250e88d47e8bc"
-  integrity sha1-TM+dOacFNMuVu9igO6JQ6I1H6Lw=
+union-type@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/union-type/-/union-type-0.4.1.tgz#745a717c006df3d642d191bcd1b995f2c8bd5581"
+  integrity sha512-VS0ygUO3G/8ZNRbw5RTrf0soTaFJCaSQR7pEOU5JiYV68PF32dl3U6QG9FaPT7YOGUAqCidyu+ZiWlCNFDlHXQ==
   dependencies:
-    ramda "^0.15.0"
+    ramda "^0.24.0"
 
 union-value@^1.0.0:
   version "1.0.0"

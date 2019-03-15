@@ -24,6 +24,6 @@
     "ramda": "^0.26.1",
     "ramda-fantasy": "^0.8.0",
     "snabbdom": "^0.7.3",
-    "union-type": "^0.1.6"
+    "union-type": "^0.4.1"
   }
 }
