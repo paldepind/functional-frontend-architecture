@@ -3353,10 +3353,10 @@ slash@^1.0.0:
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
   integrity sha1-xB8vbDn8FtHNF61LXYlhFK5HDVU=
 
-snabbdom@^0.2.4:
-  version "0.2.8"
-  resolved "https://registry.yarnpkg.com/snabbdom/-/snabbdom-0.2.8.tgz#ed3dc8b46d825201ac9d3f717cb57b01354b4240"
-  integrity sha1-7T3ItG2CUgGsnT9xfLV7ATVLQkA=
+snabbdom@^0.7.3:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/snabbdom/-/snabbdom-0.7.3.tgz#27b29b41228779ae5d99696a07edaaff4912fc54"
+  integrity sha512-XNh90GQiV36hWdfSL46fIVrSSvmBuZlWk3++qaEgBeQWQJCqTphcbjTODPv8/vyZHJaB3VhePsWfGxi/zBxXyw==
 
 snapdragon-node@^2.0.1:
   version "2.1.1"
