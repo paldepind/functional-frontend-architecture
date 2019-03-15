@@ -25,7 +25,7 @@ const USState = Type({
 
 const init = () => ({
   zipCode: '',
-  state: USState.Invalid(),
+  state: USState.Invalid,
 })
 
 // Update
@@ -43,7 +43,7 @@ const isZip = c(R.not, R.isEmpty, R.match(/^\d{5}$/))
 const createChangeStateAction = c(Action.ChangeState, USState.Names, places)
 
 const updateStateFromResp = c(R.map(createChangeStateAction), promToFut, getJSON)
-const updateStateToNotFound = c(Future.of, Action.ChangeState, USState.NotFound)
+const updateStateToNotFound = c(Future.of, Action.ChangeState, R.always(USState.NotFound))
 const lookupZipCode = c(R.chain(R.ifElse(respIsOk, updateStateFromResp, updateStateToNotFound)), fetchZip)
 
 const zipLens = R.lensProp('zipCode')
@@ -52,7 +52,7 @@ const stateLens = R.lensProp('state')
 const update = Action.caseOn({
   ChangeZipCode: (newZip, model) => {
     const validZip = isZip(newZip)
-    const newState = validZip ? USState.Loading() : USState.Invalid()
+    const newState = validZip ? USState.Loading : USState.Invalid
     const newModel = c(R.set(zipLens, newZip), R.set(stateLens, newState))(model)
     return [newModel, validZip ? [lookupZipCode(newZip)] : []]
   },
