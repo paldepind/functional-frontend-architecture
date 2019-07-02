@@ -5,12 +5,12 @@ const stream = flyd.stream;
 const forwardTo = require('flyd-forwardto');
 const Type = require('union-type');
 const patch = require('snabbdom').init([
-  require('snabbdom/modules/class'),
-  require('snabbdom/modules/props'),
-  require('snabbdom/modules/eventlisteners'),
-  require('snabbdom/modules/style'),
+  require('snabbdom/modules/class').default,
+  require('snabbdom/modules/props').default,
+  require('snabbdom/modules/eventlisteners').default,
+  require('snabbdom/modules/style').default,
 ]);
-const h = require('snabbdom/h');
+const h = require('snabbdom/h').default;
 
 const counter = require('./counter.js');
 

@@ -1,7 +1,7 @@
 /* jshint esnext: true */
 const R = require('ramda');
 const Type = require('union-type');
-const h = require('snabbdom/h');
+const h = require('snabbdom/h').default;
 
 
 // Model
